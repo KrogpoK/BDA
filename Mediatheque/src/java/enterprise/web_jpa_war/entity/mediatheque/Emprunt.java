@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package enterprise.web_jpa_war.entity.mediatheque.item;
+package enterprise.web_jpa_war.entity.mediatheque;
 
+import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -12,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -20,29 +21,29 @@ import javax.persistence.Temporal;
  * @author user
  */
 @Entity
-@Table(name = "OUVRAGE")
-public class Ouvrage implements Serializable {
-    
+public class Emprunt implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "IDOUVRAGE")
+    @Column(name = "IDEMPRUNT")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "OEUVRE")
+    @Column(name = "ECOMPTE")
     @OneToOne
-    private Oeuvre oeuvre;
+    private Compte eCompte;
         
-    @Column(name = "DATEARRIVEE")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateArrivee;
-        
-    @Column(name = "DISPONIBILITE")
-    private int disponibilite;
+    @Column(name = "EOUVRAGE")
+    @OneToOne
+    private Ouvrage eOuvrage;
             
-    @Column(name = "NBEMPRUNT")
-    private int nbEmprunts;
+    @Column(name = "DATEDEBUTEMPRUNT")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateDebutEmprunt;
+                
+    @Column(name = "DATEFINEMPRUNT")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateFinEmprunt;
                     
     @Override
     public int hashCode() {
@@ -54,10 +55,10 @@ public class Ouvrage implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ouvrage)) {
+        if (!(object instanceof Emprunt)) {
             return false;
         }
-        Ouvrage other = (Ouvrage) object;
+        Emprunt other = (Emprunt) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -66,7 +67,7 @@ public class Ouvrage implements Serializable {
 
     @Override
     public String toString() {
-        return "enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage[ id=" + id + " ]";
+        return "enterprise.web_jpa_war.entity.mediatheque.Emprunt[ id=" + id + " ]";
     }
     
 }
