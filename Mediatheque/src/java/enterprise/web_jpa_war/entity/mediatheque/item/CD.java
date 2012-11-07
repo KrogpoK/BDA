@@ -21,18 +21,18 @@ public class CD extends Oeuvre implements Serializable {
     public static final String SUPPORT = "CD";
     
     @Column(name = "SMAISON_EDITION")
-    private String maisonEdiion;
+    private String maisonEdition;
     @Column(name = "SINTERPRETE")
     private String interprete;
     @Column(name = "INB_PISTE")
     private int nbPiste;
 
-    public String getMaisonEdiion() {
-        return maisonEdiion;
+    public String getMaisonEdition() {
+        return maisonEdition;
     }
 
-    public void setMaisonEdiion(String maisonEdiion) {
-        this.maisonEdiion = maisonEdiion;
+    public void setMaisonEdition(String maisonEdiion) {
+        this.maisonEdition = maisonEdiion;
     }
 
     public String getInterprete() {

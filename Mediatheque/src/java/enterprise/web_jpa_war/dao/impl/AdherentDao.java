@@ -5,7 +5,7 @@
 package enterprise.web_jpa_war.dao.impl;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
-import enterprise.web_jpa_war.dao.IAbstractDao;
+import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.util.DateTool;
@@ -17,7 +17,7 @@ import org.hibernate.Hibernate;
  *
  * @author user
  */
-public class AdherentDao extends AbstractCommonnDao implements IAbstractDao<Adherent> {
+public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adherent> {
 
     public AdherentDao(EntityManager em) {
         super.em = em;
@@ -25,19 +25,9 @@ public class AdherentDao extends AbstractCommonnDao implements IAbstractDao<Adhe
 
     public Adherent find(int id) {
         Adherent a = em.find(Adherent.class, id);
-        if (a.getAdress() != null) {
-            Hibernate.initialize(a.getAdress());
-        }
-        if (a.getCompte() != null) {
-            Hibernate.initialize(a.getCompte());
-        }
+        
         if (a.getCompte().getListeReservation() != null) {
             Hibernate.initialize(a.getCompte().getListeReservation());
-            for (Reservation r : a.getCompte().getListeReservation()) {
-                if (r.getOeuvre() != null) {
-                    Hibernate.initialize(r.getOeuvre());
-                }
-            }
         }
 
         return a;

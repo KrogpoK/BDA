@@ -8,6 +8,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface IMediaDS {
     public List<Livre> getLivres();
 
     public List<Periodique> getPeriodiques();
-    
+
     public Film getFilm(int id);
 
     public CD getCD(int id);
@@ -36,7 +37,8 @@ public interface IMediaDS {
     public boolean estDisponible(int idOeuvre);
 
 //    public void ajouterCritique(int idOeuvre, Critique critique);
-//    public void creerOuvrage(Ouvrage ouvrage);
+    public void creerOuvrage(Ouvrage ouvrage);
+
     public boolean oeuvreExists(Oeuvre oeuvre);
 
 //    public List<Ouvrage> getOuvrages();

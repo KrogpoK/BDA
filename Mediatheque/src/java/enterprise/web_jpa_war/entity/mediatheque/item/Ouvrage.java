@@ -51,6 +51,47 @@ public class Ouvrage implements Serializable {
         return hash;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+
+    public void setOeuvre(Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
+    }
+
+    public Date getDateArrivee() {
+        return dateArrivee;
+    }
+
+    public void setDateArrivee(Date dateArrivee) {
+        this.dateArrivee = dateArrivee;
+    }
+
+    public int getDisponibilite() {
+        return disponibilite;
+    }
+
+    public void setDisponibilite(int disponibilite) {
+        this.disponibilite = disponibilite;
+    }
+
+    public int getNbEmprunts() {
+        return nbEmprunts;
+    }
+
+    public void setNbEmprunts(int nbEmprunts) {
+        this.nbEmprunts = nbEmprunts;
+    }
+
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
