@@ -31,9 +31,9 @@ public class MediaDS implements IMediaDS {
 
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
-        LivreDao lDao = new LivreDao(em);
-        CDDao cDao = new CDDao(em);
-        PeriodiqueDao pDao = new PeriodiqueDao(em);
+        lDao = new LivreDao(em);
+        cDao = new CDDao(em);
+        pDao = new PeriodiqueDao(em);
     }
 
     public List<Film> getFilms() {
@@ -45,11 +45,11 @@ public class MediaDS implements IMediaDS {
     }
 
     public List<Livre> getLivres() {
-      return lDao.findAll();
+        return lDao.findAll();
     }
 
     public List<Periodique> getPeriodiques() {
-      return pDao.findAll();
+        return pDao.findAll();
     }
 
     public boolean estDisponible(int idOeuvre) {
@@ -65,7 +65,7 @@ public class MediaDS implements IMediaDS {
     }
 
     public void creerLivre(Livre livre) {
-       lDao.persist(livre);
+        lDao.persist(livre);
     }
 
     public void creerPeriodique(Periodique periodique) {
@@ -73,7 +73,7 @@ public class MediaDS implements IMediaDS {
     }
 
     public void creerCD(CD cd) {
-         cDao.persist(cd);
+        cDao.persist(cd);
     }
 
     public Film getFilm(int id) {
@@ -89,7 +89,7 @@ public class MediaDS implements IMediaDS {
     }
 
     public Periodique getPeriodique(int id) {
-       return pDao.find(id);
+        return pDao.find(id);
     }
 
     public void creerOuvrage(Ouvrage ouvrage) {
