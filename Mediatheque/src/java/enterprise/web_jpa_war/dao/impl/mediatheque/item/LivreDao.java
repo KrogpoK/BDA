@@ -6,10 +6,8 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
-import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.util.DateTool;
-import java.nio.Buffer;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -19,12 +17,12 @@ import javax.persistence.EntityManager;
  */
 public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
 
-    public LivreDao(EntityManager em)
-    {
+    public LivreDao(EntityManager em) {
         super.em = em;
     }
+
     public Livre find(int id) {
-       return em.find(Livre.class, id);
+        return em.find(Livre.class, id);
     }
 
     public Livre findByExample(Livre example) {
@@ -36,18 +34,21 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
     }
 
     public void delete(int id) {
-       em.remove(id);
+        em.remove(id);
     }
 
     public void deleteByExample(Livre obj) {
         em.createQuery("delete from Livre l where " + getWhereClause(obj));
     }
 
-     public List<Livre> findAll() {
-        return (List<Livre>) em.createQuery("select l from Livre l" ).getResultList();
+    public List<Livre> findAll() {
+        return (List<Livre>) em.createQuery("select l from Livre l").getResultList();
     }
-     
-     
+
+    public List<Livre> findAllByExample(Livre obj) {
+        return (List<Livre>) em.createQuery("select l from Livre l where " + getWhereClause(obj)).getResultList();
+    }
+
     public String getWhereClause(Livre obj) {
         StringBuilder clause = new StringBuilder();
         clause.append(" ");
@@ -63,7 +64,7 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
             }
             clause.append(" l.genre'").append(obj.getGenre()).append("' ");
         }
-        if (obj.getAuteur()!= null) {
+        if (obj.getAuteur() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
@@ -81,10 +82,7 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
             }
             clause.append(" l.dateParution'").append(DateTool.printDate(obj.getDateParution())).append("' ");
         }
-        
+
         return clause.toString();
     }
-
-   
-    
 }

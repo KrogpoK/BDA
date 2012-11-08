@@ -23,28 +23,27 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "OUVRAGE")
 public class Ouvrage implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
+    public static final int DISPO_LIBRE = 0;
+    public static final int DISPO_RESERVE = 1;
+    public static final int DISPO_EMPRUNTE = 2;
     
     @Id
     @Column(name = "IDOUVRAGE")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     @JoinColumn(name = "OEUVRE")
     @OneToOne
     private Oeuvre oeuvre;
-        
     @Column(name = "DATEARRIVEE")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateArrivee;
-        
     @Column(name = "DISPONIBILITE")
     private int disponibilite;
-            
     @Column(name = "NBEMPRUNT")
     private int nbEmprunts;
-                    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,5 +109,4 @@ public class Ouvrage implements Serializable {
     public String toString() {
         return "enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage[ id=" + id + " ]";
     }
-    
 }

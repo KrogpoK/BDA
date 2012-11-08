@@ -16,24 +16,20 @@ import java.util.List;
  */
 public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Reservation> {
 
-
     public Reservation find(int id) {
-       return em.find(Reservation.class, id);
+        return em.find(Reservation.class, id);
     }
 
     public Reservation findByExample(Reservation example) {
-        try
-        {
-            return (Reservation) em.createQuery("select r from Reservation where "+getWhereClause(example)).getSingleResult();
-        }
-        catch(Exception e)
-        {
+        try {
+            return (Reservation) em.createQuery("select r from Reservation where " + getWhereClause(example)).getSingleResult();
+        } catch (Exception e) {
             return null;
         }
     }
 
     public void persist(Reservation obj) {
-       em.persist(obj);
+        em.persist(obj);
     }
 
     public void delete(int id) {
@@ -41,7 +37,19 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
     }
 
     public void deleteByExample(Reservation obj) {
-         em.createQuery("delete from Reservation r where " + getWhereClause(obj));
+        em.createQuery("delete from Reservation r where " + getWhereClause(obj));
+    }
+
+    public List<Reservation> findAll() {
+        try {
+            return (List<Reservation>) em.createQuery("select r from Reservation r").getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Reservation> findAllByExample(Reservation obj) {
+        return (List<Reservation>) em.createQuery("select r from Reservation r where " + getWhereClause(obj)).getResultList();
     }
 
     public String getWhereClause(Reservation obj) {
@@ -59,7 +67,7 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
             }
             clause.append(" r.oeuvre'").append(obj.getOeuvre().getId()).append("' ");
         }
-        
+
         if (obj.getDebut() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
@@ -72,19 +80,7 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
             }
             clause.append(" r.dispo'").append(DateTool.printDate(obj.getDispo())).append("' ");
         }
-        
+
         return clause.toString();
     }
-
-    public List<Reservation> findAll() {
-        try{
-            return (List<Reservation>) em.createQuery("select r from Reservation r" ).getResultList();
-        }
-        catch(Exception e)
-        {
-            return null;
-        }
-    }
-
-   
 }

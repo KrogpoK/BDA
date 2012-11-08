@@ -34,7 +34,7 @@ public interface IMediaDS {
 
     public Periodique getPeriodique(int id);
 
-    public boolean estDisponible(int idOeuvre);
+    public boolean estDisponible(Oeuvre oeuvre);
 
 //    public void ajouterCritique(int idOeuvre, Critique critique);
     public void creerOuvrage(Ouvrage ouvrage);

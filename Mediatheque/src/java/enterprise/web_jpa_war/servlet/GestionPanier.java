@@ -10,11 +10,13 @@ import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +51,7 @@ public class GestionPanier extends AbstractServlet {
             adherentDS = new AdherentDS(em);
 
             int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
+            //ajout dans le panier
             if ("add".equals(request.getParameter("action"))) {
                 String support = request.getParameter("oeuvreType");
 
@@ -68,13 +71,15 @@ public class GestionPanier extends AbstractServlet {
                     adherentDS.ajouterAuPanier(idAdherent, o);
                 }
                 request.getRequestDispatcher("rechercheOeuvre.jsp").forward(request, response);
+                //supression d'une oauvre das le panier
             } else if ("remove".equals(request.getParameter("action"))) {
                 int idOeuvre = Integer.parseInt(request.getParameter("oeuvreId"));
                 adherentDS.supprimerDuPanier(idAdherent, idOeuvre);
-                request.setAttribute("listeOeuvre", getListeOeuvre(idAdherent));
+                request.setAttribute("listeOuvrage", getListeOuvrage(idAdherent));
                 request.getRequestDispatcher("Panier.jsp").forward(request, response);
+                //affichage du panier
             } else {
-                request.setAttribute("listeOeuvre", getListeOeuvre(idAdherent));
+                request.setAttribute("listeOuvrage", getListeOuvrage(idAdherent));
                 request.getRequestDispatcher("Panier.jsp").forward(request, response);
             }
             utx.commit();
@@ -84,10 +89,23 @@ public class GestionPanier extends AbstractServlet {
         }
     }
 
-    private List<Oeuvre> getListeOeuvre(int idAdherent) {
+    private List<Ouvrage> getListeOuvrage(int idAdherent) {
         Adherent adherent = adherentDS.getAdherent(idAdherent);
         Panier panier = adherent.getCompte().getPanier();
-        return panier.getListeOeuvre();
+
+
+        List<Ouvrage> listeOuvrage = new ArrayList<Ouvrage>();
+        for (Oeuvre o : panier.getListeOeuvre()) {
+            Ouvrage ouvrage = new Ouvrage();
+            ouvrage.setOeuvre(o);
+            if (mediaDS.estDisponible(o)) {
+                ouvrage.setDisponibilite(Ouvrage.DISPO_LIBRE);
+            } else {
+                ouvrage.setDisponibilite(Ouvrage.DISPO_EMPRUNTE);
+            }
+            listeOuvrage.add(ouvrage);
+        }
+        return listeOuvrage;
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

@@ -6,10 +6,8 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
-import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.util.DateTool;
-import java.nio.Buffer;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -19,12 +17,12 @@ import javax.persistence.EntityManager;
  */
 public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Periodique> {
 
-    public PeriodiqueDao(EntityManager em)
-    {
+    public PeriodiqueDao(EntityManager em) {
         super.em = em;
     }
+
     public Periodique find(int id) {
-       return em.find(Periodique.class, id);
+        return em.find(Periodique.class, id);
     }
 
     public Periodique findByExample(Periodique example) {
@@ -36,18 +34,21 @@ public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Peri
     }
 
     public void delete(int id) {
-       em.remove(id);
+        em.remove(id);
     }
 
     public void deleteByExample(Periodique obj) {
         em.createQuery("delete from Periodique p where " + getWhereClause(obj));
     }
 
-     public List<Periodique> findAll() {
-        return (List<Periodique>) em.createQuery("select p from Periodique p" ).getResultList();
+    public List<Periodique> findAll() {
+        return (List<Periodique>) em.createQuery("select p from Periodique p").getResultList();
     }
-     
-     
+
+    public List<Periodique> findAllByExample(Periodique obj) {
+        return (List<Periodique>) em.createQuery("select p from Periodique p where " + getWhereClause(obj)).getResultList();
+    }
+
     public String getWhereClause(Periodique obj) {
         StringBuilder clause = new StringBuilder();
         clause.append(" ");
@@ -63,7 +64,7 @@ public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Peri
             }
             clause.append(" p.genre'").append(obj.getGenre()).append("' ");
         }
-        if (obj.getPeriodicite()!= null) {
+        if (obj.getPeriodicite() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
@@ -87,10 +88,7 @@ public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Peri
             }
             clause.append(" p.dateParution'").append(DateTool.printDate(obj.getDateParution())).append("' ");
         }
-        
+
         return clause.toString();
     }
-
-   
-    
 }

@@ -54,7 +54,8 @@ public class AdherentDS implements IAdherentDS {
     }
 
     public boolean creerAdherent(Adherent adherent) {
-        if (getAdherent(adherent.getNom(), adherent.getPrenom(), adherent.getDateNaissance()) == null) {
+        if (getAdherent(adherent.getNom(), adherent.getPrenom(), adherent.getDateNaissance()) == null
+                && getAdherent(adherent.getLogin()) == null) {
             adherentDao.persist(adherent);
             return true;
         }

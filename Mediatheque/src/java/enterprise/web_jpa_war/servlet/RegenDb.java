@@ -6,10 +6,13 @@ package enterprise.web_jpa_war.servlet;
 
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +43,7 @@ public class RegenDb extends AbstractServlet {
             mediaDS = new MediaDS(em);
             adherentDS = new AdherentDS(em);
 
-            for (Adherent a : Adherent.buildMock(20)) {
+            for (Adherent a : Adherent.buildMock(10)) {
                 adherentDS.creerAdherent(a);
             }
             Adherent admin = Adherent.buildMoke("Admin", "Admin", "1990-05-24");
@@ -50,6 +53,13 @@ public class RegenDb extends AbstractServlet {
             adherentDS.creerAdherent(ouioui);
             for (Film f : Film.buildMoke(1000)) {
                 mediaDS.creerFilm(f);
+                Ouvrage o = new Ouvrage();
+                Random r = new Random();
+                o.setDisponibilite(r.nextInt(3));
+                o.setDateArrivee(new Date());
+                o.setNbEmprunts(0);
+                o.setOeuvre(f);
+                mediaDS.creerOuvrage(o);
             }
 
             utx.commit();

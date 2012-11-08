@@ -5,14 +5,8 @@
 package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
-import enterprise.web_jpa_war.dao.ICommonDao;
-import enterprise.web_jpa_war.entity.Adherent;
-import enterprise.web_jpa_war.entity.mediatheque.item.CD;
-import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.util.DateTool;
-import java.nio.Buffer;
-import java.util.List;
 import javax.persistence.EntityManager;
 
 /**

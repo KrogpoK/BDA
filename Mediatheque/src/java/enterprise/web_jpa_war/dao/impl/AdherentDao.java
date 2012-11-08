@@ -25,7 +25,7 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
 
     public Adherent find(int id) {
         Adherent a = em.find(Adherent.class, id);
-        
+
         if (a.getCompte().getListeReservation() != null) {
             Hibernate.initialize(a.getCompte().getListeReservation());
         }
@@ -34,28 +34,25 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
     }
 
     public Adherent findByExample(Adherent example) {
-        try
-        {
-        Adherent a = (Adherent) em.createQuery("select a from Adherent a where " + getWhereClause(example)).getSingleResult();
-        
-        if (a.getAdress() != null) {
-            Hibernate.initialize(a.getAdress());
-        }
-        if (a.getCompte() != null) {
-            Hibernate.initialize(a.getCompte());
-        }
-        if (a.getCompte().getListeReservation() != null) {
-            Hibernate.initialize(a.getCompte().getListeReservation());
-            for (Reservation r : a.getCompte().getListeReservation()) {
-                if (r.getOeuvre() != null) {
-                    Hibernate.initialize(r.getOeuvre());
+        try {
+            Adherent a = (Adherent) em.createQuery("select a from Adherent a where " + getWhereClause(example)).getSingleResult();
+
+            if (a.getAdress() != null) {
+                Hibernate.initialize(a.getAdress());
+            }
+            if (a.getCompte() != null) {
+                Hibernate.initialize(a.getCompte());
+            }
+            if (a.getCompte().getListeReservation() != null) {
+                Hibernate.initialize(a.getCompte().getListeReservation());
+                for (Reservation r : a.getCompte().getListeReservation()) {
+                    if (r.getOeuvre() != null) {
+                        Hibernate.initialize(r.getOeuvre());
+                    }
                 }
             }
-        }
-        return a;
-        }
-        catch(Exception e)
-        {
+            return a;
+        } catch (Exception e) {
             return null;
         }
     }
@@ -73,8 +70,11 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
     }
 
     public List<Adherent> findAll() {
-        List<Adherent> liste = (List<Adherent>) em.createQuery("select a from Adherent a").getResultList();
-        return liste;
+        return (List<Adherent>) em.createQuery("select a from Adherent a").getResultList();
+    }
+
+    public List<Adherent> findAllByExample(Adherent obj) {
+        return (List<Adherent>) em.createQuery("select a from Adherent a where " + getWhereClause(obj)).getResultList();
     }
 
     public String getWhereClause(Adherent a) {
@@ -98,7 +98,7 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
             }
             clause.append(" a.prenom='").append(a.getPrenom()).append("' ");
         }
-         if (a.getLogin() != null) {
+        if (a.getLogin() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }

@@ -7,6 +7,7 @@ package enterprise.web_jpa_war.facade.impl;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.CDDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.FilmDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.LivreDao;
+import enterprise.web_jpa_war.dao.impl.mediatheque.item.OuvrageDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.PeriodiqueDao;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
@@ -28,12 +29,14 @@ public class MediaDS implements IMediaDS {
     private LivreDao lDao;
     private CDDao cDao;
     private PeriodiqueDao pDao;
+    private OuvrageDao oDao;
 
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
         lDao = new LivreDao(em);
         cDao = new CDDao(em);
         pDao = new PeriodiqueDao(em);
+        oDao = new OuvrageDao(em);
     }
 
     public List<Film> getFilms() {
@@ -52,10 +55,25 @@ public class MediaDS implements IMediaDS {
         return pDao.findAll();
     }
 
-    public boolean estDisponible(int idOeuvre) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean estDisponible(Oeuvre oeuvre) {
+        List<Ouvrage> l = oDao.findAllByExample(oeuvre);
+
+        if(l != null && l.size()>0)
+        {
+            boolean dispo = false;
+           for(Ouvrage o : l)
+           {
+               if(o.getDisponibilite() == Ouvrage.DISPO_LIBRE)
+               {
+                   dispo = true;
+               }
+           }
+           return dispo;
+        }
+        return false;
     }
 
+    
     public boolean oeuvreExists(Oeuvre oeuvre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -93,6 +111,6 @@ public class MediaDS implements IMediaDS {
     }
 
     public void creerOuvrage(Ouvrage ouvrage) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        oDao.persist(ouvrage);
     }
 }

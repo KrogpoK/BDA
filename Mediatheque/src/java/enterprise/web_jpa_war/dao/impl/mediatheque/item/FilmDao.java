@@ -17,12 +17,12 @@ import javax.persistence.EntityManager;
  */
 public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
 
-    public FilmDao(EntityManager em)
-    {
+    public FilmDao(EntityManager em) {
         super.em = em;
     }
+
     public Film find(int id) {
-       return em.find(Film.class, id);
+        return em.find(Film.class, id);
     }
 
     public Film findByExample(Film example) {
@@ -34,18 +34,21 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
     }
 
     public void delete(int id) {
-       em.remove(id);
+        em.remove(id);
     }
 
     public void deleteByExample(Film obj) {
         em.createQuery("delete from Film f where " + getWhereClause(obj));
     }
 
-     public List<Film> findAll() {
-        return (List<Film>) em.createQuery("select f from Film f" ).getResultList();
+    public List<Film> findAll() {
+        return (List<Film>) em.createQuery("select f from Film f").getResultList();
     }
-     
-     
+
+    public List<Film> findAllByExample(Film obj) {
+        return (List<Film>) em.createQuery("select f from Film f where " + getWhereClause(obj)).getResultList();
+    }
+
     public String getWhereClause(Film obj) {
         StringBuilder clause = new StringBuilder();
         clause.append(" ");
@@ -61,7 +64,7 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
             }
             clause.append(" f.genre'").append(obj.getGenre()).append("' ");
         }
-        if (obj.getLangue()!= null) {
+        if (obj.getLangue() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
@@ -91,10 +94,7 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
             }
             clause.append(" f.duree'").append(DateTool.printTime(obj.getDuree())).append("' ");
         }
-        
+
         return clause.toString();
     }
-
-   
-    
 }
