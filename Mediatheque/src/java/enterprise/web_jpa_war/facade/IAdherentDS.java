@@ -44,4 +44,6 @@ public interface IAdherentDS {
     public void supprimerEmprunt(int idAdherent, int idEmprunt);
 
     public void supprimerReservation(int idAdherent, int idReservation);
+    
+    public Adherent getAdherent(int idAdherent);
 }

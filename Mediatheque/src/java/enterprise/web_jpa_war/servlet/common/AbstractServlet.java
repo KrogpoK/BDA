@@ -9,6 +9,7 @@ import enterprise.web_jpa_war.facade.IMediaDS;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ public abstract class AbstractServlet extends HttpServlet {
     protected EntityManagerFactory emf;
     @Resource
     protected UserTransaction utx;
+    protected EntityManager em;
     protected IAdherentDS adherentDS;
     protected IMediaDS mediaDS;
 

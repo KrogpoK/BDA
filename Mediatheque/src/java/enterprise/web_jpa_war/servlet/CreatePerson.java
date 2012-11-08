@@ -4,14 +4,11 @@
  */
 package enterprise.web_jpa_war.servlet;
 
-import enterprise.web_jpa_war.dao.impl.AdherentDao;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.adress.Adresse;
 import enterprise.web_jpa_war.entity.adress.City;
 import enterprise.web_jpa_war.entity.mediatheque.Compte;
-import enterprise.web_jpa_war.facade.IMediaDS;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
-import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;

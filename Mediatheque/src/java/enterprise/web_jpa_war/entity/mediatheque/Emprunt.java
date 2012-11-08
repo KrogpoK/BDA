@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -22,27 +23,28 @@ import javax.persistence.Temporal;
  * @author user
  */
 @Entity
+@Table(name = "EMPRUNT")
 public class Emprunt implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "IDEMPRUNT")
+    @Column(name = "IEMPRUNT_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "ECOMPTE")
+    @JoinColumn(name = "ICOMPTE_ID")
     @OneToOne
     private Compte eCompte;
         
-    @JoinColumn(name = "EOUVRAGE")
+    @JoinColumn(name = "IOUVRAGE_ID")
     @OneToOne
     private Ouvrage eOuvrage;
             
-    @Column(name = "DATEDEBUTEMPRUNT")
+    @Column(name = "DDEBUT_EMPRUNT")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebutEmprunt;
                 
-    @Column(name = "DATEFINEMPRUNT")
+    @Column(name = "DFIN_EMPRUNT")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFinEmprunt;
                     

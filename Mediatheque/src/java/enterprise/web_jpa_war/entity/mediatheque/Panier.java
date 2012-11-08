@@ -8,28 +8,40 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author user
  */
 @Entity
+@Table(name="PANIER")
 public class Panier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @Column(name="IPANIER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToMany
-    @JoinTable(name = "PANIER")
+    @ManyToMany()
+    @JoinTable(name = "REL_PANIER_OEUVRE",
+      joinColumns={@JoinColumn(name="IPanier_ID", referencedColumnName="IPANIER_ID")},
+      inverseJoinColumns={@JoinColumn(name="IOeuvre_ID", referencedColumnName="IOEUVRE_ID")}
+            )
     private List<Oeuvre> listeOeuvre;
 
+    public Panier()
+    {
+        listeOeuvre = new ArrayList<Oeuvre>();
+    }
     public Long getId() {
         return id;
     }
@@ -39,9 +51,6 @@ public class Panier implements Serializable {
     }
 
     public List<Oeuvre> getListeOeuvre() {
-        if (listeOeuvre == null) {
-            listeOeuvre = new ArrayList<Oeuvre>();
-        }
         return listeOeuvre;
     }
 

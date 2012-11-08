@@ -14,6 +14,7 @@
     </head>
     <body>
         <p><a href="index.jsp" ><-- revenir a l'accueil</a></p>
+        <p><a href="GestionPanier" ><-- Lister le panier</a></p>
         <h1>Liste des Oeuvres</h1>
         <form id="searchFilmForm" action="RechercheOeuvre" method="post">
             <table>
@@ -48,9 +49,10 @@
                     <td>${film.getStrDateParution()}</td> 
                     <td>${film.getStrType()}</td>
                     <td>
-                        <form action="AjouterPanier" method="post">
-                            <input type="hidden" name="oeuvreId" value="${film.getId()}" />
+                        <form action="GestionPanier" method="post">
+                            <input type="hidden" name="action" value="add" />
                             <input type="hidden" name="oeuvreType" value="${film.getStrType()}" />
+                            <input type="hidden" name="oeuvreId" value="${film.id}" />
                             <input type="submit" id="add" value="ajouter au panier" />
                         </form>
                     </td>

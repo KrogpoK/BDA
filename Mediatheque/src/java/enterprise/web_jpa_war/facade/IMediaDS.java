@@ -49,4 +49,5 @@ public interface IMediaDS {
     public void creerPeriodique(Periodique periodique);
 
     public void creerCD(CD cd);
+    
 }
