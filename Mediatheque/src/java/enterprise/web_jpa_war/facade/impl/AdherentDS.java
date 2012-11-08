@@ -29,19 +29,27 @@ public class AdherentDS implements IAdherentDS {
         Adherent a = getAdherent(nom);
         if(a != null)
         {
-            System.out.println(a.getLogin()+" "+a.getPass());
             return pass.equals(a.getPass());
         }
-         System.out.println("NULL");
         return false;
     }
 
     public void ajouterAuPanier(int idAdherent, Oeuvre oeuvre) {
-        throw new UnsupportedOperationException("Not supported yet.");
+      Adherent a = getAdherent(idAdherent);
+        if(a != null)
+        {
+            a.getCompte().getPanier().ajouterOeuvre(oeuvre);
+           updateAdherent(a);
+        }
     }
 
     public void supprimerDuPanier(int idAdherent, int idOeuvre) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Adherent a = getAdherent(idAdherent);
+        if(a != null)
+        {
+            a.getCompte().getPanier().supprimerOeuvre(idOeuvre);
+           updateAdherent(a);
+        }
     }
 
     public void reserverPanier(int idAdherent) {
@@ -88,5 +96,9 @@ public class AdherentDS implements IAdherentDS {
         Adherent a = new Adherent();
         a.setLogin(login);
        return  adherentDao.findByExample(a);
+    }
+    
+    public Adherent getAdherent(int idAdherent) {
+       return  adherentDao.find(idAdherent);
     }
 }

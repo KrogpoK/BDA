@@ -7,14 +7,9 @@ package enterprise.web_jpa_war.entity.mediatheque;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,6 +48,9 @@ public class Compte implements Serializable {
     @OneToOne(mappedBy = "compte", cascade = CascadeType.ALL)
     @JoinColumn(name = "IADHERENT_ID")
     private Adherent proprietaire;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="IPANIER_ID", nullable=true)
+    private Panier panier;
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
     private List<Reservation> listeReservation;
 
@@ -112,6 +110,19 @@ public class Compte implements Serializable {
         this.listeReservation = listeReservation;
     }
 
+    public Panier getPanier() {
+        if(panier == null)
+        {
+            panier = new Panier();
+        }
+        return panier;
+    }
+
+    public void setPanier(Panier panier) {
+        this.panier = panier;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
