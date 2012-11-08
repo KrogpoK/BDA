@@ -16,14 +16,10 @@ import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
 
 /**
  *

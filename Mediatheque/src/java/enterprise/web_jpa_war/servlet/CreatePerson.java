@@ -12,7 +12,6 @@ import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +38,7 @@ public class CreatePerson extends AbstractServlet {
             throws ServletException, IOException {
         try {
             super.utx.begin();
-            EntityManager em = emf.createEntityManager();
+            em = emf.createEntityManager();
             adherentDS = new AdherentDS(em);
 //            AdherentDao dao = new AdherentDao(em);
 

@@ -27,37 +27,39 @@ public class AdherentDS implements IAdherentDS {
 
     public boolean checkId(String nom, String pass) {
         Adherent a = getAdherent(nom);
-        if(a != null)
-        {
+        if (a != null) {
             return pass.equals(a.getPass());
         }
         return false;
     }
 
     public void ajouterAuPanier(int idAdherent, Oeuvre oeuvre) {
-      Adherent a = getAdherent(idAdherent);
-        if(a != null)
-        {
+        Adherent a = getAdherent(idAdherent);
+        if (a != null) {
             a.getCompte().getPanier().ajouterOeuvre(oeuvre);
-           updateAdherent(a);
+            updateAdherent(a);
         }
     }
 
     public void supprimerDuPanier(int idAdherent, int idOeuvre) {
         Adherent a = getAdherent(idAdherent);
-        if(a != null)
-        {
+        if (a != null) {
             a.getCompte().getPanier().supprimerOeuvre(idOeuvre);
-           updateAdherent(a);
+            updateAdherent(a);
         }
     }
 
-    public void reserverPanier(int idAdherent) {
+    public boolean reserverPanier(int idAdherent) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void creerAdherent(Adherent adherent) {
-        adherentDao.persist(adherent);
+    public boolean creerAdherent(Adherent adherent) {
+        if (getAdherent(adherent.getNom(), adherent.getPrenom(), adherent.getDateNaissance()) == null) {
+            adherentDao.persist(adherent);
+            return true;
+        }
+        return false;
+
     }
 
     public void updateAdherent(Adherent adherent) {
@@ -95,10 +97,10 @@ public class AdherentDS implements IAdherentDS {
     public Adherent getAdherent(String login) {
         Adherent a = new Adherent();
         a.setLogin(login);
-       return  adherentDao.findByExample(a);
+        return adherentDao.findByExample(a);
     }
-    
+
     public Adherent getAdherent(int idAdherent) {
-       return  adherentDao.find(idAdherent);
+        return adherentDao.find(idAdherent);
     }
 }

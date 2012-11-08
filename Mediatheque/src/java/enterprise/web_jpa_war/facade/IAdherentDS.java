@@ -24,9 +24,9 @@ public interface IAdherentDS {
 
     public void supprimerDuPanier(int idAdherent, int idOeuvre);
 
-    public void reserverPanier(int idAdherent);
+    public boolean reserverPanier(int idAdherent);
 
-    public void creerAdherent(Adherent adherent);
+    public boolean creerAdherent(Adherent adherent);
 
     public void updateAdherent(Adherent adherent);
 

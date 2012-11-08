@@ -9,9 +9,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
-import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +36,7 @@ public class RegenDb extends AbstractServlet {
             response.setContentType("text/html;charset=UTF-8");
 
             utx.begin();
-            EntityManager em = emf.createEntityManager();
+            em = emf.createEntityManager();
             mediaDS = new MediaDS(em);
             adherentDS = new AdherentDS(em);
 
@@ -48,6 +46,8 @@ public class RegenDb extends AbstractServlet {
             Adherent admin = Adherent.buildMoke("Admin", "Admin", "1990-05-24");
             admin.setAdmin(true);
             adherentDS.creerAdherent(admin);
+            Adherent ouioui = Adherent.buildMoke("oui", "oui", "1990-05-24");
+            adherentDS.creerAdherent(ouioui);
             for (Film f : Film.buildMoke(1000)) {
                 mediaDS.creerFilm(f);
             }
