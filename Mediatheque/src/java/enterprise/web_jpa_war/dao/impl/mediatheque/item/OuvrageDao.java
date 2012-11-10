@@ -51,7 +51,13 @@ public class OuvrageDao extends AbstractCommonnDao implements ICommonDao<Ouvrage
     }
     
     public List<Ouvrage> findAllByExample(Oeuvre oeuvre) {
-        return (List<Ouvrage>) em.createQuery("select o from Ouvrage o where o.oeuvre.id = '"+oeuvre.getId()+"'").getResultList();
+        try{
+            return (List<Ouvrage>) em.createQuery("select o from Ouvrage o where o.oeuvre.id = '"+oeuvre.getId()+"'").getResultList();
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
 
     public String getWhereClause(Ouvrage obj) {

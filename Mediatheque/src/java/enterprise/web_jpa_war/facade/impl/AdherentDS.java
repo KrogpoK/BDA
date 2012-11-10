@@ -5,7 +5,10 @@
 package enterprise.web_jpa_war.facade.impl;
 
 import enterprise.web_jpa_war.dao.impl.AdherentDao;
+import enterprise.web_jpa_war.dao.impl.mediatheque.EmpruntDao;
+import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.entity.Adherent;
+import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.facade.IAdherentDS;
@@ -20,9 +23,13 @@ import javax.persistence.EntityManager;
 public class AdherentDS implements IAdherentDS {
 
     private AdherentDao adherentDao;
+    private EmpruntDao empruntDao;
+    private ReservationDao reservationDao;
 
     public AdherentDS(EntityManager em) {
         adherentDao = new AdherentDao(em);
+        empruntDao = new EmpruntDao(em);
+        reservationDao = new ReservationDao(em);
     }
 
     public boolean checkId(String nom, String pass) {
@@ -103,5 +110,16 @@ public class AdherentDS implements IAdherentDS {
 
     public Adherent getAdherent(int idAdherent) {
         return adherentDao.find(idAdherent);
+    }
+
+    public List<Emprunt> getEmprunts(int idAdherent) {
+        Adherent a = getAdherent(idAdherent);
+        Emprunt e = new Emprunt();
+        e.seteCompte(a.getCompte());
+        return empruntDao.findAllByExample(e);
+    }
+
+    public void ajouterEmprunt(Emprunt emprunt) {
+        empruntDao.persist(emprunt);
     }
 }

@@ -55,12 +55,12 @@ public class DateTool {
         long toAdd = nbJours * DateTool.dayToMillis();
         return new Date(d.getTime() + toAdd);
     }
-    
-     int getDifference(final Date d1, final Date d2)
-    {
+
+    public static int getDifference(final Date d1, final Date d2) {
         int rep;
         long diff = d1.getTime() - d2.getTime();
         rep = (int) (diff / dayToMillis());
         return Math.abs(rep);
     }
+    
 }

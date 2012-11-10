@@ -7,11 +7,9 @@ package enterprise.web_jpa_war.servlet;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
-import enterprise.web_jpa_war.entity.mediatheque.item.CD;
-import enterprise.web_jpa_war.entity.mediatheque.item.Film;
-import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
-import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
+import enterprise.web_jpa_war.facade.impl.AdherentDS;
+import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,46 +38,60 @@ public class GestionReservation extends AbstractServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
-        String[] strId = request.getParameterValues("idOeuvreList[]");
-        String[] tabType = request.getParameterValues("typeOeuvre[]");
-        int nbReservation = strId.length;
-        int[] tabId = new int[strId.length];
-        int i = 0;
-        for (String s : strId) {
-            tabId[i] = Integer.parseInt(s);
-        }
-
-        Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
-        for (i = 0; i < nbReservation; i++) {
-            Oeuvre o = mediaDS.getOeuvre(tabId[i]);
-            tabOeuvre[i] = o;
-        }
-
-        ArrayList<Reservation> listeReservationDisponible = new ArrayList<Reservation>();
-        ArrayList<Reservation> listeReservationEnAttente = new ArrayList<Reservation>();
-        ArrayList<Emprunt> listeEmpruntsCourants = new ArrayList<Emprunt>();
-
-        int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
-        Adherent adherent = adherentDS.getAdherent(idAdherent);
-        for (Oeuvre o : tabOeuvre) {
-            Reservation resa = new Reservation();
-            resa.setCompte(adherent.getCompte());
-            resa.setDebut(new Date());
-            resa.setOeuvre(o);
-            if (mediaDS.estDisponible(o)) {
-                resa.setDispo(new Date());
-                listeReservationDisponible.add(resa);
+        try {
+            utx.begin();
+            em = emf.createEntityManager();
+            mediaDS = new MediaDS(em);
+            adherentDS = new AdherentDS(em);
+            
+            String[] strId = request.getParameterValues("idOeuvreList[]");
+            int nbReservation = strId.length;
+            int[] tabId = new int[strId.length];
+            int i = 0;
+            for (String s : strId) {
+                tabId[i] = Integer.parseInt(s);
+                i++;
             }
-            else{
-                listeReservationEnAttente.add(resa);
+
+            Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
+            for (i = 0; i < nbReservation; i++) {
+                Oeuvre o = mediaDS.getOeuvre(tabId[i]);
+                System.out.println("retrouve oeuvre "+ tabId[i]+ " : "+o);
+                tabOeuvre[i] = o;
             }
+
+            ArrayList<Reservation> listeReservationDisponible = new ArrayList<Reservation>();
+            ArrayList<Reservation> listeReservationEnAttente = new ArrayList<Reservation>();
+            ArrayList<Emprunt> listeEmpruntsCourants = new ArrayList<Emprunt>();
+
+            int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
+            Adherent adherent = adherentDS.getAdherent(idAdherent);
+            for (Oeuvre o : tabOeuvre) {
+                Reservation resa = new Reservation();
+                resa.setCompte(adherent.getCompte());
+                resa.setDebut(new Date());
+                resa.setOeuvre(o);
+                System.out.println(o.getTitre()+ " "+o.getId());
+                if (mediaDS.estDisponible(o)) {
+                    resa.setDispo(new Date());
+                    listeReservationDisponible.add(resa);
+                    System.out.println("dispo");
+                } else {
+                    listeReservationEnAttente.add(resa);
+                    System.out.println("non dispo");
+                }
+            }
+
+            request.setAttribute("listeResaDispo", listeReservationDisponible);
+            request.setAttribute("listeResaAttente", listeReservationEnAttente);
+            request.setAttribute("listeEmprunts", adherentDS.getEmprunts(idAdherent));
+
+            request.getRequestDispatcher("Reservation.jsp").forward(request, response);
+            utx.commit();
+            em.close();
+        } catch (Exception ex) {
+            throw new ServletException(ex);
         }
-        
-        request.setAttribute("listeResaDispo", listeReservationDisponible);
-        request.setAttribute("listeResaAttente", listeReservationEnAttente);
-        request.getRequestDispatcher("Reservation.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -16,21 +16,20 @@ import javax.persistence.EntityManager;
  */
 public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt> {
 
-    public EmpruntDao(EntityManager em)
-    {
+    public EmpruntDao(EntityManager em) {
         this.em = em;
     }
-    
+
     public Emprunt find(int id) {
         return em.find(Emprunt.class, id);
     }
 
     public Emprunt findByExample(Emprunt example) {
-         return (Emprunt) em.createQuery("select e from Emprunt e where " + getWhereClause(example)).getSingleResult();
+        return (Emprunt) em.createQuery("select e from Emprunt e where " + getWhereClause(example)).getSingleResult();
     }
 
     public void persist(Emprunt obj) {
-       em.persist(obj);
+        em.persist(obj);
     }
 
     public void delete(int id) {
@@ -48,19 +47,22 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" e.compte'=").append(obj.geteCompte().getId()).append("' ");
+            clause.append(" e.compte.id='").append(obj.geteCompte().getId()).append("' ");
         }
-        
-        
+
+
         return clause.toString();
     }
 
     public List<Emprunt> findAll() {
         return em.createQuery("select e from Emprunt e").getResultList();
     }
-    
+
     public List<Emprunt> findAllByExample(Emprunt obj) {
-        return em.createQuery("select e from Emprunt e where " + getWhereClause(obj)).getResultList();
+        try {
+            return em.createQuery("select e from Emprunt e where " + getWhereClause(obj)).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
 }

@@ -5,6 +5,7 @@
 package enterprise.web_jpa_war.facade;
 
 import enterprise.web_jpa_war.entity.Adherent;
+import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import java.util.Date;
@@ -39,11 +40,13 @@ public interface IAdherentDS {
 //    public List<Critique> getCritiques(int idAdherent);
     public List<Reservation> getReservations(int idAdherent);
 
-//    public List<Emprunt> getEmprunts(int idAdherent);
-//    public void ajouterEmprunt(int idAdherent, Emprunt emprunt);
+    public List<Emprunt> getEmprunts(int idAdherent);
+
+    public void ajouterEmprunt(Emprunt emprunt);
+
     public void supprimerEmprunt(int idAdherent, int idEmprunt);
 
     public void supprimerReservation(int idAdherent, int idReservation);
-    
+
     public Adherent getAdherent(int idAdherent);
 }

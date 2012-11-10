@@ -23,7 +23,6 @@
         %>
         <p>Resultats : ${requestScope.listeOuvrage.size()}</p>
         <form action="GestionReservation" method="post">
-            <form action="GestionReservation" method="post" >
                 <table border="3">
                     <th>Titre</th><th>Genre</th><th>Date de parution</th><th>Support</th><th>est disponible</th><th></th>           
                     <c:forEach var="ouvrage" begin="0" items="${requestScope.listeOuvrage}">

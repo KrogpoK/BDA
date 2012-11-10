@@ -9,6 +9,7 @@ import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.util.DateTool;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -16,6 +17,10 @@ import java.util.List;
  */
 public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Reservation> {
 
+    public ReservationDao(EntityManager em)
+    {
+        this.em = em;
+    }
     public Reservation find(int id) {
         return em.find(Reservation.class, id);
     }

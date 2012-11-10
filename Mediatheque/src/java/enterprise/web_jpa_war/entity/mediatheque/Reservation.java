@@ -5,6 +5,7 @@
 package enterprise.web_jpa_war.entity.mediatheque;
 
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,6 +28,7 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "RESERVATION")
 public class Reservation implements Serializable {
 
+    public static final int NB_JOURS_RESERVATION_AUTORISES = 10;
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IRESERVATION_ID")
@@ -87,6 +89,11 @@ public class Reservation implements Serializable {
         this.oeuvre = oeuvre;
     }
 
+    public int getJourDispoRestant()
+    {
+        Date d = new Date();
+         return NB_JOURS_RESERVATION_AUTORISES - DateTool.getDifference(d, debut);
+    }
     @Override
     public int hashCode() {
         int hash = 0;
