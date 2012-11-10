@@ -5,15 +5,18 @@
 package enterprise.web_jpa_war.servlet;
 
 import enterprise.web_jpa_war.entity.Adherent;
+import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +46,7 @@ public class GestionReservation extends AbstractServlet {
             em = emf.createEntityManager();
             mediaDS = new MediaDS(em);
             adherentDS = new AdherentDS(em);
-            
+
             String[] strId = request.getParameterValues("idOeuvreList[]");
             int nbReservation = strId.length;
             int[] tabId = new int[strId.length];
@@ -56,14 +59,15 @@ public class GestionReservation extends AbstractServlet {
             Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
             for (i = 0; i < nbReservation; i++) {
                 Oeuvre o = mediaDS.getOeuvre(tabId[i]);
-                System.out.println("retrouve oeuvre "+ tabId[i]+ " : "+o);
+                System.out.println("retrouve oeuvre " + tabId[i] + " : " + o);
                 tabOeuvre[i] = o;
             }
 
             ArrayList<Reservation> listeReservationDisponible = new ArrayList<Reservation>();
             ArrayList<Reservation> listeReservationEnAttente = new ArrayList<Reservation>();
             ArrayList<Integer> listeFileAttente = new ArrayList<Integer>();
-            ArrayList<Emprunt> listeEmpruntsCourants = new ArrayList<Emprunt>();
+            ArrayList<Integer> listeJourRestantEmprunt = new ArrayList<Integer>();
+            List<Emprunt> listeEmpruntsCourants;
 
             int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
             Adherent adherent = adherentDS.getAdherent(idAdherent);
@@ -72,17 +76,20 @@ public class GestionReservation extends AbstractServlet {
                 resa.setCompte(adherent.getCompte());
                 resa.setDebut(new Date());
                 resa.setOeuvre(o);
-                System.out.println(o.getTitre()+ " "+o.getId());
                 if (mediaDS.estDisponible(o)) {
                     resa.setDispo(new Date());
                     listeReservationDisponible.add(resa);
-                    System.out.println("dispo");
                 } else {
                     listeReservationEnAttente.add(resa);
                     listeFileAttente.add(mediaDS.getPlaceAttenteReservation(o));
                 }
             }
 
+            listeEmpruntsCourants = adherentDS.getEmprunts(idAdherent);
+            for (Emprunt e : listeEmpruntsCourants) {
+                Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());
+                listeJourRestantEmprunt.add(c.getNbJours() - DateTool.getDifference(new Date(), e.getDateDebutEmprunt()));
+            }
             request.setAttribute("listeResaDispo", listeReservationDisponible);
             request.setAttribute("listeResaAttente", listeReservationEnAttente);
             request.setAttribute("placeFileAttente", listeFileAttente);

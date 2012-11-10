@@ -4,6 +4,7 @@
  */
 package enterprise.web_jpa_war.facade.impl;
 
+import enterprise.web_jpa_war.dao.impl.configuration.ConfigurationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.CDDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.FilmDao;
@@ -11,6 +12,7 @@ import enterprise.web_jpa_war.dao.impl.mediatheque.item.LivreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OeuvreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OuvrageDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.PeriodiqueDao;
+import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
@@ -34,7 +36,8 @@ public class MediaDS implements IMediaDS {
     private PeriodiqueDao pDao;
     private OuvrageDao oDao;
     private OeuvreDao oeuvreDao;
-    ReservationDao reservationDao;
+    private ReservationDao reservationDao;
+    private ConfigurationDao configDao;
 
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
@@ -44,6 +47,7 @@ public class MediaDS implements IMediaDS {
         oDao = new OuvrageDao(em);
         oeuvreDao = new OeuvreDao(em);
         reservationDao = new ReservationDao(em);
+        configDao = new ConfigurationDao(em);
 
     }
 
@@ -77,6 +81,11 @@ public class MediaDS implements IMediaDS {
         return false;
     }
 
+    public Configuration getConfiguration(String support) {
+        return configDao.getConfiguration(support);
+    }
+
+    
     public boolean oeuvreExists(Oeuvre oeuvre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

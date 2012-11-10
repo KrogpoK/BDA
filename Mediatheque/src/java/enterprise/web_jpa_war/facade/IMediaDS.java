@@ -4,6 +4,7 @@
  */
 package enterprise.web_jpa_war.facade;
 
+import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
@@ -55,4 +56,6 @@ public interface IMediaDS {
     public void creerCD(CD cd);
     
     public int getPlaceAttenteReservation(Oeuvre oeuvre);
+    
+    public Configuration getConfiguration(String support);
 }
