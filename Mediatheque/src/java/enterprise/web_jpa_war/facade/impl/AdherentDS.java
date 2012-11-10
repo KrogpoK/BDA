@@ -5,14 +5,18 @@
 package enterprise.web_jpa_war.facade.impl;
 
 import enterprise.web_jpa_war.dao.impl.AdherentDao;
+import enterprise.web_jpa_war.dao.impl.configuration.ConfigurationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.EmpruntDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.entity.Adherent;
+import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Panier;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.IAdherentDS;
+import enterprise.web_jpa_war.util.DateTool;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,11 +30,13 @@ public class AdherentDS implements IAdherentDS {
     private AdherentDao adherentDao;
     private EmpruntDao empruntDao;
     private ReservationDao reservationDao;
+    private ConfigurationDao configDao;
 
     public AdherentDS(EntityManager em) {
         adherentDao = new AdherentDao(em);
         empruntDao = new EmpruntDao(em);
         reservationDao = new ReservationDao(em);
+        configDao = new ConfigurationDao(em);
     }
 
     public boolean checkId(String nom, String pass) {
@@ -108,8 +114,22 @@ public class AdherentDS implements IAdherentDS {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void supprimerEmprunt(int idAdherent, int idEmprunt) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean retourneOuvrage(int idEmprunt) {
+
+        Emprunt e = empruntDao.find(idEmprunt);
+        Adherent a = e.geteCompte().getProprietaire();
+        Ouvrage o = e.geteOuvrage();
+        
+//        List<Reservation> liste
+        
+        
+        Configuration config = configDao.getConfiguration(o.getOeuvre().getStrType());
+        e.setDateFinEmprunt(new Date());
+        if(DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt())> config.getNbJours())
+        {
+            return true;
+        }
+        return false;
     }
 
     public void supprimerReservation(int idAdherent, int idReservation) {

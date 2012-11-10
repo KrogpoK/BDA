@@ -44,7 +44,8 @@ public interface IAdherentDS {
 
     public void ajouterEmprunt(Emprunt emprunt);
 
-    public void supprimerEmprunt(int idAdherent, int idEmprunt);
+    //indique si le rendu se fait en retard
+    public boolean retourneOuvrage(int idEmprunt);
 
     public void supprimerReservation(int idAdherent, int idReservation);
 
