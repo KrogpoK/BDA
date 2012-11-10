@@ -65,7 +65,6 @@ public class MediaDS implements IMediaDS {
 
     public boolean estDisponible(Oeuvre oeuvre) {
         List<Ouvrage> l = getListeOuvrage(oeuvre);
-
         if (l != null && l.size() > 0) {
             boolean dispo = false;
             for (Ouvrage o : l) {

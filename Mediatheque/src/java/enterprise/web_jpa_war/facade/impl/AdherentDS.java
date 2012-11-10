@@ -9,6 +9,7 @@ import enterprise.web_jpa_war.dao.impl.mediatheque.EmpruntDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
+import enterprise.web_jpa_war.entity.mediatheque.Panier;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.facade.IAdherentDS;
@@ -43,8 +44,21 @@ public class AdherentDS implements IAdherentDS {
     public void ajouterAuPanier(int idAdherent, Oeuvre oeuvre) {
         Adherent a = getAdherent(idAdherent);
         if (a != null) {
-            a.getCompte().getPanier().ajouterOeuvre(oeuvre);
-            updateAdherent(a);
+            Panier p = a.getCompte().getPanier();
+            boolean present = false;
+            if (p != null) {
+                if (p.getListeOeuvre() != null) {
+                    for (Oeuvre o : p.getListeOeuvre()) {
+                        if (o.getId() == oeuvre.getId()) {
+                            present = true;
+                        }
+                    }
+                }
+            }
+            if (!present) {
+                a.getCompte().getPanier().ajouterOeuvre(oeuvre);
+                updateAdherent(a);
+            }
         }
     }
 
