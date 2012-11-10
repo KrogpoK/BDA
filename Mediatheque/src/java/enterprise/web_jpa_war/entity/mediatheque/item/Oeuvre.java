@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 //@Table(name = "OEUVRE")
-public abstract class Oeuvre implements Serializable {
+public class Oeuvre implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -118,7 +118,10 @@ public abstract class Oeuvre implements Serializable {
         return DateTool.printDate(dateParution);
     }
 
-    public abstract String getStrType();
+    public String getStrType()
+    {
+        return "Oeuvre";
+    }
 
     @Override
     public int hashCode() {
