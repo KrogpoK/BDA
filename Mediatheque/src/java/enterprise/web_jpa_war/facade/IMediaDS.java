@@ -58,4 +58,6 @@ public interface IMediaDS {
     public int getPlaceAttenteReservation(Oeuvre oeuvre);
     
     public Configuration getConfiguration(String support);
+    
+    public List<Oeuvre> getOeuvres();
 }

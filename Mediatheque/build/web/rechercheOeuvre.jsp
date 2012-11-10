@@ -19,40 +19,54 @@
         <form id="searchFilmForm" action="RechercheOeuvre" method="post">
             <table>
                 <tr>
-                    <td><input type="checkbox" id="isFilm" name="Film" /></td><td>Film&nbsp;&nbsp;</td>
-                    <td><input type="checkbox" id="isLivre" name="Livre" /></td><td>Livre&nbsp;&nbsp;</td>
-                    <td><input type="checkbox" id="isCD" name="CD" /></td><td>CD&nbsp;&nbsp;</td>
-                    <td><input type="checkbox" id="isPeriodique" name="Periodique" /></td><td>Periodique&nbsp;&nbsp;</td>
+                    <td><input type="radio" id="periodique" name="typeSupport" value="All" /></td><td>Periodique</td>
+                    <td><input type="radio" id="film" name="typeSupport" value="Film" /></td><td>Film</td>
+                    <td><input type="radio" id="livre" name="typeSupport" value="Livre" /></td><td>Livre</td>
+                    <td><input type="radio" id="CD" name="typeSupport" value="CD" /></td><td>CD</td>
+                    <td><input type="radio" id="periodique" name="typeSupport" value="Periodique" /></td><td>Periodique</td>
                 </tr>
-            </table>
-            <table>
                 <tr>
-                    <td>mot clef</td>
-                    <td><input type="text" id = "motsClef" name="motsClef" /></td>
-                    <td><input type="submit" id="find" value="find" /></td>
+                    Titre : 
+                <input type="text" id="titreSearch" name="titreSearch" placeholder="titre" />
+                </tr>
+                <tr>
+                    Genre : 
+                <select name="genreSearch">
+                    <option selected="true"></option>
+                    <option>Comique</option>
+                    <option>Horreur</option>
+                    <option>Policier</option>
+                </select> 
+
+                <input type="date" id="dateParutionSearch" name="dateParutionSearch" placeholder="date de parution" />
+                <input type="radio" id="periodique" name="dateParutionAvantSearch" value="avant" /></td>avant
+                <input type="radio" id="film" name="dateParutionAvantSearch" value="apres" /></td>après
+                </tr>
+                <tr>                    
+                <input type="submit" id="find" value="find" />
                 </tr>
             </table>
         </form>
         <br />
         <%
-            if (request.getAttribute("oeuvreList") != null) {
+            if (request.getAttribute("listFilms") != null) {
         %>
-        <p>Resultats : ${requestScope.oeuvreList.size()}</p>
+        <p>Resultats : ${requestScope.listFilms.size()}</p>
         <table border="3">
             <th>Titre</th><th>Genre</th><th>Date de parution</th><th>Support</th><th></th>
-            <c:forEach var="film" begin="0" items="${requestScope.oeuvreList}">
+            <c:forEach var="oeuvre" begin="0" items="${requestScope.listFilms}">
                 <tr>
-                    <% String kw = (String)request.getAttribute("kw");
+                    <% String keyWord = (String) request.getAttribute("keyWord");
                     %>
-                    <td>${film.getTitre(kw)}</td> 
-                    <td>${film.getGenre(kw)}</td> 
-                    <td>${film.getStrDateParution()}</td> 
-                    <td>${film.getStrType()}</td>
+                    <td>${oeuvre.getTitre(keyWord)}</td> 
+                    <td>${oeuvre.getGenre()}</td> 
+                    <td>${oeuvre.getStrDateParution()}</td> 
+                    <td>${oeuvre.getStrType()}</td>
                     <td>
                         <form action="GestionPanier" method="post">
                             <input type="hidden" name="action" value="add" />
-                            <input type="hidden" name="oeuvreType" value="${film.getStrType()}" />
-                            <input type="hidden" name="oeuvreId" value="${film.id}" />
+                            <input type="hidden" name="oeuvreType" value="${oeuvre.getStrType()}" />
+                            <input type="hidden" name="oeuvreId" value="${oeuvre.id}" />
                             <input type="submit" id="add" value="ajouter au panier" />
                         </form>
                     </td>
