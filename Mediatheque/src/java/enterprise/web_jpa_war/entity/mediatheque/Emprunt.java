@@ -27,6 +27,7 @@ import javax.persistence.Temporal;
 public class Emprunt implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    public static double PENALITE_JOURNALIERE = 0.5;
     @Id
     @Column(name = "IEMPRUNT_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)

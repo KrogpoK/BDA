@@ -60,4 +60,5 @@ public interface IMediaDS {
     public Configuration getConfiguration(String support);
     
     public List<Oeuvre> getOeuvres();
+   
 }

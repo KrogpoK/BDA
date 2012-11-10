@@ -110,26 +110,24 @@ public class AdherentDS implements IAdherentDS {
         return adherentDao.findByExample(a);
     }
 
-    public List<Reservation> getReservations(int idAdherent) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Reservation> getReservationsByAdherent(int idAdherent) {
+        Reservation r = new Reservation();
+        Adherent a = adherentDao.find(idAdherent);
+        r.setCompte(a.getCompte());
+        return reservationDao.findAllByExample(r);
     }
 
-    public boolean retourneOuvrage(int idEmprunt) {
+    public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre) {
+       Reservation r = new Reservation();
+       r.setOeuvre(oeuvre);
+        return reservationDao.findAllByExample(r);
+    }
 
-        Emprunt e = empruntDao.find(idEmprunt);
-        Adherent a = e.geteCompte().getProprietaire();
-        Ouvrage o = e.geteOuvrage();
-        
-//        List<Reservation> liste
-        
-        
-        Configuration config = configDao.getConfiguration(o.getOeuvre().getStrType());
-        e.setDateFinEmprunt(new Date());
-        if(DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt())> config.getNbJours())
-        {
-            return true;
-        }
-        return false;
+    
+    public Emprunt getEmprunt(int idEmprunt) {
+
+        return empruntDao.find(idEmprunt);
+
     }
 
     public void supprimerReservation(int idAdherent, int idReservation) {

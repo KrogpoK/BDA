@@ -38,14 +38,16 @@ public interface IAdherentDS {
     public Adherent getAdherent(String nom, String prenom, Date dateDeNaissance);
 
 //    public List<Critique> getCritiques(int idAdherent);
-    public List<Reservation> getReservations(int idAdherent);
+    public List<Reservation> getReservationsByAdherent(int idAdherent);
+
+    public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre);
 
     public List<Emprunt> getEmprunts(int idAdherent);
 
     public void ajouterEmprunt(Emprunt emprunt);
 
     //indique si le rendu se fait en retard
-    public boolean retourneOuvrage(int idEmprunt);
+    public Emprunt getEmprunt(int idEmprunt);
 
     public void supprimerReservation(int idAdherent, int idReservation);
 
