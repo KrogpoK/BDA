@@ -4,6 +4,8 @@
     Author     : user
 --%>
 
+<%@page import="enterprise.web_jpa_war.entity.mediatheque.Reservation"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 
@@ -60,6 +62,7 @@
 
         <%
             if (request.getAttribute("listeResaAttente") != null) {
+                int i=0;
         %>
         <h1>liste resa attente</h1>
         <p>Resultats : ${requestScope.listeResaAttente.size()}</p>
@@ -71,7 +74,10 @@
                     <td>${resa.oeuvre.genre}</td> 
                     <td>${resa.oeuvre.getStrDateParution()}</td> 
                     <td>${resa.oeuvre.getStrType()}</td>
-                    <td>${resa.getJourDispoRestant()}</td>
+                    <td><% List<Integer> l = (List<Integer>)request.getAttribute("placeFileAttente"); 
+                        out.print(l.get(i));
+                        i++;
+                    %></td>
 
                 </tr> 
             </c:forEach>

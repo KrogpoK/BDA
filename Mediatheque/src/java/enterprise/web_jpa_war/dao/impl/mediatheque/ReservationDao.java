@@ -64,26 +64,26 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.compte.id'").append(obj.getCompte().getId()).append("' ");
+            clause.append(" r.compte.id='").append(obj.getCompte().getId()).append("' ");
         }
         if (obj.getOeuvre() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.oeuvre'").append(obj.getOeuvre().getId()).append("' ");
+            clause.append(" r.oeuvre.id='").append(obj.getOeuvre().getId()).append("' ");
         }
 
         if (obj.getDebut() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.debut'").append(DateTool.printDate(obj.getDebut())).append("' ");
+            clause.append(" r.debut='").append(DateTool.printDate(obj.getDebut())).append("' ");
         }
         if (obj.getDispo() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.dispo'").append(DateTool.printDate(obj.getDispo())).append("' ");
+            clause.append(" r.dispo='").append(DateTool.printDate(obj.getDispo())).append("' ");
         }
 
         return clause.toString();

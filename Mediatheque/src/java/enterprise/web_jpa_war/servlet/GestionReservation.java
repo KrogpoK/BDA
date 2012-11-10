@@ -62,6 +62,7 @@ public class GestionReservation extends AbstractServlet {
 
             ArrayList<Reservation> listeReservationDisponible = new ArrayList<Reservation>();
             ArrayList<Reservation> listeReservationEnAttente = new ArrayList<Reservation>();
+            ArrayList<Integer> listeFileAttente = new ArrayList<Integer>();
             ArrayList<Emprunt> listeEmpruntsCourants = new ArrayList<Emprunt>();
 
             int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
@@ -78,12 +79,13 @@ public class GestionReservation extends AbstractServlet {
                     System.out.println("dispo");
                 } else {
                     listeReservationEnAttente.add(resa);
-                    System.out.println("non dispo");
+                    listeFileAttente.add(mediaDS.getPlaceAttenteReservation(o));
                 }
             }
 
             request.setAttribute("listeResaDispo", listeReservationDisponible);
             request.setAttribute("listeResaAttente", listeReservationEnAttente);
+            request.setAttribute("placeFileAttente", listeFileAttente);
             request.setAttribute("listeEmprunts", adherentDS.getEmprunts(idAdherent));
 
             request.getRequestDispatcher("Reservation.jsp").forward(request, response);

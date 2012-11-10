@@ -4,12 +4,14 @@
  */
 package enterprise.web_jpa_war.facade.impl;
 
+import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.CDDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.FilmDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.LivreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OeuvreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OuvrageDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.PeriodiqueDao;
+import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
@@ -32,6 +34,8 @@ public class MediaDS implements IMediaDS {
     private PeriodiqueDao pDao;
     private OuvrageDao oDao;
     private OeuvreDao oeuvreDao;
+    ReservationDao reservationDao;
+
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
         lDao = new LivreDao(em);
@@ -39,7 +43,8 @@ public class MediaDS implements IMediaDS {
         pDao = new PeriodiqueDao(em);
         oDao = new OuvrageDao(em);
         oeuvreDao = new OeuvreDao(em);
-        
+        reservationDao = new ReservationDao(em);
+
     }
 
     public List<Film> getFilms() {
@@ -61,22 +66,18 @@ public class MediaDS implements IMediaDS {
     public boolean estDisponible(Oeuvre oeuvre) {
         List<Ouvrage> l = getListeOuvrage(oeuvre);
 
-        if(l != null && l.size()>0)
-        {
+        if (l != null && l.size() > 0) {
             boolean dispo = false;
-           for(Ouvrage o : l)
-           {
-               if(o.getDisponibilite() == Ouvrage.DISPO_LIBRE)
-               {
-                   dispo = true;
-               }
-           }
-           return dispo;
+            for (Ouvrage o : l) {
+                if (o.getDisponibilite() == Ouvrage.DISPO_LIBRE) {
+                    dispo = true;
+                }
+            }
+            return dispo;
         }
         return false;
     }
 
-    
     public boolean oeuvreExists(Oeuvre oeuvre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -122,6 +123,16 @@ public class MediaDS implements IMediaDS {
     }
 
     public List<Ouvrage> getListeOuvrage(Oeuvre oeuvre) {
-       return oDao.findAllByExample(oeuvre);
+        return oDao.findAllByExample(oeuvre);
+    }
+
+    public int getPlaceAttenteReservation(Oeuvre oeuvre) {
+        Reservation resa = new Reservation();
+        resa.setOeuvre(oeuvre);
+        List<Reservation> listeResa = reservationDao.findAllByExample(resa);
+        if (resa != null) {
+            return listeResa.size() + 1;
+        }
+        return 1;
     }
 }

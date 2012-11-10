@@ -54,4 +54,5 @@ public interface IMediaDS {
 
     public void creerCD(CD cd);
     
+    public int getPlaceAttenteReservation(Oeuvre oeuvre);
 }
