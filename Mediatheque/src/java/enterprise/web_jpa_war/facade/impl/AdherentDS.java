@@ -110,9 +110,8 @@ public class AdherentDS implements IAdherentDS {
         return adherentDao.findByExample(a);
     }
 
-    public List<Reservation> getReservationsByAdherent(int idAdherent) {
+    public List<Reservation> getReservationsByAdherent(Adherent a) {
         Reservation r = new Reservation();
-        Adherent a = adherentDao.find(idAdherent);
         r.setCompte(a.getCompte());
         return reservationDao.findAllByExample(r);
     }
@@ -144,14 +143,16 @@ public class AdherentDS implements IAdherentDS {
         return adherentDao.find(idAdherent);
     }
 
-    public List<Emprunt> getEmprunts(int idAdherent) {
-        Adherent a = getAdherent(idAdherent);
+    public List<Emprunt> getEmprunts(Adherent a) {
         Emprunt e = new Emprunt();
         e.seteCompte(a.getCompte());
-        return empruntDao.findAllByExample(e);
+        return empruntDao.findAllEmpruntsActif(a);
     }
 
     public void ajouterEmprunt(Emprunt emprunt) {
         empruntDao.persist(emprunt);
     }
+    
+    
+    
 }

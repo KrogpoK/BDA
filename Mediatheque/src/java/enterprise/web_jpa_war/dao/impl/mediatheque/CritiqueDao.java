@@ -13,6 +13,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.util.DateTool;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -20,6 +21,9 @@ import java.util.List;
  */
 public class CritiqueDao  extends AbstractCommonnDao implements ICommonDao<Critique>  {
     
+    public CritiqueDao(EntityManager em) {
+        super.em = em;
+    }
    public Critique find(int id) {
            
        return em.find(Critique.class, id);
@@ -39,27 +43,33 @@ public class CritiqueDao  extends AbstractCommonnDao implements ICommonDao<Criti
     
     public String getWhereClause(Critique obj) {
 
+        System.out.print("1");
         StringBuilder clause = new StringBuilder();
         clause.append(" ");
         if (obj.getCompte() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.compte.id'").append(obj.getCompte().getId()).append("' ");
+            System.out.print("2");
+            clause.append(" c.compte.id = '").append(obj.getCompte().getId()).append("' ");
         }
         if (obj.getOeuvre() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.oeuvre'").append(obj.getOeuvre().getId()).append("' ");
+            System.out.print("4");
+            System.out.print(obj.getOeuvre().getId());
+            clause.append(" c.oeuvre.id = '").append(obj.getOeuvre().getId()).append("' ");
         }
         
         if (obj.getNote() != null) {
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" r.note'").append(obj.getNote()).append("' ");
-        }        
+            System.out.print("3");
+            clause.append(" c.note.id = '").append(obj.getNote()).append("' ");
+        }     
+        System.out.print(clause);
         return clause.toString();
     }
     public void persist(Critique obj) {
@@ -74,13 +84,13 @@ public class CritiqueDao  extends AbstractCommonnDao implements ICommonDao<Criti
     
     public void deleteByExample(Critique obj) {
     
-       em.createQuery("delete from Critique r where " + getWhereClause(obj));
+       em.createQuery("delete from Critique c where " + getWhereClause(obj));
     }
         
     public List<Critique> findAll() {
     
       try{
-            return (List<Critique>) em.createQuery("select r from Critique r" ).getResultList();
+            return (List<Critique>) em.createQuery("select c from Critique c" ).getResultList();
         }
         catch(Exception e)
         {
@@ -89,6 +99,9 @@ public class CritiqueDao  extends AbstractCommonnDao implements ICommonDao<Criti
     }
     
     public List<Critique> findAllByExample(Critique obj) {
-        return (List<Critique>) em.createQuery("select c from Critique c  where " + getWhereClause(obj)).getResultList();
+        
+        List<Critique> res = (List<Critique>) em.createQuery("select c from Critique c  where " + getWhereClause(obj)).getResultList();
+        System.out.print(res);
+        return res;
     }
 }

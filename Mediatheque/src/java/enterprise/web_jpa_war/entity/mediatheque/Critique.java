@@ -5,6 +5,7 @@
 package enterprise.web_jpa_war.entity.mediatheque;
 
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.facade.impl.MediaDS;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,11 @@ public class Critique implements Serializable {
     private Long id;
     
     @JoinColumn(name = "idCompte")
-    @OneToOne
+    @OneToOne()
     private Compte compte;
     
     @JoinColumn(name = "idOeuvre")
-    @ManyToOne 
+    @ManyToOne ()
     private Oeuvre oeuvre; 
     
     @Column(name = "titreCritiqie")
@@ -86,6 +87,14 @@ public class Critique implements Serializable {
         this.note = note;
     }
 
+    public void setTitreCritiqie(String titreCritiqie) {
+        this.titreCritiqie = titreCritiqie;
+    }
+
+    public String getTitreCritiqie() {
+        return titreCritiqie;
+    }
+
     
     @Override
     public int hashCode() {
@@ -111,5 +120,6 @@ public class Critique implements Serializable {
     public String toString() {
         return "enterprise.web_jpa_war.entity.mediatheque.Critique[ id=" + id + " ]";
     }
+
     
 }

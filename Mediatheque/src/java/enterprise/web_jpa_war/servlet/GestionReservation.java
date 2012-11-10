@@ -85,7 +85,7 @@ public class GestionReservation extends AbstractServlet {
                 }
             }
 
-            listeEmpruntsCourants = adherentDS.getEmprunts(idAdherent);
+            listeEmpruntsCourants = adherentDS.getEmprunts(adherent);
             for (Emprunt e : listeEmpruntsCourants) {
                 Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());
                 listeJourRestantEmprunt.add(c.getNbJours() - DateTool.getDifference(new Date(), e.getDateDebutEmprunt()));
@@ -93,7 +93,7 @@ public class GestionReservation extends AbstractServlet {
             request.setAttribute("listeResaDispo", listeReservationDisponible);
             request.setAttribute("listeResaAttente", listeReservationEnAttente);
             request.setAttribute("placeFileAttente", listeFileAttente);
-            request.setAttribute("listeEmprunts", adherentDS.getEmprunts(idAdherent));
+            request.setAttribute("listeEmprunts", adherentDS.getEmprunts(adherent));
 
             request.getRequestDispatcher("Reservation.jsp").forward(request, response);
             utx.commit();

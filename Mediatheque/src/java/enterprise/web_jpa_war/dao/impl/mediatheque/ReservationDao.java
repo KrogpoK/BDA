@@ -53,7 +53,7 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
         }
     }
 
-    // retourn la liste des reservation du plus ancien au plus recent
+    // retourne la liste des reservation du plus ancien au plus recent
     public List<Reservation> findAllByExample(Reservation obj) {
         System.out.println("select r from Reservation r where " + getWhereClause(obj) +"SORT BY r.debut");
         List<Reservation> l= (List<Reservation>) em.createQuery("select r from Reservation r where " + getWhereClause(obj) +"ORDER BY r.debut").getResultList();

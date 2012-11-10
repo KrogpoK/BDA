@@ -5,6 +5,7 @@
 package enterprise.web_jpa_war.facade.impl;
 
 import enterprise.web_jpa_war.dao.impl.configuration.ConfigurationDao;
+import enterprise.web_jpa_war.dao.impl.mediatheque.CritiqueDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.CDDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.FilmDao;
@@ -13,6 +14,7 @@ import enterprise.web_jpa_war.dao.impl.mediatheque.item.OeuvreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OuvrageDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.PeriodiqueDao;
 import enterprise.web_jpa_war.entity.configuration.Configuration;
+import enterprise.web_jpa_war.entity.mediatheque.Critique;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
@@ -38,6 +40,7 @@ public class MediaDS implements IMediaDS {
     private OeuvreDao oeuvreDao;
     private ReservationDao reservationDao;
     private ConfigurationDao configDao;
+    private CritiqueDao rDao;
 
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
@@ -48,6 +51,7 @@ public class MediaDS implements IMediaDS {
         oeuvreDao = new OeuvreDao(em);
         reservationDao = new ReservationDao(em);
         configDao = new ConfigurationDao(em);
+        rDao = new CritiqueDao(em);
 
     }
 
@@ -85,7 +89,6 @@ public class MediaDS implements IMediaDS {
         return configDao.getConfiguration(support);
     }
 
-    
     public boolean oeuvreExists(Oeuvre oeuvre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -126,6 +129,18 @@ public class MediaDS implements IMediaDS {
         oDao.persist(ouvrage);
     }
 
+    public void setCritique(Critique critique) {
+
+        rDao.persist(critique);
+    }
+
+    public List<Critique> getCritiques(Oeuvre oeuvre) {
+
+        Critique film = new Critique();
+        film.setOeuvre(oeuvre);
+        return rDao.findAllByExample(film);
+    }
+
     public Oeuvre getOeuvre(int id) {
         return oeuvreDao.find(id);
     }
@@ -143,7 +158,7 @@ public class MediaDS implements IMediaDS {
         }
         return 1;
     }
-    
+
     public List<Oeuvre> getOeuvres() {
         return null;
     }

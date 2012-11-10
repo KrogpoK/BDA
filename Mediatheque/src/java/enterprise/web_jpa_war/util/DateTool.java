@@ -22,7 +22,7 @@ public class DateTool {
         try {
             DateFormat df = new SimpleDateFormat(DATE_FORMAT);
             return df.parse(date);
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             return null;
         }
     }

@@ -52,52 +52,75 @@ public class GestionEmprunt extends AbstractServlet {
             em = emf.createEntityManager();
             adherentDS = new AdherentDS(em);
             mediaDS = new MediaDS(em);
-            
-            String empruntStr = request.getParameter("idEmprunt");
-            int idEmprunt = Integer.parseInt(empruntStr);
 
-            Emprunt e = adherentDS.getEmprunt(idEmprunt);
-            Adherent a = e.geteCompte().getProprietaire();
-            Ouvrage o = e.geteOuvrage();
+            Adherent a = null;;
+            if ("rendre".equals(request.getParameter("action"))) {
+                String empruntStr = request.getParameter("idEmprunt");
+                int idEmprunt = Integer.parseInt(empruntStr);
 
-            //attribuer la reservation au prochain mec
-            List<Reservation> liste = adherentDS.getReservationsByOeuvre(o.getOeuvre());
-            if (liste != null) {
-                Reservation r = liste.get(0);
-                int i = 0;
-                while (i < liste.size() && r.getDispo() != null) {
-                    r = liste.get(i);
-                    i++;
+                Emprunt e = adherentDS.getEmprunt(idEmprunt);
+                a = e.geteCompte().getProprietaire();
+                Ouvrage o = e.geteOuvrage();
+
+                //attribuer la reservation au prochain mec
+                List<Reservation> liste = adherentDS.getReservationsByOeuvre(o.getOeuvre());
+                if (liste != null) {
+                    Reservation r = liste.get(0);
+                    int i = 0;
+                    while (i < liste.size() && r.getDispo() != null) {
+                        r = liste.get(i);
+                        i++;
+                    }
+                    // si un gen recoit la reservation
+                    if (r.getDispo() == null) {
+                        r.setDispo(new Date());
+                        o.setDisponibilite(Ouvrage.DISPO_RESERVE);
+                    } //sinon, elle retrouve l'oeuvre retrouve sa liberte
+                    else {
+                        o.setDisponibilite(Ouvrage.DISPO_LIBRE);
+                    }
                 }
-                // si un gen recoit la reservation
-                if (r.getDispo() == null) {
-                    r.setDispo(new Date());
-                    o.setDisponibilite(Ouvrage.DISPO_RESERVE);
-                } //sinon, elle retrouve l'oeuvre retrouve sa liberte
-                else {
-                    o.setDisponibilite(Ouvrage.DISPO_LIBRE);
+
+                Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
+                e.setDateFinEmprunt(new Date());
+                int nbJoursEmpruntes = DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt());
+                if (nbJoursEmpruntes > config.getNbJours()) {
+                    double montantPenalite = Emprunt.PENALITE_JOURNALIERE * (nbJoursEmpruntes - config.getNbJours());
+                    e.geteCompte().setSolde(e.geteCompte().getSolde() - montantPenalite);
+                    request.setAttribute("penalite", montantPenalite);
                 }
-            }
 
-            Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
-            e.setDateFinEmprunt(new Date());
-            int nbJoursEmpruntes = DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt());
-            if (nbJoursEmpruntes > config.getNbJours()) {
-                double montantPenalite = Emprunt.PENALITE_JOURNALIERE * (nbJoursEmpruntes - config.getNbJours());
-                e.geteCompte().setSolde(e.geteCompte().getSolde() - montantPenalite);
-                request.setAttribute("penalite", montantPenalite);
             }
-
             utx.commit();
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String date = request.getParameter("date");
+            System.out.println(date);
+            if (a == null) {
+                a = adherentDS.getAdherent(nom, prenom, DateTool.parseDate(date));
+            }
+            if (a == null) {
+                request.setAttribute("error", "adherent non trouve");
+                System.out.println("error : non trouve");
+            } else {
+                System.out.println("compte ID : " + a.getCompte().getId());
+                List<Emprunt> liste = adherentDS.getEmprunts(a);
+                if (liste == null || liste.isEmpty()) {
+                    request.setAttribute("error", "pas de resultats");
+                } else {
+                    request.setAttribute("listeEmprunt", liste);
+                }
+            }
             em.close();
+
+            request.getRequestDispatcher("EmpruntRetour.jsp").forward(request, response);
+
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
-
-
     }
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.

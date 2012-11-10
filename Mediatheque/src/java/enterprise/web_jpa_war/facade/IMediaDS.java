@@ -5,6 +5,7 @@
 package enterprise.web_jpa_war.facade;
 
 import enterprise.web_jpa_war.entity.configuration.Configuration;
+import enterprise.web_jpa_war.entity.mediatheque.Critique;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
@@ -61,4 +62,7 @@ public interface IMediaDS {
     
     public List<Oeuvre> getOeuvres();
    
+     public void setCritique(Critique critique);
+
+    public List<Critique> getCritiques(Oeuvre oeuvre);
 }

@@ -6,6 +6,7 @@ package enterprise.web_jpa_war.dao.impl.mediatheque;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
+import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -47,8 +48,9 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             if (clause.length() > 1) {
                 clause.append(" and");
             }
-            clause.append(" e.compte.id='").append(obj.geteCompte().getId()).append("' ");
+            clause.append(" e.eCompte.id='").append(obj.geteCompte().getId()).append("' ");
         }
+        
 
 
         return clause.toString();
@@ -60,9 +62,19 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
 
     public List<Emprunt> findAllByExample(Emprunt obj) {
         try {
+            System.out.println("query : select e from Emprunt e where " + getWhereClause(obj));
             return em.createQuery("select e from Emprunt e where " + getWhereClause(obj)).getResultList();
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public List<Emprunt> findAllEmpruntsActif(Adherent a) {
+      try {
+            System.out.println("query : select e from Emprunt e where e.Ecompte='"+a.getCompte().getId()+"' and e.dateFinEmprunt = null");
+            return em.createQuery("select e from Emprunt e where e.Ecompte='"+a.getCompte().getId()+"' and e.dateFinEmprunt = null").getResultList();
+        } catch (Exception e) {
+            return null;
+        }  
     }
 }

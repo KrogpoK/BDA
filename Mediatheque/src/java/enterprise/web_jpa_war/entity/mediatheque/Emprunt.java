@@ -6,6 +6,7 @@ package enterprise.web_jpa_war.entity.mediatheque;
 
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -89,7 +90,10 @@ public class Emprunt implements Serializable {
         this.dateFinEmprunt = dateFinEmprunt;
     }
 
-    
+    public String getStrDateDebut()
+    {
+        return DateTool.printDate(dateDebutEmprunt);
+    }
     
     @Override
     public int hashCode() {

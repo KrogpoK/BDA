@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author isso
  */
 @Entity
-@Table(name = "critique")
+@Table(name = "fournisseur")
 public class Fournisseur implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

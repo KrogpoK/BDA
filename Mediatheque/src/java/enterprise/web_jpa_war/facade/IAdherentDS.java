@@ -38,11 +38,11 @@ public interface IAdherentDS {
     public Adherent getAdherent(String nom, String prenom, Date dateDeNaissance);
 
 //    public List<Critique> getCritiques(int idAdherent);
-    public List<Reservation> getReservationsByAdherent(int idAdherent);
+    public List<Reservation> getReservationsByAdherent(Adherent a);
 
     public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre);
 
-    public List<Emprunt> getEmprunts(int idAdherent);
+    public List<Emprunt> getEmprunts(Adherent a);
 
     public void ajouterEmprunt(Emprunt emprunt);
 
