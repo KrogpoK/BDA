@@ -30,7 +30,7 @@ public class BonDeCommande implements Serializable {
     @Id
     @Column(name = "idbondecommande")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @JoinColumn(name = "idfournisseur")
     @OneToOne
@@ -40,11 +40,11 @@ public class BonDeCommande implements Serializable {
     @OneToMany
     private ArrayList<Oeuvre> oeuvre;
     
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -9,17 +9,22 @@ import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.facade.IMediaDS;
+import enterprise.web_jpa_war.facade.impl.AdherentDS;
+import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 
 /**
  *
@@ -40,43 +45,55 @@ public class GestionEmprunt extends AbstractServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        try {
+            response.setContentType("text/html;charset=UTF-8");
 
-        String empruntStr = request.getParameter("idEmprunt");
-        int idEmprunt = Integer.parseInt(empruntStr);
+            utx.begin();
+            em = emf.createEntityManager();
+            adherentDS = new AdherentDS(em);
+            mediaDS = new MediaDS(em);
+            
+            String empruntStr = request.getParameter("idEmprunt");
+            int idEmprunt = Integer.parseInt(empruntStr);
 
-        Emprunt e = adherentDS.getEmprunt(idEmprunt);
-        Adherent a = e.geteCompte().getProprietaire();
-        Ouvrage o = e.geteOuvrage();
+            Emprunt e = adherentDS.getEmprunt(idEmprunt);
+            Adherent a = e.geteCompte().getProprietaire();
+            Ouvrage o = e.geteOuvrage();
 
-        //attribuer la reservation au prochain mec
-        List<Reservation> liste = adherentDS.getReservationsByAdherent(a.getId());
-        if (liste != null) {
-            Reservation r = liste.get(0);
-            int i = 0;
-            while (i < liste.size() && r.getDispo() != null) {
-                r = liste.get(i);
-                i++;
+            //attribuer la reservation au prochain mec
+            List<Reservation> liste = adherentDS.getReservationsByOeuvre(o.getOeuvre());
+            if (liste != null) {
+                Reservation r = liste.get(0);
+                int i = 0;
+                while (i < liste.size() && r.getDispo() != null) {
+                    r = liste.get(i);
+                    i++;
+                }
+                // si un gen recoit la reservation
+                if (r.getDispo() == null) {
+                    r.setDispo(new Date());
+                    o.setDisponibilite(Ouvrage.DISPO_RESERVE);
+                } //sinon, elle retrouve l'oeuvre retrouve sa liberte
+                else {
+                    o.setDisponibilite(Ouvrage.DISPO_LIBRE);
+                }
             }
-            // si un gen recoit la reservation
-            if (r.getDispo() == null) {
-                r.setDispo(new Date());
-                o.setDisponibilite(Ouvrage.DISPO_RESERVE);
+
+            Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
+            e.setDateFinEmprunt(new Date());
+            int nbJoursEmpruntes = DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt());
+            if (nbJoursEmpruntes > config.getNbJours()) {
+                double montantPenalite = Emprunt.PENALITE_JOURNALIERE * (nbJoursEmpruntes - config.getNbJours());
+                e.geteCompte().setSolde(e.geteCompte().getSolde() - montantPenalite);
+                request.setAttribute("penalite", montantPenalite);
             }
-            //sinon, elle retrouve l'oeuvre retrouve sa liberte
-            else {
-                 o.setDisponibilite(Ouvrage.DISPO_LIBRE);
-            }
+
+            utx.commit();
+            em.close();
+        } catch (Exception ex) {
+            throw new ServletException(ex);
         }
 
-        Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
-        e.setDateFinEmprunt(new Date());
-        int nbJoursEmpruntes = DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt());
-        if (nbJoursEmpruntes > config.getNbJours()) {
-            double montantPenalite = Emprunt.PENALITE_JOURNALIERE * nbJoursEmpruntes;
-            e.geteCompte().setSolde(e.geteCompte().getSolde() - montantPenalite);
-            request.setAttribute("penalite", montantPenalite);
-        }
 
     }
 

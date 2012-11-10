@@ -31,7 +31,7 @@ public class Emprunt implements Serializable {
     @Id
     @Column(name = "IEMPRUNT_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @JoinColumn(name = "ICOMPTE_ID")
     @OneToOne
@@ -49,11 +49,11 @@ public class Emprunt implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFinEmprunt;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
