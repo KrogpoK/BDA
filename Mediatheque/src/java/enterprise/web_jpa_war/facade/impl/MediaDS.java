@@ -7,6 +7,7 @@ package enterprise.web_jpa_war.facade.impl;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.CDDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.FilmDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.LivreDao;
+import enterprise.web_jpa_war.dao.impl.mediatheque.item.OeuvreDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.OuvrageDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.item.PeriodiqueDao;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
@@ -30,13 +31,15 @@ public class MediaDS implements IMediaDS {
     private CDDao cDao;
     private PeriodiqueDao pDao;
     private OuvrageDao oDao;
-
+    private OeuvreDao oeuvreDao;
     public MediaDS(EntityManager em) {
         fDao = new FilmDao(em);
         lDao = new LivreDao(em);
         cDao = new CDDao(em);
         pDao = new PeriodiqueDao(em);
         oDao = new OuvrageDao(em);
+        oeuvreDao = new OeuvreDao(em);
+        
     }
 
     public List<Film> getFilms() {
@@ -56,7 +59,7 @@ public class MediaDS implements IMediaDS {
     }
 
     public boolean estDisponible(Oeuvre oeuvre) {
-        List<Ouvrage> l = oDao.findAllByExample(oeuvre);
+        List<Ouvrage> l = getListeOuvrage(oeuvre);
 
         if(l != null && l.size()>0)
         {
@@ -112,5 +115,13 @@ public class MediaDS implements IMediaDS {
 
     public void creerOuvrage(Ouvrage ouvrage) {
         oDao.persist(ouvrage);
+    }
+
+    public Oeuvre getOeuvre(int id) {
+        return oeuvreDao.find(id);
+    }
+
+    public List<Ouvrage> getListeOuvrage(Oeuvre oeuvre) {
+       return oDao.findAllByExample(oeuvre);
     }
 }

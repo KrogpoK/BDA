@@ -7,7 +7,6 @@ package enterprise.web_jpa_war.servlet.common;
 import enterprise.web_jpa_war.facade.IAdherentDS;
 import enterprise.web_jpa_war.facade.IMediaDS;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

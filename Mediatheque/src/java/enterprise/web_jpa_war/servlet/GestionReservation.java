@@ -11,8 +11,6 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,13 +48,7 @@ public class GestionReservation extends AbstractServlet {
 
        Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
         for (i = 0; i < nbReservation; i++) {
-            if (Film.SUPPORT.equals(tabType[i])) {
-            } else if (Livre.SUPPORT.equals(tabType[i])) {
-            }
-            if (CD.SUPPORT.equals(tabType[i])) {
-            }
-            if (Periodique.SUPPORT.equals(tabType[i])) {
-            }
+            Oeuvre o = mediaDS.g
         }
         request.getRequestDispatcher("Reservation.jsp").forward(request, response);
     }
