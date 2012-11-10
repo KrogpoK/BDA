@@ -11,8 +11,10 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -40,43 +42,45 @@ public class RechercheOeuvre extends AbstractServlet {
 
         mediaDS = new MediaDS(emf.createEntityManager());
 
-        ArrayList<Oeuvre> liste = new ArrayList<Oeuvre>();
+        ArrayList<Oeuvre> listOeuvres = new ArrayList<Oeuvre>();
 
-        boolean tous = !"on".equals((String) request.getParameter("Film"))
-                && !"on".equals((String) request.getParameter("CD"))
-                && !"on".equals((String) request.getParameter("Livre"))
-                && !"on".equals((String) request.getParameter("Periodique"));
-
-        if ("on".equals((String) request.getParameter(Film.SUPPORT)) || tous) {
+        if (Film.SUPPORT.equals((String) request.getParameter("typeSupport"))) {
             List<Film> fList = mediaDS.getFilms();
-            for (int i = 0; i < fList.size(); i++) {
-                liste.add(fList.get(i));
+            for (Film f : fList) {
+                listOeuvres.add(f);
             }
-        }
-        if ("on".equals((String) request.getParameter(CD.SUPPORT)) || tous) {
+            listOeuvres = triParams(listOeuvres, request);
+            fList = new ArrayList<Film>();
+            for (Oeuvre o : listOeuvres) {
+                fList.add((Film) o);
+            }
+            request.setAttribute("listFilms", fList);
+
+        } else if (Livre.SUPPORT.equals((String) request.getParameter(CD.SUPPORT))) {
             List<CD> cList = mediaDS.getCDs();
             for (int i = 0; i < cList.size(); i++) {
-                liste.add(cList.get(i));
+                //liste.add(cList.get(i));
             }
-        }
-        if ("on".equals((String) request.getParameter(Periodique.SUPPORT)) || tous) {
+        } else if (CD.SUPPORT.equals((String) request.getParameter(Periodique.SUPPORT))) {
             List<Periodique> pList = mediaDS.getPeriodiques();
             for (int i = 0; i < pList.size(); i++) {
-                liste.add(pList.get(i));
+                //liste.add(pList.get(i));
             }
-        }
-        if ("on".equals((String) request.getParameter(Livre.SUPPORT)) || tous) {
+        } else if (Periodique.SUPPORT.equals((String) request.getParameter(Livre.SUPPORT))) {
             List<Livre> lList = mediaDS.getLivres();
             for (int i = 0; i < lList.size(); i++) {
-                liste.add(lList.get(i));
+                //liste.add(lList.get(i));
             }
+        } else {
+            listOeuvres = (ArrayList) mediaDS.getOeuvres();
+            listOeuvres = triParams(listOeuvres, request);
+            request.setAttribute("listOeuvres", listOeuvres);
         }
 
-        String kw = (String) request.getParameter("motsClef");
+        String keyWord = (String) request.getParameter("titreSearch");
 
-        ArrayList<Oeuvre> res = appliFiltre(liste, kw);
-        request.setAttribute("oeuvreList", res);
-        request.setAttribute("kw", kw);
+        //ArrayList<Oeuvre> res = appliFiltre(liste, keyWord);
+        request.setAttribute("keyWord", keyWord);
         request.getRequestDispatcher("rechercheOeuvre.jsp").forward(request, response);
     }
 
@@ -164,4 +168,50 @@ public class RechercheOeuvre extends AbstractServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private ArrayList<Oeuvre> triParams(ArrayList<Oeuvre> listOeuvres, HttpServletRequest request) {
+        String titre = (String) request.getParameter("titreSearch");
+        String genre = (String) request.getParameter("genreSearch");
+        String dateParution = (String) request.getParameter("dateParutionSearch");
+        String dateParutionAvant = (String) request.getParameter("dateParutionAvantSearch");
+        boolean boolDateParutionAvant = ("avant".equals(dateParutionAvant)) ? true : false;
+        listOeuvres = triTitre(listOeuvres, titre);
+        listOeuvres = triGenre(listOeuvres, genre);
+        listOeuvres = triDate(listOeuvres, dateParution, boolDateParutionAvant);
+        return listOeuvres;
+    }
+
+    private ArrayList<Oeuvre> triTitre(ArrayList<Oeuvre> listOeuvres, String titre) {
+        if (!"".equals(titre)) {
+            for (Oeuvre o : listOeuvres) {
+                if (!o.getTitre().contains(titre)) {
+                    listOeuvres.remove(o);
+                }
+            }
+        }
+        return listOeuvres;
+    }
+
+    private ArrayList<Oeuvre> triGenre(ArrayList<Oeuvre> listOeuvres, String genre) {
+        if (!"".equals(genre)) {
+            for (Oeuvre o : listOeuvres) {
+                if (!o.getGenre().equals(genre)) {
+                    listOeuvres.remove(o);
+                }
+            }
+        }
+        return listOeuvres;
+    }
+
+    private ArrayList<Oeuvre> triDate(ArrayList<Oeuvre> listOeuvres, String dateParutionStr, boolean boolDateParutionAvant) {
+        if (!"".equals(dateParutionStr)) {
+            Date dateParution = DateTool.parseDate(dateParutionStr);
+            for (Oeuvre o : listOeuvres) {
+                if (!(boolDateParutionAvant && o.getDateParution().before(dateParution) || !boolDateParutionAvant && o.getDateParution().after(dateParution))) {
+                    listOeuvres.remove(o);
+                }
+            }
+        }
+        return listOeuvres;
+    }
 }

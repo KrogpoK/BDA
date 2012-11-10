@@ -143,4 +143,8 @@ public class MediaDS implements IMediaDS {
         }
         return 1;
     }
+    
+    public List<Oeuvre> getOeuvres() {
+        return null;
+    }
 }
