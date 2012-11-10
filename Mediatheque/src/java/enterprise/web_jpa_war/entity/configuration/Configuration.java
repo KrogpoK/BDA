@@ -43,6 +43,47 @@ public class Configuration implements Serializable {
         return hash;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNomSupport() {
+        return nomSupport;
+    }
+
+    public void setNomSupport(String nomSupport) {
+        this.nomSupport = nomSupport;
+    }
+
+    public boolean isEstRenouvelable() {
+        return estRenouvelable;
+    }
+
+    public void setEstRenouvelable(boolean estRenouvelable) {
+        this.estRenouvelable = estRenouvelable;
+    }
+
+    public int getNbOuvragesMemeType() {
+        return nbOuvragesMemeType;
+    }
+
+    public void setNbOuvragesMemeType(int nbOuvragesMemeType) {
+        this.nbOuvragesMemeType = nbOuvragesMemeType;
+    }
+
+    public int getNbJours() {
+        return nbJours;
+    }
+
+    public void setNbJours(int nbJours) {
+        this.nbJours = nbJours;
+    }
+
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
