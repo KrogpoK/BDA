@@ -47,7 +47,49 @@ public class Emprunt implements Serializable {
     @Column(name = "DFIN_EMPRUNT")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFinEmprunt;
-                    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Compte geteCompte() {
+        return eCompte;
+    }
+
+    public void seteCompte(Compte eCompte) {
+        this.eCompte = eCompte;
+    }
+
+    public Ouvrage geteOuvrage() {
+        return eOuvrage;
+    }
+
+    public void seteOuvrage(Ouvrage eOuvrage) {
+        this.eOuvrage = eOuvrage;
+    }
+
+    public Date getDateDebutEmprunt() {
+        return dateDebutEmprunt;
+    }
+
+    public void setDateDebutEmprunt(Date dateDebutEmprunt) {
+        this.dateDebutEmprunt = dateDebutEmprunt;
+    }
+
+    public Date getDateFinEmprunt() {
+        return dateFinEmprunt;
+    }
+
+    public void setDateFinEmprunt(Date dateFinEmprunt) {
+        this.dateFinEmprunt = dateFinEmprunt;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

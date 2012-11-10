@@ -4,6 +4,9 @@
  */
 package enterprise.web_jpa_war.servlet;
 
+import enterprise.web_jpa_war.entity.Adherent;
+import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
+import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
@@ -11,6 +14,8 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +41,7 @@ public class GestionReservation extends AbstractServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
+
         String[] strId = request.getParameterValues("idOeuvreList[]");
         String[] tabType = request.getParameterValues("typeOeuvre[]");
         int nbReservation = strId.length;
@@ -46,10 +51,34 @@ public class GestionReservation extends AbstractServlet {
             tabId[i] = Integer.parseInt(s);
         }
 
-       Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
+        Oeuvre[] tabOeuvre = new Oeuvre[nbReservation];
         for (i = 0; i < nbReservation; i++) {
-            Oeuvre o = mediaDS.g
+            Oeuvre o = mediaDS.getOeuvre(tabId[i]);
+            tabOeuvre[i] = o;
         }
+
+        ArrayList<Reservation> listeReservationDisponible = new ArrayList<Reservation>();
+        ArrayList<Reservation> listeReservationEnAttente = new ArrayList<Reservation>();
+        ArrayList<Emprunt> listeEmpruntsCourants = new ArrayList<Emprunt>();
+
+        int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
+        Adherent adherent = adherentDS.getAdherent(idAdherent);
+        for (Oeuvre o : tabOeuvre) {
+            Reservation resa = new Reservation();
+            resa.setCompte(adherent.getCompte());
+            resa.setDebut(new Date());
+            resa.setOeuvre(o);
+            if (mediaDS.estDisponible(o)) {
+                resa.setDispo(new Date());
+                listeReservationDisponible.add(resa);
+            }
+            else{
+                listeReservationEnAttente.add(resa);
+            }
+        }
+        
+        request.setAttribute("listeResaDispo", listeReservationDisponible);
+        request.setAttribute("listeResaAttente", listeReservationEnAttente);
         request.getRequestDispatcher("Reservation.jsp").forward(request, response);
     }
 
