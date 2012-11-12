@@ -83,8 +83,8 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
     }
 
     public List<Oeuvre> findWithParams(HashMap<String, String> mapParamsOeuvre) {
-        String retour = DaoTool.analyseParams(mapParamsOeuvre);
-        System.out.println("select o from Oeuvre o " + retour);
+        String retour = DaoTool.analyseParams(mapParamsOeuvre,"o");
+        System.out.println("select o from Oeuvre o where" + retour);
         Long tpsAvt = System.currentTimeMillis();
         List<Oeuvre> result = (List<Oeuvre>) em.createQuery("select o from Oeuvre o " + retour).getResultList();
         System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");

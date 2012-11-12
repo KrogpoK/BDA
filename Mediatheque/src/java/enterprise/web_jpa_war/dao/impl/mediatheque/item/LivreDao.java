@@ -101,7 +101,7 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
     private String analyseParamsLivre(HashMap<String, String> mapParamsOeuvre) {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
-        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre,"l"));
         if (!("".equals(mapParamsOeuvre.get(Livre.AUTEUR))) && mapParamsOeuvre.get(Livre.AUTEUR) != null) {
             retour.append("l.auteur like '%" + mapParamsOeuvre.get(Livre.AUTEUR) + "%' AND ");
         }
