@@ -109,10 +109,10 @@ public class CDDao extends AbstractCommonnDao implements ICommonDao<CD> {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
         retour.append(DaoTool.analyseParams(mapParamsOeuvre));
-        if (!("".equals(mapParamsOeuvre.get(CD.INTERPRETE)))) {
+        if (!("".equals(mapParamsOeuvre.get(CD.INTERPRETE))) && mapParamsOeuvre.get(CD.INTERPRETE) != null) {
             retour.append("c.interprete like '%" + mapParamsOeuvre.get(CD.INTERPRETE) + "%' AND ");
         }
-        if (!("".equals(mapParamsOeuvre.get(CD.MAISONEDITION)))) {
+        if (!("".equals(mapParamsOeuvre.get(CD.MAISONEDITION))) && mapParamsOeuvre.get(CD.MAISONEDITION) != null) {
             retour.append("c.maisonEdition like '%" + mapParamsOeuvre.get(CD.MAISONEDITION) + "%' AND ");
         }
         retour.append("1=1 ");

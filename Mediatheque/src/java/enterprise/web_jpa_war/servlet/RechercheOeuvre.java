@@ -77,7 +77,7 @@ public class RechercheOeuvre extends AbstractServlet {
 
             List<Livre> lList = mediaDS.getLivres(mapParamsOeuvre);
             request.setAttribute("listLivres", lList);
-        } else if (CD.SUPPORT.equals((String) request.getParameter(Periodique.SUPPORT))) {
+        } else if (CD.SUPPORT.equals(typeSupport)) {
             String interprete = (String) request.getParameter("interpreteSearch");
             String maisonEdition = (String) request.getParameter("maisonEditionSearch");
 
@@ -86,7 +86,7 @@ public class RechercheOeuvre extends AbstractServlet {
 
             List<CD> cList = mediaDS.getCDs(mapParamsOeuvre);
             request.setAttribute("listCDs", cList);
-        } else if (Periodique.SUPPORT.equals((String) request.getParameter(Livre.SUPPORT))) {
+        } else if (Periodique.SUPPORT.equals(typeSupport)) {
             String theme = (String) request.getParameter("themeSearch");
             String periodicite = (String) request.getParameter("periodiciteSearch");
 

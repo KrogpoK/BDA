@@ -37,8 +37,9 @@ public class Oeuvre implements Serializable {
     public final static String DATEPARUTION = "dateParution";
     public final static String DATEPARUTIONINDICATEUR = "dateParutionIndicateur";
     public final static String LANGUE = "langue";
-
     private static final long serialVersionUID = 1L;
+
+
     @Id
     @Column(name = "IOEUVRE_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,7 +79,7 @@ public class Oeuvre implements Serializable {
     public void setLangue(String langue) {
         this.langue = langue;
     }
-    
+
     public String getTitre() {
         return titre;
     }
@@ -134,8 +135,7 @@ public class Oeuvre implements Serializable {
         return DateTool.printDate(dateParution);
     }
 
-    public String getStrType()
-    {
+    public String getStrType() {
         return "Oeuvre";
     }
 
@@ -163,13 +163,12 @@ public class Oeuvre implements Serializable {
     public String toString() {
         return "enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre[ id=" + id + " ]";
     }
-    
-    public static String generateRandomTitle()
-    {
+
+    public static String generateRandomTitle() {
         ArrayList<String> sujet = new ArrayList<String>();
         ArrayList<String> couleur = new ArrayList<String>();
         ArrayList<String> lieu = new ArrayList<String>();
-       
+
 
         sujet.add("Le chien");
         sujet.add("Le chat");
@@ -225,12 +224,48 @@ public class Oeuvre implements Serializable {
         lieu.add("de Marseille");
         lieu.add("de Lyon");
         lieu.add("de Brest");
-        
+
         Random r = new Random();
         String titre = sujet.get(r.nextInt(sujet.size())) + " "
                 + couleur.get(r.nextInt(couleur.size())) + " "
                 + lieu.get(r.nextInt(lieu.size()));
-        
+
         return titre;
     }
+
+    public static String generateRandomGenre() {
+        ArrayList<String> genre = new ArrayList<String>();
+
+        genre.add("action");
+        genre.add("amour");
+        genre.add("thriller");
+        genre.add("Policier");
+        genre.add("nouvelle");
+        genre.add("anime");
+        genre.add("Horreur");
+        genre.add("suspense");
+        genre.add("roman");
+        genre.add("biographie");
+
+        Random r = new Random();
+
+        String genr = genre.get(r.nextInt(genre.size()));
+
+        return genr;
+    }
+
+    public static String generateRandomLangue() {
+        ArrayList<String> langue = new ArrayList<String>();
+
+        langue.add("Français");
+        langue.add("Anglais");
+        langue.add("Russe");
+
+        Random r = new Random();
+
+        String langu = langue.get(r.nextInt(langue.size()));
+
+        return langu;
+    }
+
 }

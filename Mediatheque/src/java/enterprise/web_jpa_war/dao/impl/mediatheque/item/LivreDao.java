@@ -102,10 +102,10 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
         retour.append(DaoTool.analyseParams(mapParamsOeuvre));
-        if (!("".equals(mapParamsOeuvre.get(Livre.AUTEUR)))) {
+        if (!("".equals(mapParamsOeuvre.get(Livre.AUTEUR))) && mapParamsOeuvre.get(Livre.AUTEUR) != null) {
             retour.append("l.auteur like '%" + mapParamsOeuvre.get(Livre.AUTEUR) + "%' AND ");
         }
-        if (!("".equals(mapParamsOeuvre.get(Livre.EDITEUR)))) {
+        if (!("".equals(mapParamsOeuvre.get(Livre.EDITEUR))) && mapParamsOeuvre.get(Livre.EDITEUR) != null) {
             retour.append("l.editeur like '%" + mapParamsOeuvre.get(Livre.EDITEUR) + "%' AND ");
         }
         retour.append("1=1 ");
