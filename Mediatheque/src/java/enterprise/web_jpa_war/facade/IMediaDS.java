@@ -12,6 +12,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,4 +66,14 @@ public interface IMediaDS {
      public void setCritique(Critique critique);
 
     public List<Critique> getCritiques(Oeuvre oeuvre);
+
+    public List<Film> getFilms(HashMap<String, String> mapParamsOeuvre);
+
+    public List<Livre> getLivres(HashMap<String, String> mapParamsOeuvre);
+
+    public List<CD> getCDs(HashMap<String, String> mapParamsOeuvre);
+
+    public List<Periodique> getPeriodiques(HashMap<String, String> mapParamsOeuvre);
+
+    public List<Oeuvre> getOeuvres(HashMap<String, String> mapParamsOeuvre);
 }

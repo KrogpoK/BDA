@@ -23,6 +23,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.IMediaDS;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -161,5 +162,25 @@ public class MediaDS implements IMediaDS {
 
     public List<Oeuvre> getOeuvres() {
         return null;
+    }
+
+    public List<Film> getFilms(HashMap<String, String> mapParamsOeuvre) {
+        return fDao.findWithParams(mapParamsOeuvre);
+    }
+
+    public List<Livre> getLivres(HashMap<String, String> mapParamsOeuvre) {
+        return lDao.findWithParams(mapParamsOeuvre);
+    }
+
+    public List<CD> getCDs(HashMap<String, String> mapParamsOeuvre) {
+        return cDao.findWithParams(mapParamsOeuvre);
+    }
+
+    public List<Periodique> getPeriodiques(HashMap<String, String> mapParamsOeuvre) {
+        return pDao.findWithParams(mapParamsOeuvre);
+    }
+
+    public List<Oeuvre> getOeuvres(HashMap<String, String> mapParamsOeuvre) {
+        return oeuvreDao.findWithParams(mapParamsOeuvre);
     }
 }

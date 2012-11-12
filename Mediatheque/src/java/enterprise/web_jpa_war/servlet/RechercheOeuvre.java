@@ -44,40 +44,63 @@ public class RechercheOeuvre extends AbstractServlet {
 
         ArrayList<Oeuvre> listOeuvres = new ArrayList<Oeuvre>();
 
-        if (Film.SUPPORT.equals((String) request.getParameter("typeSupport"))) {
-            List<Film> fList = mediaDS.getFilms();
-            for (Film f : fList) {
-                listOeuvres.add(f);
-            }
-            listOeuvres = triParams(listOeuvres, request);
-            fList = new ArrayList<Film>();
-            for (Oeuvre o : listOeuvres) {
-                fList.add((Film) o);
-            }
-            request.setAttribute("listFilms", fList);
+        String titre = (String) request.getParameter("titreSearch");
+        String genre = (String) request.getParameter("genreSearch");
+        String dateParution = (String) request.getParameter("dateParutionSearch");
+        String dateParutionIndicateur = (String) request.getParameter("dateParutionIndicateurSearch");
+        String langue = (String) request.getParameter("langueSearch");
 
-        } else if (Livre.SUPPORT.equals((String) request.getParameter(CD.SUPPORT))) {
-            List<CD> cList = mediaDS.getCDs();
-            for (int i = 0; i < cList.size(); i++) {
-                //liste.add(cList.get(i));
-            }
+        HashMap<String, String> mapParamsOeuvre = new HashMap<String, String>();
+
+        mapParamsOeuvre.put(Oeuvre.TITRE, titre);
+        mapParamsOeuvre.put(Oeuvre.GENRE, genre);
+        mapParamsOeuvre.put(Oeuvre.DATEPARUTION, dateParution);
+        mapParamsOeuvre.put(Oeuvre.DATEPARUTIONINDICATEUR, dateParutionIndicateur);
+        mapParamsOeuvre.put(Oeuvre.LANGUE, langue);
+
+        String typeSupport = (String) request.getParameter("typeSupport");
+        if (Film.SUPPORT.equals(typeSupport)) {
+            String realisateur = (String) request.getParameter("realisateurSearch");
+            String acteurPrincipal = (String) request.getParameter("acteurPrincipalSearch");
+
+            mapParamsOeuvre.put(Film.REALISATEUR, realisateur);
+            mapParamsOeuvre.put(Film.ACTEURPRINCIPAL, acteurPrincipal);
+
+            List<Film> fList = mediaDS.getFilms(mapParamsOeuvre);
+            request.setAttribute("listFilms", fList);
+        } else if (Livre.SUPPORT.equals(typeSupport)) {
+            String auteur = (String) request.getParameter("auteurSearch");
+            String editeur = (String) request.getParameter("editeurSearch");
+
+            mapParamsOeuvre.put(Livre.AUTEUR, auteur);
+            mapParamsOeuvre.put(Livre.EDITEUR, editeur);
+
+            List<Livre> lList = mediaDS.getLivres(mapParamsOeuvre);
+            request.setAttribute("listLivres", lList);
         } else if (CD.SUPPORT.equals((String) request.getParameter(Periodique.SUPPORT))) {
-            List<Periodique> pList = mediaDS.getPeriodiques();
-            for (int i = 0; i < pList.size(); i++) {
-                //liste.add(pList.get(i));
-            }
+            String interprete = (String) request.getParameter("interpreteSearch");
+            String maisonEdition = (String) request.getParameter("maisonEditionSearch");
+
+            mapParamsOeuvre.put(CD.INTERPRETE, interprete);
+            mapParamsOeuvre.put(CD.MAISONEDITION, maisonEdition);
+
+            List<CD> cList = mediaDS.getCDs(mapParamsOeuvre);
+            request.setAttribute("listCDs", cList);
         } else if (Periodique.SUPPORT.equals((String) request.getParameter(Livre.SUPPORT))) {
-            List<Livre> lList = mediaDS.getLivres();
-            for (int i = 0; i < lList.size(); i++) {
-                //liste.add(lList.get(i));
-            }
+            String theme = (String) request.getParameter("themeSearch");
+            String periodicite = (String) request.getParameter("periodiciteSearch");
+
+            mapParamsOeuvre.put(Periodique.THEME, theme);
+            mapParamsOeuvre.put(Periodique.PERIODICITE, periodicite);
+
+            List<Periodique> pList = mediaDS.getPeriodiques(mapParamsOeuvre);
+            request.setAttribute("listPeriodiques", pList);
         } else {
-            listOeuvres = (ArrayList) mediaDS.getOeuvres();
-            listOeuvres = triParams(listOeuvres, request);
-            request.setAttribute("listOeuvres", listOeuvres);
+            List<Oeuvre> oList = mediaDS.getOeuvres(mapParamsOeuvre);
+            request.setAttribute("listOeuvres", oList);
         }
 
-        String keyWord = (String) request.getParameter("titreSearch");
+        String keyWord = titre;
 
         //ArrayList<Oeuvre> res = appliFiltre(liste, keyWord);
         request.setAttribute("keyWord", keyWord);
@@ -168,50 +191,4 @@ public class RechercheOeuvre extends AbstractServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private ArrayList<Oeuvre> triParams(ArrayList<Oeuvre> listOeuvres, HttpServletRequest request) {
-        String titre = (String) request.getParameter("titreSearch");
-        String genre = (String) request.getParameter("genreSearch");
-        String dateParution = (String) request.getParameter("dateParutionSearch");
-        String dateParutionAvant = (String) request.getParameter("dateParutionAvantSearch");
-        boolean boolDateParutionAvant = ("avant".equals(dateParutionAvant)) ? true : false;
-        listOeuvres = triTitre(listOeuvres, titre);
-        listOeuvres = triGenre(listOeuvres, genre);
-        listOeuvres = triDate(listOeuvres, dateParution, boolDateParutionAvant);
-        return listOeuvres;
-    }
-
-    private ArrayList<Oeuvre> triTitre(ArrayList<Oeuvre> listOeuvres, String titre) {
-        if (!"".equals(titre)) {
-            for (Oeuvre o : listOeuvres) {
-                if (!o.getTitre().contains(titre)) {
-                    listOeuvres.remove(o);
-                }
-            }
-        }
-        return listOeuvres;
-    }
-
-    private ArrayList<Oeuvre> triGenre(ArrayList<Oeuvre> listOeuvres, String genre) {
-        if (!"".equals(genre)) {
-            for (Oeuvre o : listOeuvres) {
-                if (!o.getGenre().equals(genre)) {
-                    listOeuvres.remove(o);
-                }
-            }
-        }
-        return listOeuvres;
-    }
-
-    private ArrayList<Oeuvre> triDate(ArrayList<Oeuvre> listOeuvres, String dateParutionStr, boolean boolDateParutionAvant) {
-        if (!"".equals(dateParutionStr)) {
-            Date dateParution = DateTool.parseDate(dateParutionStr);
-            for (Oeuvre o : listOeuvres) {
-                if (!(boolDateParutionAvant && o.getDateParution().before(dateParution) || !boolDateParutionAvant && o.getDateParution().after(dateParution))) {
-                    listOeuvres.remove(o);
-                }
-            }
-        }
-        return listOeuvres;
-    }
 }

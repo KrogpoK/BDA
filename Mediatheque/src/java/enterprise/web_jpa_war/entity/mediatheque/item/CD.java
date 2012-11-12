@@ -17,6 +17,9 @@ import javax.persistence.Table;
 @Table(name = "CD")
 public class CD extends Oeuvre implements Serializable {
 
+    public final static String MAISONEDITION = "maisonEdition";
+    public final static String INTERPRETE = "interprete";
+    
     private static final long serialVersionUID = 1L;
     public static final String SUPPORT = "CD";
     

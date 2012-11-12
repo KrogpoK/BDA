@@ -7,7 +7,11 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.mediatheque.item.CD;
+import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.util.DaoTool;
 import enterprise.web_jpa_war.util.DateTool;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -92,8 +96,27 @@ public class CDDao extends AbstractCommonnDao implements ICommonDao<CD> {
         return clause.toString();
     }
 
-    
+    public List<CD> findWithParams(HashMap<String, String> mapParamsOeuvre) {
+        String retour = analyseParamsCD(mapParamsOeuvre);
+        System.out.println("select c from CD c " + retour);
+        Long tpsAvt = System.currentTimeMillis();
+        List<CD> result = (List<CD>) em.createQuery("select c from CD c " + retour).getResultList();
+        System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
+        return result;    
+    }
 
-   
+    private String analyseParamsCD(HashMap<String, String> mapParamsOeuvre) {
+        StringBuilder retour = new StringBuilder();
+        retour.append("where ");
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        if (!("".equals(mapParamsOeuvre.get(CD.INTERPRETE)))) {
+            retour.append("c.interprete like '%" + mapParamsOeuvre.get(CD.INTERPRETE) + "%' AND ");
+        }
+        if (!("".equals(mapParamsOeuvre.get(CD.MAISONEDITION)))) {
+            retour.append("c.maisonEdition like '%" + mapParamsOeuvre.get(CD.MAISONEDITION) + "%' AND ");
+        }
+        retour.append("1=1 ");
+        return retour.toString();
+    }
     
 }

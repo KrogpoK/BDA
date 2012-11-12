@@ -32,6 +32,12 @@ import javax.persistence.TemporalType;
 //@Table(name = "OEUVRE")
 public class Oeuvre implements Serializable {
 
+    public final static String TITRE = "titre";
+    public final static String GENRE = "genre";
+    public final static String DATEPARUTION = "dateParution";
+    public final static String DATEPARUTIONINDICATEUR = "dateParutionIndicateur";
+    public final static String LANGUE = "langue";
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "IOEUVRE_ID")
@@ -44,6 +50,8 @@ public class Oeuvre implements Serializable {
     protected String titre;
     @Column(name = "SGENRE")
     protected String genre;
+    @Column(name = "SLANGUE")
+    private String langue;
     @OneToMany(mappedBy = "oeuvre", cascade = CascadeType.ALL)
     List<Reservation> listeReservation;
 
@@ -63,6 +71,14 @@ public class Oeuvre implements Serializable {
         this.dateParution = dateParution;
     }
 
+    public String getLangue() {
+        return langue;
+    }
+
+    public void setLangue(String langue) {
+        this.langue = langue;
+    }
+    
     public String getTitre() {
         return titre;
     }

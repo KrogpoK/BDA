@@ -89,6 +89,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         %>
 
            <a href="RegenDb" >creer des choses dans la base</a>
+            
+           <h3><a href="rechercheOeuvre.jsp" >rechercher une oeuvre</a></h3>
 
     </body>
 </html>

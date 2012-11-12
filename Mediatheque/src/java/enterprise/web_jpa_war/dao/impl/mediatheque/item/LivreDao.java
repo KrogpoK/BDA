@@ -6,8 +6,11 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
+import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
+import enterprise.web_jpa_war.util.DaoTool;
 import enterprise.web_jpa_war.util.DateTool;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -84,5 +87,28 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
         }
 
         return clause.toString();
+    }
+
+    public List<Livre> findWithParams(HashMap<String, String> mapParamsOeuvre) {
+        String retour = analyseParamsLivre(mapParamsOeuvre);
+        System.out.println("select l from Livre l " + retour);
+        Long tpsAvt = System.currentTimeMillis();
+        List<Livre> result = (List<Livre>) em.createQuery("select l from Livre l " + retour).getResultList();
+        System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
+        return result;  
+    }
+
+    private String analyseParamsLivre(HashMap<String, String> mapParamsOeuvre) {
+        StringBuilder retour = new StringBuilder();
+        retour.append("where ");
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        if (!("".equals(mapParamsOeuvre.get(Livre.AUTEUR)))) {
+            retour.append("l.auteur like '%" + mapParamsOeuvre.get(Livre.AUTEUR) + "%' AND ");
+        }
+        if (!("".equals(mapParamsOeuvre.get(Livre.EDITEUR)))) {
+            retour.append("l.editeur like '%" + mapParamsOeuvre.get(Livre.EDITEUR) + "%' AND ");
+        }
+        retour.append("1=1 ");
+        return retour.toString();
     }
 }

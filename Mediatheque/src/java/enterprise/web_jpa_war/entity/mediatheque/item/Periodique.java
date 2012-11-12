@@ -20,6 +20,9 @@ import javax.persistence.Table;
 @Table(name = "PERIODIQUE")
 public class Periodique extends Oeuvre implements Serializable {
 
+    public final static String THEME = "theme";
+    public final static String PERIODICITE = "periodicite";
+    
     private static final long serialVersionUID = 1L;
     public static final String SUPPORT = "Periodique";
     @Column(name = "STHEME")

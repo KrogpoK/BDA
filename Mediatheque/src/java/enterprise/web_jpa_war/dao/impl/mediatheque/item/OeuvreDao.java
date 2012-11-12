@@ -6,9 +6,12 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
+import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.util.DaoTool;
 import enterprise.web_jpa_war.util.DateTool;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -18,12 +21,10 @@ import javax.persistence.EntityManager;
  */
 public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> {
 
-    public OeuvreDao(EntityManager em)
-    {
+    public OeuvreDao(EntityManager em) {
         super.em = em;
     }
-     
-     
+
     public String getWhereClause(Oeuvre obj) {
         StringBuilder clause = new StringBuilder();
         clause.append(" ");
@@ -45,19 +46,18 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
             }
             clause.append(" c.titre'=").append(obj.getTitre()).append("' ");
         }
-        
+
         return clause.toString();
     }
 
     public Oeuvre find(int id) {
-       return em.find(Oeuvre.class, id);
+        return em.find(Oeuvre.class, id);
     }
 
     public Oeuvre findByExample(Oeuvre example) {
-        try{
-            return (Oeuvre) em.createQuery("select o from Oeuvre where "+ getWhereClause(example)).getSingleResult();
-        }catch(Exception e)
-        {
+        try {
+            return (Oeuvre) em.createQuery("select o from Oeuvre where " + getWhereClause(example)).getSingleResult();
+        } catch (Exception e) {
             return null;
         }
     }
@@ -67,11 +67,11 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
     }
 
     public void delete(int id) {
-       em.remove(id);
+        em.remove(id);
     }
 
     public void deleteByExample(Oeuvre obj) {
-         em.createQuery("delete from Ouvrage o where " + getWhereClause(obj));
+        em.createQuery("delete from Ouvrage o where " + getWhereClause(obj));
     }
 
     public List<Oeuvre> findAll() {
@@ -79,9 +79,16 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
     }
 
     public List<Oeuvre> findAllByExample(Oeuvre obj) {
-       return (List<Oeuvre>) em.createQuery("select o from Oeuvre o where " + getWhereClause(obj)).getResultList();
+        return (List<Oeuvre>) em.createQuery("select o from Oeuvre o where " + getWhereClause(obj)).getResultList();
     }
 
-   
-    
+    public List<Oeuvre> findWithParams(HashMap<String, String> mapParamsOeuvre) {
+        String retour = DaoTool.analyseParams(mapParamsOeuvre);
+        System.out.println("select o from Oeuvre o " + retour);
+        Long tpsAvt = System.currentTimeMillis();
+        List<Oeuvre> result = (List<Oeuvre>) em.createQuery("select o from Oeuvre o " + retour).getResultList();
+        System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
+        return result;     
+    }
+
 }

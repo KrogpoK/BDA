@@ -9,6 +9,7 @@ import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.util.DateTool;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 

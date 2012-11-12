@@ -17,6 +17,9 @@ import javax.persistence.Table;
 @Table(name = "LIVRE")
 public class Livre extends Oeuvre implements Serializable {
 
+    public final static String AUTEUR = "auteur";
+    public final static String EDITEUR = "editeur";
+    
     private static final long serialVersionUID = 1L;
     public static final String SUPPORT = "Livre";
     @Column(name = "SAUTEUR")
@@ -57,10 +60,9 @@ public class Livre extends Oeuvre implements Serializable {
     public String toString() {
         return "enterprise.web_jpa_war.entity.mediatheque.item.Livre[ id=" + id + " ]";
     }
-    
-    
+
     @Override
     public String getStrType() {
-       return SUPPORT;
+        return SUPPORT;
     }
 }

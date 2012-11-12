@@ -23,12 +23,15 @@ import javax.persistence.TemporalType;
 @Table(name = "Film")
 public class Film extends Oeuvre implements Serializable {
 
+    public final static String REALISATEUR = "realisateur";
+    public final static String ACTEURPRINCIPAL = "acteurPrincipal";
+    
     private static final long serialVersionUID = 1L;
     public static final String SUPPORT = "Film";
     @Column(name = "SREALISATEUR")
     private String realisateur;
-    @Column(name = "SLANGUE")
-    private String langue;
+    @Column(name = "SACTEURPRINCIPAL")
+    private String acteurPrincipal;
     @Column(name = "STYPE")
     private String type;
     @Column(name = "TDUREE")
@@ -40,16 +43,16 @@ public class Film extends Oeuvre implements Serializable {
         return realisateur;
     }
 
-    public void setRealisateur(String realisateur) {
+    public void setRealisateur(String acteurPrincipal) {
         this.realisateur = realisateur;
     }
-
-    public String getLangue() {
-        return langue;
+    
+    public String getActeurPrincipal() {
+        return acteurPrincipal;
     }
 
-    public void setLangue(String langue) {
-        this.langue = langue;
+    public void setActeurPrincipal(String acteurPrincipal) {
+        this.acteurPrincipal = acteurPrincipal;
     }
 
     public String getType() {
@@ -101,13 +104,14 @@ public class Film extends Oeuvre implements Serializable {
         genre.add("action");
         genre.add("amour");
         genre.add("thriller");
-        genre.add("policier");
+        genre.add("Policier");
         genre.add("nouvelle");
         genre.add("anime");
-        genre.add("horreur");
+        genre.add("Horreur");
         genre.add("suspense");
         genre.add("roman");
         genre.add("biographie");
+
 
         Random r = new Random();
 

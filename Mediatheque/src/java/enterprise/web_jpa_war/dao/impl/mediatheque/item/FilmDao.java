@@ -7,7 +7,10 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.util.DaoTool;
 import enterprise.web_jpa_war.util.DateTool;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -96,5 +99,28 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
         }
 
         return clause.toString();
+    }
+
+    public List<Film> findWithParams(HashMap<String, String> mapParamsOeuvre) {
+        String retour = analyseParamsFilm(mapParamsOeuvre);
+        System.out.println("select f from Film f " + retour);
+        Long tpsAvt = System.currentTimeMillis();
+        List<Film> result = (List<Film>) em.createQuery("select f from Film f " + retour).getResultList();
+        System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
+        return result;
+    }
+
+    private String analyseParamsFilm(HashMap<String, String> mapParamsOeuvre) {
+        StringBuilder retour = new StringBuilder();
+        retour.append("where ");
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        if (!("".equals(mapParamsOeuvre.get(Film.REALISATEUR)))) {
+            retour.append("f.realisateur like '%" + mapParamsOeuvre.get(Film.REALISATEUR) + "%' AND ");
+        }
+        if (!("".equals(mapParamsOeuvre.get(Film.ACTEURPRINCIPAL)))) {
+            retour.append("f.acteurPrincipal like '%" + mapParamsOeuvre.get(Film.ACTEURPRINCIPAL) + "%' AND ");
+        }
+        retour.append("1=1 ");
+        return retour.toString();
     }
 }
