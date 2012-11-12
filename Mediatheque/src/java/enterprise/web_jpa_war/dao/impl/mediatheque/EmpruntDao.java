@@ -62,7 +62,6 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
 
     public List<Emprunt> findAllByExample(Emprunt obj) {
         try {
-            System.out.println("query : select e from Emprunt e where " + getWhereClause(obj));
             return em.createQuery("select e from Emprunt e where " + getWhereClause(obj)).getResultList();
         } catch (Exception e) {
             return null;
