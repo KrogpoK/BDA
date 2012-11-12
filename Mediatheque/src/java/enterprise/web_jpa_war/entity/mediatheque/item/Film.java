@@ -25,7 +25,6 @@ public class Film extends Oeuvre implements Serializable {
 
     public final static String REALISATEUR = "realisateur";
     public final static String ACTEURPRINCIPAL = "acteurPrincipal";
-    
     private static final long serialVersionUID = 1L;
     public static final String SUPPORT = "Film";
     @Column(name = "SREALISATEUR")
@@ -38,15 +37,14 @@ public class Film extends Oeuvre implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date duree;
 
-   
     public String getRealisateur() {
         return realisateur;
     }
 
-    public void setRealisateur(String acteurPrincipal) {
+    public void setRealisateur(String realisateur) {
         this.realisateur = realisateur;
     }
-    
+
     public String getActeurPrincipal() {
         return acteurPrincipal;
     }
@@ -84,40 +82,51 @@ public class Film extends Oeuvre implements Serializable {
         return true;
     }
 
-    public static Film buildMoke(String titre, String genre) {
+    public static Film buildMoke() {
 
         Film f = new Film();
         f.setDateParution(DateTool.parseDate("2009-06-12"));
         f.setDuree(DateTool.parseTime("03:59:43"));
-        f.setGenre(genre);
-        f.setLangue("Francais");
-        f.setRealisateur("Moi");
-        f.setTitre(titre);
+        f.setGenre(Oeuvre.generateRandomGenre());
+        f.setLangue(Oeuvre.generateRandomLangue());
+        f.setRealisateur(Film.generateRandomRealisateur());
+        f.setActeurPrincipal(Film.generateRandomActeurPrincipal());
+        f.setTitre(Oeuvre.generateRandomTitle());
         f.setType("Polar");
         return f;
 
     }
 
-    public static Film buildMoke() {
-        ArrayList<String> genre = new ArrayList<String>();
-        
-        genre.add("action");
-        genre.add("amour");
-        genre.add("thriller");
-        genre.add("Policier");
-        genre.add("nouvelle");
-        genre.add("anime");
-        genre.add("Horreur");
-        genre.add("suspense");
-        genre.add("roman");
-        genre.add("biographie");
+    private static String generateRandomRealisateur() {
+ArrayList<String> realisateur = new ArrayList<String>();
 
+        realisateur.add("Gérard Gaston");
+        realisateur.add("Francois Dubois");
+        realisateur.add("Sélio Rofrigez");
+        realisateur.add("Michel Dupont");
+        realisateur.add("Fred le touriste");
 
         Random r = new Random();
 
-        String genr = genre.get(r.nextInt(genre.size()));
+        String realisateu = realisateur.get(r.nextInt(realisateur.size()));
 
-        return buildMoke(Oeuvre.generateRandomTitle(), genr);
+        return realisateu;    
+    }
+
+    private static String generateRandomActeurPrincipal() {
+ArrayList<String> acteurPrincipal = new ArrayList<String>();
+
+        acteurPrincipal.add("Hubert le couvert");
+        acteurPrincipal.add("Guy Copain");
+        acteurPrincipal.add("pas d'inspiration");
+        acteurPrincipal.add("pas envie de réfléchir");
+        acteurPrincipal.add("cool");
+
+        Random r = new Random();
+
+        String acteurPrincipa = acteurPrincipal.get(r.nextInt(acteurPrincipal.size()));
+
+        return acteurPrincipa;    
     }
 
     public static ArrayList<Film> buildMoke(int nb) {
