@@ -98,20 +98,15 @@ public class GestionEmprunt extends AbstractServlet {
                     List<Ouvrage> listeOurage = mediaDS.getListeOuvrage(o);
                     if (listeOurage != null && !listeOurage.isEmpty()) {
                         List<Ouvrage> ouvragesDisponibles = new ArrayList<Ouvrage>();
-                        for(int i=0;i<listeOurage.size();i++)
-                        {
-                            if(listeOurage.get(i).getDisponibilite() == Ouvrage.DISPO_LIBRE)
-                            {
+                        for (int i = 0; i < listeOurage.size(); i++) {
+                            if (listeOurage.get(i).getDisponibilite() == Ouvrage.DISPO_LIBRE) {
                                 ouvragesDisponibles.add(listeOurage.get(i));
                             }
                         }
-                        if(ouvragesDisponibles.size() == 0)
-                        {
-                           request.setAttribute("error", "aucun ouvrage disponible"); 
-                        }
-                        else 
-                        {
-                            Emprunt  e = new Emprunt();
+                        if (ouvragesDisponibles.size() == 0) {
+                            request.setAttribute("error", "aucun ouvrage disponible");
+                        } else {
+                            Emprunt e = new Emprunt();
                             e.setDateDebutEmprunt(new Date());
                             e.seteCompte(a.getCompte());
                             e.seteOuvrage(ouvragesDisponibles.get(0));
@@ -135,12 +130,11 @@ public class GestionEmprunt extends AbstractServlet {
                 System.out.println("error : non trouve");
             } else {
                 System.out.println("compte ID : " + a.getCompte().getId());
-                List<Emprunt> liste = adherentDS.getEmprunts(a);
-                if (liste == null || liste.isEmpty()) {
-                    request.setAttribute("error", "pas de resultats");
-                } else {
-                    request.setAttribute("listeEmprunt", liste);
-                }
+                List<Emprunt> listeEmprunts = adherentDS.getEmprunts(a);
+                List<Reservation> listeReservation = adherentDS.getReservationsActives(a);
+                request.setAttribute("listeEmprunts", listeEmprunts);
+                request.setAttribute("listeReservation", listeReservation);
+
             }
             em.close();
 

@@ -152,6 +152,10 @@ public class AdherentDS implements IAdherentDS {
     public void ajouterEmprunt(Emprunt emprunt) {
         empruntDao.persist(emprunt);
     }
+
+    public List<Reservation> getReservationsActives(Adherent a) {
+        return reservationDao.findAllResevationsActives(a);
+    }
     
     
     

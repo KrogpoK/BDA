@@ -6,6 +6,7 @@ package enterprise.web_jpa_war.dao.impl.mediatheque;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
+import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.util.DateTool;
 import java.util.List;
@@ -17,10 +18,10 @@ import javax.persistence.EntityManager;
  */
 public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Reservation> {
 
-    public ReservationDao(EntityManager em)
-    {
+    public ReservationDao(EntityManager em) {
         this.em = em;
     }
+
     public Reservation find(int id) {
         return em.find(Reservation.class, id);
     }
@@ -55,13 +56,20 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
 
     // retourne la liste des reservation du plus ancien au plus recent
     public List<Reservation> findAllByExample(Reservation obj) {
-        System.out.println("select r from Reservation r where " + getWhereClause(obj) +"SORT BY r.debut");
-        List<Reservation> l= (List<Reservation>) em.createQuery("select r from Reservation r where " + getWhereClause(obj) +"ORDER BY r.debut").getResultList();
-        for(Reservation r : l)
-        {
+        System.out.println("select r from Reservation r where " + getWhereClause(obj) + "SORT BY r.debut");
+        List<Reservation> l = (List<Reservation>) em.createQuery("select r from Reservation r where " + getWhereClause(obj) + "ORDER BY r.debut").getResultList();
+        for (Reservation r : l) {
             System.out.println(DateTool.printDate(r.getDebut()));
         }
         return l;
+    }
+
+    public List<Reservation> findAllResevationsActives(Adherent a) {
+        try {
+            return em.createQuery("select r from Reservation r where r.dispo is not null and r.compte.proprietaire.id = " + a.getId()).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getWhereClause(Reservation obj) {

@@ -42,6 +42,7 @@ public interface IAdherentDS {
 
     public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre);
 
+    public List<Reservation> getReservationsActives(Adherent a);
     public List<Emprunt> getEmprunts(Adherent a);
 
     public void ajouterEmprunt(Emprunt emprunt);
