@@ -1,3 +1,4 @@
+<%@page import="enterprise.web_jpa_war.entity.Adherent"%>
 <%-- 
     Document   : Header
     Created on : 13 nov. 2012, 20:06:07
@@ -18,7 +19,7 @@
             <a class="brand" href="#">Médiathèque</a>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right">
-                    <a href="#" class="navbar-link">Copain</a>
+                    <a href="#" class="navbar-link"><% out.print(((Adherent) request.getSession().getAttribute("user")).getLogin());%></a>
                 </p>
                 <ul class="nav">
                     <li class="">

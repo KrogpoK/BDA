@@ -94,7 +94,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                         <%                    } //si l'utilisateur est un client
                         else {
                         %>
-                        <jsp:forward page="AccueilClient.jsp"></jsp:forward>
+                        <jsp:forward page="Accueil.jsp"></jsp:forward>
                         <%                            }
                             }
                         %>
