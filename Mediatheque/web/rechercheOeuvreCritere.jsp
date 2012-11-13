@@ -35,6 +35,7 @@
             <option selected="true"></option>
             <option>Français</option>
             <option>Anglais</option>
+        </select>
         <input type="date" id="dateParutionSearch" name="dateParutionSearch" placeholder="date de parution" />
         <input type="radio" id="avant" name="dateParutionIndicateurSearch" value="avant" checked="true "/></td>avant
         <input type="radio" id="apres" name="dateParutionIndicateurSearch" value="apres" /></td>après

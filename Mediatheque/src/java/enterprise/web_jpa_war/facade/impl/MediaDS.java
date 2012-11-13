@@ -183,4 +183,12 @@ public class MediaDS implements IMediaDS {
     public List<Oeuvre> getOeuvres(HashMap<String, String> mapParamsOeuvre) {
         return oeuvreDao.findWithParams(mapParamsOeuvre);
     }
+
+    public List<Ouvrage> getOuvrages(HashMap<String, String> mapParamsOuvrage) {
+        return oDao.findWithParams(mapParamsOuvrage);
+    }
+
+    public void creerOeuvre(Oeuvre o) {
+        oeuvreDao.persist(o);
+    }
 }

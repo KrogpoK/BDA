@@ -38,8 +38,6 @@ public class Oeuvre implements Serializable {
     public final static String DATEPARUTIONINDICATEUR = "dateParutionIndicateur";
     public final static String LANGUE = "langue";
     private static final long serialVersionUID = 1L;
-
-
     @Id
     @Column(name = "IOEUVRE_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -268,4 +266,23 @@ public class Oeuvre implements Serializable {
         return langu;
     }
 
+    /*public static Oeuvre buildMoke() {
+
+        Oeuvre o = new Oeuvre();
+        o.setDateParution(DateTool.parseDate("2009-06-12"));
+        o.setGenre(Oeuvre.generateRandomGenre());
+        o.setLangue(Oeuvre.generateRandomLangue());
+        o.setTitre(Oeuvre.generateRandomTitle());
+        return o;
+    }
+
+    public static ArrayList<Oeuvre> buildMoke(int nb) {
+        ArrayList<Oeuvre> al = new ArrayList<Oeuvre>();
+
+        for (int i = 0; i < nb; i++) {
+            al.add(buildMoke());
+        }
+        return al;
+
+    }*/
 }

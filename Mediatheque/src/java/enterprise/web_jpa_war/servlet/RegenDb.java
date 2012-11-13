@@ -7,6 +7,7 @@ package enterprise.web_jpa_war.servlet;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
@@ -63,15 +64,14 @@ public class RegenDb extends AbstractServlet {
                 mediaDS.creerOuvrage(o);
             }
 
-            
             Configuration cFilm = new Configuration();
             cFilm.setEstRenouvelable(false);
             cFilm.setNbJours(5);
             cFilm.setNbOuvragesMemeType(4);
             cFilm.setNomSupport(Film.SUPPORT);
             em.persist(cFilm);
-            
-            
+
+
             utx.commit();
             em.close();
 

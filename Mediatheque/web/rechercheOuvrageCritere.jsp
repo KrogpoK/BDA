@@ -1,6 +1,6 @@
 <%-- 
-    Document   : rechercheLivreCritere
-    Created on : 11 nov. 2012, 10:15:20
+    Document   : rechercheOuvrageCritere
+    Created on : 12 nov. 2012, 23:56:20
     Author     : jeremiefabre
 --%>
 
@@ -8,16 +8,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
-<h1>Recherche des Livres</h1>
-<form id="searchFilmForm" action="RechercheOeuvre" method="post">
+<h1>Recherche des Ouvrages</h1>
+<form id="searchFilmForm" action="RechercheOuvrage" method="post">
     <table>
-        <tr>
-            <td><input type="radio" id="all" name="typeSupport" value="All" /></td><td>All</td>
-            <td><input type="radio" id="film" name="typeSupport" value="Film" /></td><td>Film</td>
-            <td><input type="radio" id="livre" name="typeSupport" value="Livre" checked="true" /></td><td>Livre</td>
-            <td><input type="radio" id="CD" name="typeSupport" value="CD" /></td><td>CD</td>
-            <td><input type="radio" id="periodique" name="typeSupport" value="Periodique" /></td><td>Periodique</td>
-        </tr>
         <tr>
             Titre : 
         <input type="text" id="titreSearch" name="titreSearch" placeholder="titre" />
@@ -39,10 +32,18 @@
         <input type="date" id="dateParutionSearch" name="dateParutionSearch" placeholder="date de parution" />
         <input type="radio" id="avant" name="dateParutionIndicateurSearch" value="avant" checked="true "/></td>avant
         <input type="radio" id="apres" name="dateParutionIndicateurSearch" value="apres" /></td>après
-        Auteur : 
-        <input type="text" id="auteurSearch" name="auteurSearch" placeholder="autheur" />
-        Editeur : 
-        <input type="text" id="editeurSearch" name="editeurSearch" placeholder="éditeur" />
+        <input type="date" id="dateArriveeSearch" name="dateArriveeSearch" placeholder="date d'arrivée" />
+        <input type="radio" id="avant" name="datArriveeIndicateurSearch" value="avant" checked="true "/></td>avant
+        <input type="radio" id="apres" name="datArriveeIndicateurSearch" value="apres" /></td>après
+        Disponibilité : 
+        <select name="disponibiliteSearch">
+            <option selected="true"></option>
+            <option>Oui</option>
+            <option>Non</option>
+        </select>
+        <input type="text" id="nbEmpruntsSearch" name="nbEmpruntsSearch" placeholder="nombre d'emprunts" />
+        <input type="radio" id="avant" name="nbEmpruntsIndicateurSearch" value="avant" checked="true "/></td>avant
+        <input type="radio" id="apres" name="nbEmpruntsIndicateurSearch" value="apres" /></td>après
         </tr>
     </table>
     <input type="submit" id="find" value="Find" />

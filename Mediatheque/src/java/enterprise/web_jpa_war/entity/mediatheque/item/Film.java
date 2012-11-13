@@ -94,11 +94,10 @@ public class Film extends Oeuvre implements Serializable {
         f.setTitre(Oeuvre.generateRandomTitle());
         f.setType("Polar");
         return f;
-
     }
 
     private static String generateRandomRealisateur() {
-ArrayList<String> realisateur = new ArrayList<String>();
+        ArrayList<String> realisateur = new ArrayList<String>();
 
         realisateur.add("Gérard Gaston");
         realisateur.add("Francois Dubois");
@@ -110,11 +109,11 @@ ArrayList<String> realisateur = new ArrayList<String>();
 
         String realisateu = realisateur.get(r.nextInt(realisateur.size()));
 
-        return realisateu;    
+        return realisateu;
     }
 
     private static String generateRandomActeurPrincipal() {
-ArrayList<String> acteurPrincipal = new ArrayList<String>();
+        ArrayList<String> acteurPrincipal = new ArrayList<String>();
 
         acteurPrincipal.add("Hubert le couvert");
         acteurPrincipal.add("Guy Copain");
@@ -126,7 +125,7 @@ ArrayList<String> acteurPrincipal = new ArrayList<String>();
 
         String acteurPrincipa = acteurPrincipal.get(r.nextInt(acteurPrincipal.size()));
 
-        return acteurPrincipa;    
+        return acteurPrincipa;
     }
 
     public static ArrayList<Film> buildMoke(int nb) {

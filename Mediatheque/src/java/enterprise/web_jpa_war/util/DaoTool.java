@@ -13,19 +13,19 @@ import java.util.HashMap;
  */
 public class DaoTool {
 
-    public static String analyseParams(HashMap<String, String> mapParamsOeuvre) {
+    public static String analyseParams(HashMap<String, String> mapParamsOeuvre, String oeuvre) {
         StringBuilder retour = new StringBuilder();
         if (!("".equals(mapParamsOeuvre.get(Oeuvre.TITRE)))) {
-            retour.append("f.titre like '%" + mapParamsOeuvre.get(Oeuvre.TITRE) + "%' AND ");
+            retour.append(oeuvre + ".titre like '%" + mapParamsOeuvre.get(Oeuvre.TITRE) + "%' AND ");
         }
         if (!("".equals(mapParamsOeuvre.get(Oeuvre.GENRE)))) {
-            retour.append("f.genre = '" + mapParamsOeuvre.get(Oeuvre.GENRE) + "' AND ");
+            retour.append(oeuvre + ".genre = '" + mapParamsOeuvre.get(Oeuvre.GENRE) + "' AND ");
         }
         if (!("".equals(mapParamsOeuvre.get(Oeuvre.LANGUE)))) {
-            retour.append("f.langue = '" + mapParamsOeuvre.get(Oeuvre.LANGUE) + "' AND ");
+            retour.append(oeuvre + ".langue = '" + mapParamsOeuvre.get(Oeuvre.LANGUE) + "' AND ");
         }
         if (!("".equals(mapParamsOeuvre.get(Oeuvre.DATEPARUTION)))) {
-            retour.append("f.dateParution ");
+            retour.append(oeuvre + ".dateParution ");
             retour.append((mapParamsOeuvre.get(Oeuvre.DATEPARUTIONINDICATEUR).equals("avant")) ? "<" : ">");
             retour.append("= '" + mapParamsOeuvre.get(Oeuvre.DATEPARUTION) + "' AND ");
         }

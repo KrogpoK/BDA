@@ -107,7 +107,7 @@ public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Peri
     private String analyseParamsPeriodique(HashMap<String, String> mapParamsOeuvre) {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
-        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre, "p"));
         if (!("".equals(mapParamsOeuvre.get(Periodique.THEME))) && mapParamsOeuvre.get(Periodique.THEME) != null) {
             retour.append("p.theme like '%" + mapParamsOeuvre.get(Periodique.THEME) + "%' AND ");
         }

@@ -113,7 +113,7 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
     private String analyseParamsFilm(HashMap<String, String> mapParamsOeuvre) {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
-        retour.append(DaoTool.analyseParams(mapParamsOeuvre));
+        retour.append(DaoTool.analyseParams(mapParamsOeuvre, "f"));
         if (!("".equals(mapParamsOeuvre.get(Film.REALISATEUR))) && mapParamsOeuvre.get(Film.REALISATEUR) != null) {
             retour.append("f.realisateur like '%" + mapParamsOeuvre.get(Film.REALISATEUR) + "%' AND ");
         }

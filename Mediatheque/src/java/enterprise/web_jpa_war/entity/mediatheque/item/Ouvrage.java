@@ -28,6 +28,11 @@ public class Ouvrage implements Serializable {
     public static final int DISPO_LIBRE = 0;
     public static final int DISPO_RESERVE = 1;
     public static final int DISPO_EMPRUNTE = 2;
+    public final static String DATEARRIVEE = "dateArrivee";
+    public final static String DATEARRIVEEINDICATEUR = "dateArriveeIndicateur";
+    public final static String DISPONIBILITE = "disponibilite";
+    public final static String NBEMPRUNTS = "nbEmprunts";
+    public final static String NBEMPRUNTSINDICATEUR = "nbEmpruntsIndicateur";
     
     @Id
     @Column(name = "IDOUVRAGE")
@@ -91,7 +96,6 @@ public class Ouvrage implements Serializable {
         this.nbEmprunts = nbEmprunts;
     }
 
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -76,4 +76,8 @@ public interface IMediaDS {
     public List<Periodique> getPeriodiques(HashMap<String, String> mapParamsOeuvre);
 
     public List<Oeuvre> getOeuvres(HashMap<String, String> mapParamsOeuvre);
+
+    public List<Ouvrage> getOuvrages(HashMap<String, String> mapParamsOuvrage);
+
+    public void creerOeuvre(Oeuvre o);
 }

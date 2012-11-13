@@ -6,8 +6,11 @@ package enterprise.web_jpa_war.dao.impl.mediatheque.item;
 
 import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
+import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.util.DaoTool;
 import enterprise.web_jpa_war.util.DateTool;
 import java.util.HashMap;
 import java.util.List;
@@ -50,13 +53,11 @@ public class OuvrageDao extends AbstractCommonnDao implements ICommonDao<Ouvrage
     public List<Ouvrage> findAllByExample(Ouvrage obj) {
         return (List<Ouvrage>) em.createQuery("select o from Ouvrage o where " + getWhereClause(obj)).getResultList();
     }
-    
+
     public List<Ouvrage> findAllByExample(Oeuvre oeuvre) {
-        try{
-            return (List<Ouvrage>) em.createQuery("select o from Ouvrage o where o.oeuvre.id = '"+oeuvre.getId()+"'").getResultList();
-        }
-        catch(Exception e)
-        {
+        try {
+            return (List<Ouvrage>) em.createQuery("select o from Ouvrage o where o.oeuvre.id = '" + oeuvre.getId() + "'").getResultList();
+        } catch (Exception e) {
             return null;
         }
     }
@@ -91,5 +92,35 @@ public class OuvrageDao extends AbstractCommonnDao implements ICommonDao<Ouvrage
         }
 
         return clause.toString();
+    }
+
+    public List<Ouvrage> findWithParams(HashMap<String, String> mapParamsOuvrage) {
+        String retour = analyseParamsOuvrage(mapParamsOuvrage);
+        System.out.println("select o from Ouvrage o " + retour);
+        Long tpsAvt = System.currentTimeMillis();
+        List<Ouvrage> result = (List<Ouvrage>) em.createQuery("select o from Ouvrage o " + retour).getResultList();
+        System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
+        return result;
+    }
+
+    private String analyseParamsOuvrage(HashMap<String, String> mapParamsOuvrage) {
+        StringBuilder retour = new StringBuilder();
+        retour.append("where ");
+        retour.append(DaoTool.analyseParams(mapParamsOuvrage, "o"));
+        if (!("".equals(mapParamsOuvrage.get(Ouvrage.DATEARRIVEE))) && mapParamsOuvrage.get(Ouvrage.DATEARRIVEE) != null) {
+            retour.append("o.dateParution ");
+            retour.append((mapParamsOuvrage.get(Ouvrage.DATEARRIVEEINDICATEUR).equals("avant")) ? "<" : ">");
+            retour.append("= '" + mapParamsOuvrage.get(Ouvrage.DATEARRIVEE) + "' AND ");
+        }
+        if (!("".equals(mapParamsOuvrage.get(Ouvrage.DISPONIBILITE))) && mapParamsOuvrage.get(Ouvrage.DISPONIBILITE) != null) {
+            retour.append("o.disponibilite = '" + mapParamsOuvrage.get(Ouvrage.DISPONIBILITE) + "' AND ");
+        }
+        if (!("".equals(mapParamsOuvrage.get(Ouvrage.NBEMPRUNTS))) && mapParamsOuvrage.get(Ouvrage.NBEMPRUNTS) != null) {
+            retour.append("o.nbEmprunts ");
+            retour.append((mapParamsOuvrage.get(Ouvrage.NBEMPRUNTSINDICATEUR).equals("avant")) ? "<" : ">");
+            retour.append("= '" + mapParamsOuvrage.get(Ouvrage.NBEMPRUNTS) + "' AND ");
+        }
+        retour.append("1=1 ");
+        return retour.toString();
     }
 }
