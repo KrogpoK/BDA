@@ -44,7 +44,7 @@ public interface IMediaDS {
     public List<Ouvrage> getListeOuvrage(Oeuvre oeuvre);
 
 //    public void ajouterCritique(int idOeuvre, Critique critique);
-    public void creerOuvrage(Ouvrage ouvrage);
+    public void persistOuvrage(Ouvrage ouvrage);
 
     public boolean oeuvreExists(Oeuvre oeuvre);
 
