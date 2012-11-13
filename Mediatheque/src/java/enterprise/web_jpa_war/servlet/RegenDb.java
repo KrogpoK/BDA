@@ -53,7 +53,7 @@ public class RegenDb extends AbstractServlet {
             adherentDS.creerAdherent(admin);
             Adherent ouioui = Adherent.buildMoke("oui", "oui", "1990-05-24");
             adherentDS.creerAdherent(ouioui);
-            for (Film f : Film.buildMoke(1000)) {
+            for (Film f : Film.buildMoke(10)) {
                 mediaDS.creerFilm(f);
                 Ouvrage o = new Ouvrage();
                 Random r = new Random();
@@ -61,7 +61,7 @@ public class RegenDb extends AbstractServlet {
                 o.setDateArrivee(new Date());
                 o.setNbEmprunts(0);
                 o.setOeuvre(f);
-                mediaDS.creerOuvrage(o);
+                mediaDS.persistOuvrage(o);
             }
 
             Configuration cFilm = new Configuration();

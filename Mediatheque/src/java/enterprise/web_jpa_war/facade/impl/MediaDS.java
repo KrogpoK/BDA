@@ -76,17 +76,17 @@ public class MediaDS implements IMediaDS {
         List<Ouvrage> l = getListeOuvrage(oeuvre);
         if (l != null && l.size() > 0) {
             boolean dispo = false;
-            System.out.println("nb items : "+l.size());
+            System.out.println("nb items : " + l.size());
             for (Ouvrage o : l) {
                 if (o.getDisponibilite() == Ouvrage.DISPO_LIBRE) {
                     System.out.println("pouet");
                     dispo = true;
                 }
             }
-            System.out.println("dispo :  "+dispo );
+            System.out.println("dispo :  " + dispo);
             return dispo;
         }
-            System.out.println("C PAS DISPO ET PIS CEST TOUT ");
+        System.out.println("C PAS DISPO ET PIS CEST TOUT ");
         return false;
     }
 
@@ -130,7 +130,7 @@ public class MediaDS implements IMediaDS {
         return pDao.find(id);
     }
 
-    public void creerOuvrage(Ouvrage ouvrage) {
+    public void persistOuvrage(Ouvrage ouvrage) {
         oDao.persist(ouvrage);
     }
 
@@ -159,7 +159,7 @@ public class MediaDS implements IMediaDS {
         resa.setOeuvre(oeuvre);
         List<Reservation> listeResa = reservationDao.findAllByExample(resa);
         if (resa != null) {
-            return listeResa.size() + 1;
+            return listeResa.size() - 1;
         }
         return 1;
     }

@@ -4,7 +4,10 @@
  */
 package enterprise.web_jpa_war.entity.mediatheque.item;
 
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -65,6 +68,62 @@ public class CD extends Oeuvre implements Serializable {
             return false;
         }
         return true;
+    }
+    
+        public static CD buildMoke() {
+
+        CD f = new CD();
+        f.setDateParution(DateTool.parseDate("2009-06-12"));
+        f.setGenre(Oeuvre.generateRandomGenre());
+        f.setLangue(Oeuvre.generateRandomLangue());
+        f.setTitre(Oeuvre.generateRandomTitle());
+        f.setGenre(Oeuvre.generateRandomGenre());
+        f.setInterprete(CD.generateRandomInterprete());
+        f.setNbPiste(12);
+        f.setMaisonEdition(CD.generateRandomMaisonEdition());
+        return f;
+    }
+
+    private static String generateRandomInterprete() {
+        ArrayList<String> interprete = new ArrayList<String>();
+
+        interprete.add("Gérard Gaston");
+        interprete.add("Francois Dubois");
+        interprete.add("Sélio Rofrigez");
+        interprete.add("Michel Dupont");
+        interprete.add("Fred le touriste");
+
+        Random r = new Random();
+
+        String interpretee = interprete.get(r.nextInt(interprete.size()));
+
+        return interpretee;
+    }
+
+    private static String generateRandomMaisonEdition() {
+        ArrayList<String> maisonEdition = new ArrayList<String>();
+
+        maisonEdition.add("Hubert le couvert");
+        maisonEdition.add("Guy Copain");
+        maisonEdition.add("pas d'inspiration");
+        maisonEdition.add("pas envie de réfléchir");
+        maisonEdition.add("cool");
+
+        Random r = new Random();
+
+        String maisonEditione = maisonEdition.get(r.nextInt(maisonEdition.size()));
+
+        return maisonEditione;
+    }
+
+    public static ArrayList<CD> buildMoke(int nb) {
+        ArrayList<CD> cd = new ArrayList<CD>();
+
+        for (int i = 0; i < nb; i++) {
+            cd.add(buildMoke());
+        }
+        return cd;
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.EmpruntDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
@@ -82,6 +83,14 @@ public class GestionReservation extends AbstractServlet {
                     resa.setDebut(new Date());
                     resa.setOeuvre(o);
                     if (mediaDS.estDisponible(o)) {
+                        List<Ouvrage> listeOuvrage = mediaDS.getListeOuvrage(o);
+                        int ind = 0;
+                        while( listeOuvrage.get(ind).getDisponibilite() !=(Ouvrage.DISPO_LIBRE))
+                        {
+                            ind++;
+                        }
+                        listeOuvrage.get(ind).setDisponibilite(Ouvrage.DISPO_RESERVE);
+                        mediaDS.persistOuvrage(listeOuvrage.get(ind));
                         resa.setDispo(new Date());
 //                        listeReservationDisponible.add(resa);
                     } else {
@@ -93,7 +102,9 @@ public class GestionReservation extends AbstractServlet {
                 }
             }
             utx.commit();
-            for(Reservation r : reservationDS.getReservationsActives(adherent))
+            
+            //Liste les reservations
+            for(Reservation r : reservationDS.getReservationsByAdherent(adherent))
             {
                 //si la reservation n'est pas disponible
                 if(r.getDispo() == null)
