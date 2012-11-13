@@ -76,13 +76,17 @@ public class MediaDS implements IMediaDS {
         List<Ouvrage> l = getListeOuvrage(oeuvre);
         if (l != null && l.size() > 0) {
             boolean dispo = false;
+            System.out.println("nb items : "+l.size());
             for (Ouvrage o : l) {
                 if (o.getDisponibilite() == Ouvrage.DISPO_LIBRE) {
+                    System.out.println("pouet");
                     dispo = true;
                 }
             }
+            System.out.println("dispo :  "+dispo );
             return dispo;
         }
+            System.out.println("C PAS DISPO ET PIS CEST TOUT ");
         return false;
     }
 
