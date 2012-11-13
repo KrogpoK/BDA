@@ -36,12 +36,18 @@
         </form>
 
         <%
-            if (request.getAttribute("error") == null && request.getAttribute("listeEmprunt") != null) {
+            System.out.println("dans jsp, error : " + request.getAttribute("error"));
+            if (request.getAttribute("error") == null) {
+                if (request.getAttribute("listeEmprunts") == null) {
+        %>
+
+        <h2>Il n'y a pas d'emprunts actifs</h2>
+        <% } else {
         %>
         <h2>Liste des emprunts </h2>
         <table>
             <th>Titre</th><th>genre</th><th>date emprunt</th><th>type</th><th></th>          
-            <c:forEach var="emprunt" begin="0" items="${requestScope.listeEmprunt}">
+            <c:forEach var="emprunt" begin="0" items="${requestScope.listeEmprunts}">
                 <tr>
                     <td>${emprunt.eOuvrage.oeuvre.titre}</td> 
                     <td>${emprunt.eOuvrage.oeuvre.genre}</td> 
@@ -53,10 +59,31 @@
             </c:forEach>
         </table>
 
-        <%  } else {%>
-        <h1>${requestScope.error}</h1>
-        <%  }
+        <%            }
+            if (request.getAttribute("listeReservation") == null) {
+        %>
 
+        <h2>Il n'y a pas de reservations actives</h2>
+        <%  } else {
+        %>
+        <h2>Liste des reservations </h2>
+        <table>
+            <th>Titre</th><th>genre</th><th>type</th><th></th>          
+            <c:forEach var="resa" begin="0" items="${requestScope.listeReservation}">
+                <tr>
+                    <td>${resa.oeuvre.titre}</td> 
+                    <td>${resa.oeuvre.genre}</td>
+                    <td>
+                        <a href="GestionEmprunt?action=creer&idOeuvre=${resa.oeuvre.id}&idAdherent=${resa.compte.proprietaire.id}&idResa=${resa.id}" ><input type ="button" value="emprunter" /></a> 
+                    </td>
+                </tr> 
+            </c:forEach>
+        </table>
+        <%  }
+            } //si il y a eu une erreur
+            else {
+                out.println("<h2>erreur : " + request.getAttribute("error") + "</h2>");
+            }
         %>
     </body>
 </html>

@@ -83,12 +83,15 @@ public class GestionReservation extends AbstractServlet {
                     listeReservationEnAttente.add(resa);
                     listeFileAttente.add(mediaDS.getPlaceAttenteReservation(o));
                 }
+                adherentDS.creerReservation(resa);
             }
 
-            listeEmpruntsCourants = adherentDS.getEmprunts(adherent);
-            for (Emprunt e : listeEmpruntsCourants) {
-                Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());
-                listeJourRestantEmprunt.add(c.getNbJours() - DateTool.getDifference(new Date(), e.getDateDebutEmprunt()));
+            listeEmpruntsCourants = adherentDS.getEmpruntsActifs(adherent);
+            if (listeEmpruntsCourants != null) {
+                for (Emprunt e : listeEmpruntsCourants) {
+                    Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());
+                    listeJourRestantEmprunt.add(c.getNbJours() - DateTool.getDifference(new Date(), e.getDateDebutEmprunt()));
+                }
             }
             request.setAttribute("listeResaDispo", listeReservationDisponible);
             request.setAttribute("listeResaAttente", listeReservationEnAttente);

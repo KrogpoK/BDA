@@ -38,9 +38,11 @@ public class FournisseurDao extends AbstractCommonnDao implements ICommonDao<Fou
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Fournisseur obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(Fournisseur obj) {
         em.createQuery("delete from Fournisseur r where " + getWhereClause(obj));

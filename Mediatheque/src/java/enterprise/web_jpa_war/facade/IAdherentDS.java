@@ -31,7 +31,7 @@ public interface IAdherentDS {
 
     public void updateAdherent(Adherent adherent);
 
-    public void supprimerAdherent(int idAdherent);
+    public void supprimerAdherent(Adherent adherent);
 
     public List<Adherent> listerAdherent();
 
@@ -42,6 +42,7 @@ public interface IAdherentDS {
 
     public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre);
 
+    public List<Reservation> getReservationsActives(Adherent a);
     public List<Emprunt> getEmprunts(Adherent a);
 
     public void ajouterEmprunt(Emprunt emprunt);
@@ -49,7 +50,12 @@ public interface IAdherentDS {
     //indique si le rendu se fait en retard
     public Emprunt getEmprunt(int idEmprunt);
 
-    public void supprimerReservation(int idAdherent, int idReservation);
+    public void creerReservation(Reservation r);
+    
+    public void supprimerReservation(Reservation reservation);
 
+    public Reservation getReservation(int idReservation);
     public Adherent getAdherent(int idAdherent);
+    
+    public List<Emprunt> getEmpruntsActifs(Adherent a);
 }

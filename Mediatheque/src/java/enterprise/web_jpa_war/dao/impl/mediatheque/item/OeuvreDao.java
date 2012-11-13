@@ -66,9 +66,11 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Oeuvre obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(Oeuvre obj) {
         em.createQuery("delete from Ouvrage o where " + getWhereClause(obj));
@@ -86,7 +88,7 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
         String retour = "where " + DaoTool.analyseParams(mapParamsOeuvre, "o") + "1=1 ";
         System.out.println("select o from Oeuvre o " + retour);
         Long tpsAvt = System.currentTimeMillis();
-        List<Oeuvre> result = (List<Oeuvre>) em.createQuery("select o from Oeuvre o " + retour).getResultList();
+        List<Oeuvre> result = (List<Oeuvre>) em.createQuery("select o from Oeuvre o where " + retour).getResultList();
         System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");
         return result;     
     }

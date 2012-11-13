@@ -18,8 +18,9 @@
             <li><a href ="JaiFaim.jsp" >manger Une pizza</a></li>
             <li><a href="ListPersonne" >Lister les adherents</a></li>
             <li><a href="rechercheOeuvre.jsp" >rechercher une oeuvre</a></li>
-            <li><a href="CreatePerson.jsp"><strong>Creer une personne</strong></a></li>
+            <li><a href="CreatePerson.jsp">Creer une personne</a></li>
             <li><a href="RegenDb" >creer des choses dans la base</a></li>
+            <li><a href="GestionEmprunt.jsp" >Gerer les emprunts </a></li>
         </ul>
         <form action="Connexion" method="post" >
             <input type="hidden" name="action" value="deconnexion" />

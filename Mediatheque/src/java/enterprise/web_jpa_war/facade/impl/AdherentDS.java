@@ -9,14 +9,11 @@ import enterprise.web_jpa_war.dao.impl.configuration.ConfigurationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.EmpruntDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.entity.Adherent;
-import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Panier;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
-import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.IAdherentDS;
-import enterprise.web_jpa_war.util.DateTool;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -94,8 +91,8 @@ public class AdherentDS implements IAdherentDS {
         adherentDao.persist(adherent);
     }
 
-    public void supprimerAdherent(int idAdherent) {
-        adherentDao.delete(idAdherent);
+    public void supprimerAdherent(Adherent adherent) {
+        adherentDao.delete(adherent);
     }
 
     public List<Adherent> listerAdherent() {
@@ -117,20 +114,31 @@ public class AdherentDS implements IAdherentDS {
     }
 
     public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre) {
-       Reservation r = new Reservation();
-       r.setOeuvre(oeuvre);
+        Reservation r = new Reservation();
+        r.setOeuvre(oeuvre);
         return reservationDao.findAllByExample(r);
     }
 
-    
     public Emprunt getEmprunt(int idEmprunt) {
 
         return empruntDao.find(idEmprunt);
 
     }
 
-    public void supprimerReservation(int idAdherent, int idReservation) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void creerReservation(Reservation r) {
+        reservationDao.persist(r);
+    }
+
+    public void supprimerReservation(Reservation resa) {
+        reservationDao.delete(resa);
+    }
+
+    public Reservation getReservation(int idReservation) {
+        try {
+            return reservationDao.find(idReservation);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Adherent getAdherent(String login) {
@@ -152,7 +160,16 @@ public class AdherentDS implements IAdherentDS {
     public void ajouterEmprunt(Emprunt emprunt) {
         empruntDao.persist(emprunt);
     }
-    
-    
-    
+
+    public List<Reservation> getReservationsActives(Adherent a) {
+        return reservationDao.findAllResevationsActives(a);
+    }
+
+    public List<Emprunt> getEmpruntsActifs(Adherent a) {
+        try {
+            return empruntDao.findAllEmpruntsActif(a);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

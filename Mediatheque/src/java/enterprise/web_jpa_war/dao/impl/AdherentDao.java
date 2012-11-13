@@ -35,6 +35,8 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
 
     public Adherent findByExample(Adherent example) {
         try {
+            System.out.println("dans dao, recherchre adherent : ");
+            System.out.println("select a from Adherent a where " + getWhereClause(example));
             Adherent a = (Adherent) em.createQuery("select a from Adherent a where " + getWhereClause(example)).getSingleResult();
 
             if (a.getAdress() != null) {
@@ -61,9 +63,11 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Adherent obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(Adherent obj) {
         em.createQuery("delete from Adherent a where " + getWhereClause(obj));
