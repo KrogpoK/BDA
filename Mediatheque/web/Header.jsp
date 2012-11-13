@@ -31,9 +31,6 @@
                     <li class="">
                         <a href="rechercheOeuvre.jsp">Recherche Oeuvre</a>
                     </li>
-                    <li class="">
-                        <a href="detailsOeuvre.jsp">Critique Oeuvre</a>
-                    </li>
                     <% if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
                     %>
                     <li><a href="rechercheOuvrage.jsp" >Recherche Stock</a></li>

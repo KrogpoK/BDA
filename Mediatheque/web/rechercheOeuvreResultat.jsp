@@ -20,16 +20,17 @@
                 <th>Langue</th>
                 <th>Support</th>
                 <th>Panier</th>
+                <th>Critique</th>
             </tr>
         </thead>
         <tbody>
-            <% int cpt = 0; %>
+            <% int cpt = 0;%>
             <c:forEach var="oeuvre" begin="0" items="${requestScope.listOeuvres}">
                 <tr>
-                    <% 
+                    <%
                         String keyWord = (String) request.getAttribute("keyWord");
                     %>
-                    <td><% out.print(cpt); %></td> 
+                    <td><% out.print(cpt);%></td> 
                     <td>${oeuvre.getTitre(keyWord)}</td> 
                     <td>${oeuvre.getGenre()}</td> 
                     <td>${oeuvre.getStrDateParution()}</td> 
@@ -43,8 +44,11 @@
                             <input type="submit" class="btn" id="add" value="X" />
                         </form>
                     </td>
-                </tr> 
-                <% cpt++; %>
+                    <td>
+                        <a class="btn" href="DetailsOeuvre?id=${oeuvre.getId()}&oeuvreType=${oeuvre.getStrType()}">X</a> 
+                    </td>
+                </tr>
+                <% cpt++;%>
             </c:forEach>
         </tbody>
     </table>

@@ -10,7 +10,7 @@
 <footer class="footer">
     <div class="container">
         <p class="pull-right"><a href="#">Retour en haut</a></p>
-        <p>Site web crée par l'équipe FAREZ</p>
+        <p>Site web crée par l'équipe FAREZ & Co</p>
         <p>© Tout droits réservés</p>
     </div>
 </footer>

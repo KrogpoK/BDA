@@ -21,6 +21,7 @@
                 <th>Thème</th>
                 <th>Périodicité</th>
                 <th>Panier</th>
+                <th>Critique</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +45,9 @@
                             <input type="submit" id="add" class="btn" value="X" />
                         </form>
                     </td>
-
+                    <td>
+                        <a class="btn" href="DetailsOeuvre?id=${oeuvre.getId()}&oeuvreType=${oeuvre.getStrType()}">X</a> 
+                    </td>
                 </tr> 
                 <% cpt++;%>
             </c:forEach>
