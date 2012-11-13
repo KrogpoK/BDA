@@ -107,7 +107,7 @@ public class OuvrageDao extends AbstractCommonnDao implements ICommonDao<Ouvrage
     private String analyseParamsOuvrage(HashMap<String, String> mapParamsOuvrage) {
         StringBuilder retour = new StringBuilder();
         retour.append("where ");
-        retour.append(DaoTool.analyseParams(mapParamsOuvrage, "o"));
+        retour.append(DaoTool.analyseParams(mapParamsOuvrage, "o.oeuvre"));
         if (!("".equals(mapParamsOuvrage.get(Ouvrage.DATEARRIVEE))) && mapParamsOuvrage.get(Ouvrage.DATEARRIVEE) != null) {
             retour.append("o.dateParution ");
             retour.append((mapParamsOuvrage.get(Ouvrage.DATEARRIVEEINDICATEUR).equals("avant")) ? "<" : ">");

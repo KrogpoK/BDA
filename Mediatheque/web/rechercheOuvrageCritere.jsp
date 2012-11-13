@@ -10,7 +10,7 @@
 
 <h1>Recherche des Ouvrages</h1>
 <div class="container-fluid well">
-    <form id="searchFilmForm" action="RechercheOeuvre" method="post">
+    <form id="searchFilmForm" action="RechercheOuvrage" method="post">
         <fieldset>
             <legend>Critères</legend>
             <label class="radio">

@@ -8,7 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
-<h3>Resultats : ${requestScope.listFilms.size()}</h3>
+<h3>Resultats : ${requestScope.listCDs.size()}</h3>
 <div class="container-fluid well">
     <table class="table table-hover">
         <thead>
@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <% int cpt = 0;%>
-            <c:forEach var="oeuvre" begin="0" items="${requestScope.listFilms}">
+            <c:forEach var="oeuvre" begin="0" items="${requestScope.listCDs}">
                 <tr>
                     <% String keyWord = (String) request.getAttribute("keyWord");
                     %>

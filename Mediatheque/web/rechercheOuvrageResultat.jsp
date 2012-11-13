@@ -31,11 +31,11 @@
                     <% String keyWord = (String) request.getAttribute("keyWord");
                     %>
                     <td><% out.print(cpt);%></td> 
-                    <td>${ouvrage.getTitre(keyWord)}</td> 
-                    <td>${ouvrage.getGenre()}</td> 
-                    <td>${ouvrage.getStrDateParution()}</td> 
-                    <td>${ouvrage.getLangue()}</td> 
-                    <td>${ouvrage.getStrType()}</td>
+                    <td>${ouvrage.oeuvre.getTitre(keyWord)}</td> 
+                    <td>${ouvrage.oeuvre.getGenre()}</td> 
+                    <td>${ouvrage.oeuvre.getStrDateParution()}</td> 
+                    <td>${ouvrage.oeuvre.getLangue()}</td> 
+                    <td>${ouvrage.oeuvre.getStrType()}</td>
                     <td>${ouvrage.getDateArrivee()}</td>
                     <td>${ouvrage.getDisponibilite()}</td>
                     <td>${ouvrage.getNbEmprunts()}</td>
