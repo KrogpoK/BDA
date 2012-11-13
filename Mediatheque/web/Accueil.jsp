@@ -30,13 +30,13 @@
                     <div class="sidebar-nav">
                         <h3>Bonjour <% out.print(prenom);%></h3>
                         <ul>
-                            <li><a href="rechercheOeuvre.jsp" >Espace Personnel</a></li>
+                            <li><a href="Reservation.jsp" >Espace Personnel</a></li>
                             <li><a href="rechercheOeuvre.jsp" >Rechercher des oeuvres</a></li>
-                            <li><a href="rechercheOeuvre.jsp" >Critiquer des oeuvres</a></li>
+                            <li><a href="detailsOeuvre.jsp" >Critiquer des oeuvres</a></li>
                             <% if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
                             %>
-                            <li><a href="rechercheOeuvre.jsp" >Rechercher dans le stock</a></li>
-                            <li><a href="rechercheOeuvre.jsp" >Gérer les emprunts</a></li>
+                            <li><a href="rechercheOuvrage.jsp" >Rechercher dans le stock</a></li>
+                            <li><a href="GestionEmprunt.jsp" >Gérer les emprunts</a></li>
                             <% } %>
                         </ul>
                     </div>

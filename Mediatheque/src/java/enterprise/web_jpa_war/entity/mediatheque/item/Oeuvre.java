@@ -171,7 +171,7 @@ public class Oeuvre implements Serializable {
         sujet.add("Le chien");
         sujet.add("Le chat");
         sujet.add("Le pinguin");
-        sujet.add("L'elephant");
+        sujet.add("L elephant");
         sujet.add("Le ver de terre");
         sujet.add("Le mamouth");
         sujet.add("Le serpent");
@@ -181,7 +181,7 @@ public class Oeuvre implements Serializable {
         sujet.add("Le boulet");
         sujet.add("Le poulet");
         sujet.add("Le coq");
-        sujet.add("L'ane");
+        sujet.add("L ane");
         sujet.add("Le cochon");
         sujet.add("Le rat");
 
@@ -210,7 +210,7 @@ public class Oeuvre implements Serializable {
         lieu.add("de la piscine");
         lieu.add("de la tour");
         lieu.add("de la tourelle");
-        lieu.add("de l'eglise");
+        lieu.add("de l eglise");
         lieu.add("du restaurant");
         lieu.add("de la foret");
         lieu.add("de la colline");

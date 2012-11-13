@@ -87,15 +87,9 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                         <%
                             //Si il y a une session en cours
                         } else {
-                            //si l'utilisateur est un administrateur
-                            if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
-                        %>
-                        <jsp:forward page="AccueilAdmin.jsp"></jsp:forward>
-                        <%                    } //si l'utilisateur est un client
-                        else {
                         %>
                         <jsp:forward page="Accueil.jsp"></jsp:forward>
-                        <%                            }
+                        <%                            
                             }
                         %>
 

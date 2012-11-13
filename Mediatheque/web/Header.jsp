@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -26,14 +26,19 @@
                         <a href="Accueil.jsp">Accueil</a>
                     </li>
                     <li class="">
-                        <a href="sais">Espace Personnel</a>
+                        <a href="Reservation.jsp">Espace Personnel</a>
                     </li>
                     <li class="">
-                        <a href="./getting-started.html">Recherche Oeuvre</a>
+                        <a href="rechercheOeuvre.jsp">Recherche Oeuvre</a>
                     </li>
                     <li class="">
-                        <a href="./getting-started.html">Critique Oeuvre</a>
+                        <a href="detailsOeuvre.jsp">Critique Oeuvre</a>
                     </li>
+                    <% if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
+                    %>
+                    <li><a href="rechercheOuvrage.jsp" >Recherche Stock</a></li>
+                    <li><a href="GestionEmprunt.jsp" >Gérer Emprunts</a></li>
+                    <% }%>
                     <li>
                         <form action="Connexion" method="post" >
                             <input type="hidden" name="action" value="deconnexion" />
