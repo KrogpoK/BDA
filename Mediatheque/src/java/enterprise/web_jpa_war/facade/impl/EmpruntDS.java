@@ -108,4 +108,10 @@ public class EmpruntDS implements IEmpruntDS {
     public List<Emprunt> getEmprutTermineDuJour(Adherent a, Date d) {
         return empruntDao.getEmprutTermineDuJour(a, d);
     }
+
+    public Emprunt getEmpruntPrepare(Adherent a, Oeuvre oeuvre) {
+        return empruntDao.getEmpruntPrepare(a, oeuvre);
+    }
+    
+    
 }

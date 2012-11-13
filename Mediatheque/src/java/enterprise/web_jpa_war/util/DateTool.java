@@ -38,7 +38,10 @@ public class DateTool {
 
     public static String printDate(Date date) {
         DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-        return df.format(date);
+        if(date != null){
+            return df.format(date);
+        }
+        else return null;
     }
 
     public static String printTime(Date date) {

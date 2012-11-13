@@ -89,9 +89,14 @@ public class GestionReservation extends AbstractServlet {
                         {
                             ind++;
                         }
-                        listeOuvrage.get(ind).setDisponibilite(Ouvrage.DISPO_RESERVE);
-                        mediaDS.persistOuvrage(listeOuvrage.get(ind));
+                        Ouvrage ouvrage = listeOuvrage.get(ind);
+                        ouvrage.setDisponibilite(Ouvrage.DISPO_RESERVE);
+                        mediaDS.persistOuvrage(ouvrage);
                         resa.setDispo(new Date());
+                         Emprunt e = new Emprunt();
+                            e.seteCompte(adherent.getCompte());
+                            e.seteOuvrage(ouvrage);
+                            empruntDS.ajouterEmprunt(e);
 //                        listeReservationDisponible.add(resa);
                     } else {
 //                        listeReservationEnAttente.add(resa);

@@ -77,7 +77,7 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
     public List<Emprunt> findAllEmpruntsActif(Adherent a) {
         try {
             List<Emprunt> l = em.createQuery("select e from Emprunt e where e.eCompte.id='" + a.getCompte().getId()
-                    + "' and e.dateFinEmprunt IS NULL ").getResultList();
+                    + "' and e.dateFinEmprunt IS NULL and e.dateDebutEmprunt IS NOT NULL").getResultList();
             return l;
         } catch (Exception e) {
             return null;
@@ -93,6 +93,20 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             query.setParameter("date", d, TemporalType.DATE);
 
             return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Emprunt getEmpruntPrepare(Adherent a, Oeuvre oeuvre) {
+        try {
+            Query query = em.createQuery("select e from Emprunt e "
+                    + "where e.dateFinEmprunt IS NULL "
+                    + "and e.dateDebutEmprunt IS NULL "
+                    + "and e.eCompte.proprietaire.id = " + a.getId() + " "
+                    + "and e.eOuvrage.oeuvre.id = " + oeuvre.getId());
+
+            return (Emprunt) query.getSingleResult();
         } catch (Exception e) {
             return null;
         }
