@@ -5,7 +5,10 @@
 package enterprise.web_jpa_war.servlet.common;
 
 import enterprise.web_jpa_war.facade.IAdherentDS;
+import enterprise.web_jpa_war.facade.IEmpruntDS;
 import enterprise.web_jpa_war.facade.IMediaDS;
+import enterprise.web_jpa_war.facade.IPanierDS;
+import enterprise.web_jpa_war.facade.IReservationDS;
 import java.io.IOException;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -30,6 +33,9 @@ public abstract class AbstractServlet extends HttpServlet {
     protected EntityManager em;
     protected IAdherentDS adherentDS;
     protected IMediaDS mediaDS;
+    protected IPanierDS panierDS;
+    protected IEmpruntDS empruntDS;
+    protected IReservationDS reservationDS;
 
     /**
      * Processes requests for both HTTP

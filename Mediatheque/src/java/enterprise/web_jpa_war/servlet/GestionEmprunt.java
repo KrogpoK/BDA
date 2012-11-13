@@ -11,7 +11,9 @@ import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
+import enterprise.web_jpa_war.facade.impl.EmpruntDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
+import enterprise.web_jpa_war.facade.impl.ReservationDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
@@ -49,6 +51,8 @@ public class GestionEmprunt extends AbstractServlet {
             em = emf.createEntityManager();
             adherentDS = new AdherentDS(em);
             mediaDS = new MediaDS(em);
+            empruntDS = new EmpruntDS(em);
+            reservationDS = new ReservationDS(em);
             
             Adherent a = null;
             //rendre un emprunt
@@ -57,12 +61,12 @@ public class GestionEmprunt extends AbstractServlet {
                 String empruntStr = request.getParameter("idEmprunt");
                 int idEmprunt = Integer.parseInt(empruntStr);
                 
-                Emprunt e = adherentDS.getEmprunt(idEmprunt);
+                Emprunt e = empruntDS.getEmprunt(idEmprunt);
                 a = e.geteCompte().getProprietaire();
                 Ouvrage o = e.geteOuvrage();
 
                 //attribuer la reservation au prochain mec
-                List<Reservation> liste = adherentDS.getReservationsByOeuvre(o.getOeuvre());
+                List<Reservation> liste = reservationDS.getReservationsByOeuvre(o.getOeuvre());
                 System.out.println("liste reservation de l'eouvre : "+liste.size());
                 if (liste != null && !liste.isEmpty()) {
                     System.out.println("dans if");
@@ -121,13 +125,12 @@ public class GestionEmprunt extends AbstractServlet {
                             a=adherentDS.getAdherent(idAdherent);
                             e.seteCompte(a.getCompte());
                             e.seteOuvrage(ouvragesDisponibles.get(0));
-                            adherentDS.ajouterEmprunt(e);
+                            empruntDS.ajouterEmprunt(e);
                             e.geteOuvrage().setDisponibilite(Ouvrage.DISPO_EMPRUNTE);
                             //supression de la reservation correspondante
                             String strResaId = request.getParameter("idResa");
                             int idResa = Integer.parseInt(strResaId);
-                            System.out.println("avant ds : "+ idResa);
-                            adherentDS.supprimerReservation(adherentDS.getReservation(idResa));
+                            reservationDS.supprimerReservation(reservationDS.getReservation(idResa));
                         }
                     }
                 }
@@ -145,8 +148,8 @@ public class GestionEmprunt extends AbstractServlet {
                 request.setAttribute("error", "adherent non trouve");
                 System.out.println("error : non trouve");
             } else {
-                List<Emprunt> listeEmprunts = adherentDS.getEmpruntsActifs(a);
-                List<Reservation> listeReservation = adherentDS.getReservationsActives(a);
+                List<Emprunt> listeEmprunts = empruntDS.getEmpruntsActifs(a);
+                List<Reservation> listeReservation = reservationDS.getReservationsActives(a);
                 request.setAttribute("listeEmprunts", listeEmprunts);
                 request.setAttribute("listeReservation", listeReservation);
             }

@@ -4,6 +4,7 @@
  */
 package enterprise.web_jpa_war.servlet;
 
+import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
@@ -30,20 +31,28 @@ public class Connexion extends AbstractServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        if (request.getParameter("action").equals("deconnexion")) {
-            request.getSession().removeAttribute("user");
-        } else if (request.getParameter("action").equals("connexion")) {
-            String login = request.getParameter("login");
-            String pass = request.getParameter("pass");
-            adherentDS = new AdherentDS(emf.createEntityManager());
-            if (adherentDS.checkId(login, pass)) {
-                request.getSession().setAttribute("user", adherentDS.getAdherent(login));
-            } else {
-                request.setAttribute("error", "");
+        try {
+            utx.begin();
+            em = emf.createEntityManager();
+            if (request.getParameter("action").equals("deconnexion")) {
+                request.getSession().removeAttribute("user");
+            } else if (request.getParameter("action").equals("connexion")) {
+                String login = request.getParameter("login");
+                String pass = request.getParameter("pass");
+                adherentDS = new AdherentDS(em);
+                if (adherentDS.checkId(login, pass)) {
+                    Adherent a = adherentDS.getAdherent(login);
+                    request.getSession().setAttribute("user", a);
+                } else {
+                    request.setAttribute("error", "");
+                }
             }
+            utx.commit();
+            em.close();
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

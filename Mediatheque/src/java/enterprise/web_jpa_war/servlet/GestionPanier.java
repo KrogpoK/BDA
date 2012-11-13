@@ -14,6 +14,7 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
+import enterprise.web_jpa_war.facade.impl.PanierDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +50,8 @@ public class GestionPanier extends AbstractServlet {
             em = emf.createEntityManager();
             mediaDS = new MediaDS(em);
             adherentDS = new AdherentDS(em);
-
+            panierDS = new PanierDS(em);
+            
             int idAdherent = ((Adherent) request.getSession().getAttribute("user")).getId();
             //ajout dans le panier
             if ("add".equals(request.getParameter("action"))) {
@@ -68,13 +70,13 @@ public class GestionPanier extends AbstractServlet {
                     o = mediaDS.getPeriodique(id);
                 }
                 if (o != null) {
-                    adherentDS.ajouterAuPanier(idAdherent, o);
+                    panierDS.ajouterAuPanier(idAdherent, o);
                 }
                 request.getRequestDispatcher("rechercheOeuvre.jsp").forward(request, response);
                 //supression d'une oauvre das le panier
             } else if ("remove".equals(request.getParameter("action"))) {
                 int idOeuvre = Integer.parseInt(request.getParameter("oeuvreId"));
-                adherentDS.supprimerDuPanier(idAdherent, idOeuvre);
+                panierDS.supprimerDuPanier(idAdherent, idOeuvre);
                 request.setAttribute("listeOuvrage", getListeOuvrage(idAdherent));
                 request.getRequestDispatcher("Panier.jsp").forward(request, response);
                 //affichage du panier

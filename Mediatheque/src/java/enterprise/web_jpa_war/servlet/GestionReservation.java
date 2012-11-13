@@ -10,7 +10,9 @@ import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
+import enterprise.web_jpa_war.facade.impl.EmpruntDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
+import enterprise.web_jpa_war.facade.impl.ReservationDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
@@ -46,7 +48,9 @@ public class GestionReservation extends AbstractServlet {
             em = emf.createEntityManager();
             mediaDS = new MediaDS(em);
             adherentDS = new AdherentDS(em);
-
+            reservationDS = new ReservationDS(em);
+            empruntDS = new EmpruntDS(em);
+            
             String[] strId = request.getParameterValues("idOeuvreList[]");
             int nbReservation = strId.length;
             int[] tabId = new int[strId.length];
@@ -83,10 +87,10 @@ public class GestionReservation extends AbstractServlet {
                     listeReservationEnAttente.add(resa);
                     listeFileAttente.add(mediaDS.getPlaceAttenteReservation(o));
                 }
-                adherentDS.creerReservation(resa);
+                reservationDS.creerReservation(resa);
             }
 
-            listeEmpruntsCourants = adherentDS.getEmpruntsActifs(adherent);
+            listeEmpruntsCourants = empruntDS.getEmpruntsActifs(adherent);
             if (listeEmpruntsCourants != null) {
                 for (Emprunt e : listeEmpruntsCourants) {
                     Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());
@@ -96,7 +100,7 @@ public class GestionReservation extends AbstractServlet {
             request.setAttribute("listeResaDispo", listeReservationDisponible);
             request.setAttribute("listeResaAttente", listeReservationEnAttente);
             request.setAttribute("placeFileAttente", listeFileAttente);
-            request.setAttribute("listeEmprunts", adherentDS.getEmprunts(adherent));
+            request.setAttribute("listeEmprunts", empruntDS.getEmprunts(adherent));
 
             request.getRequestDispatcher("Reservation.jsp").forward(request, response);
             utx.commit();
