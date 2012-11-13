@@ -60,15 +60,15 @@
                                 <td colspan="2">
                                     <form action="DetailsOeuvre" method="post">
                                         <fieldset>
-                                            <textarea cols="5" rows="9" name="description"></textarea>
+                                            <textarea cols="50" rows="5" name="description"></textarea>
                                             <select name="note">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
-                                                <option value="5">5</option>
+                                                <option value="5" checked="true">5</option>
                                             </select>
-                                            <input type="submit" value='Critiquer' />
+                                            <input type="submit" class="btn btn-primary" value='Critiquer' />
                                             <input type="hidden" name="id" value="${id}" />
                                             <input type="hidden" name="oeuvreType" value="${oeuvreType}" />
                                         </fieldset>

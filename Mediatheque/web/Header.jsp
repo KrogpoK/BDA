@@ -26,7 +26,7 @@
                         <a href="Accueil.jsp">Accueil</a>
                     </li>
                     <li class="">
-                        <a href="Reservation.jsp">Espace Personnel</a>
+                        <a href="GestionReservation">Espace Personnel</a>
                     </li>
                     <li class="">
                         <a href="rechercheOeuvre.jsp">Recherche Oeuvre</a>

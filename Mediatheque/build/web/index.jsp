@@ -66,7 +66,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                                 <%
                                     if (request.getAttribute("error") != null) {
                                 %>
-                                <p style="color:red;" ><strong>Erreur danc le couple login/mot de passe</strong></p>      
+                                <p style="color:red;" ><strong>Erreur dans le couple login/mot de passe</strong></p>      
                                 <%                }
                                 %>
                                 <table>
