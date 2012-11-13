@@ -56,4 +56,6 @@ public interface IAdherentDS {
 
     public Reservation getReservation(int idReservation);
     public Adherent getAdherent(int idAdherent);
+    
+    public List<Emprunt> getEmpruntsActifs(Adherent a);
 }

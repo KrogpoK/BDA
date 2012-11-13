@@ -86,7 +86,7 @@ public class GestionReservation extends AbstractServlet {
                 adherentDS.creerReservation(resa);
             }
 
-            listeEmpruntsCourants = adherentDS.getEmprunts(adherent);
+            listeEmpruntsCourants = adherentDS.getEmpruntsActifs(adherent);
             if (listeEmpruntsCourants != null) {
                 for (Emprunt e : listeEmpruntsCourants) {
                     Configuration c = mediaDS.getConfiguration(e.geteOuvrage().getOeuvre().getStrType());

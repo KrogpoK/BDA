@@ -105,7 +105,7 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
 
     public List<Film> findWithParams(HashMap<String, String> mapParamsOeuvre) {
         String retour = analyseParamsFilm(mapParamsOeuvre);
-        System.out.println("select f from Film f " + retour);
+//        System.out.println("select f from Film f " + retour);
         Long tpsAvt = System.currentTimeMillis();
         List<Film> result = (List<Film>) em.createQuery("select f from Film f " + retour).getResultList();
         System.out.println("Temps de réponse : " + (System.currentTimeMillis() - tpsAvt) + "ms");

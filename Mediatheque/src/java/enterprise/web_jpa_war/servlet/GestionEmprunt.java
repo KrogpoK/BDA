@@ -53,6 +53,7 @@ public class GestionEmprunt extends AbstractServlet {
             Adherent a = null;
             //rendre un emprunt
             if ("rendre".equals(request.getParameter("action"))) {
+                System.out.println("rendre emprunt");
                 String empruntStr = request.getParameter("idEmprunt");
                 int idEmprunt = Integer.parseInt(empruntStr);
                 
@@ -62,7 +63,9 @@ public class GestionEmprunt extends AbstractServlet {
 
                 //attribuer la reservation au prochain mec
                 List<Reservation> liste = adherentDS.getReservationsByOeuvre(o.getOeuvre());
-                if (liste != null) {
+                System.out.println("liste reservation de l'eouvre : "+liste.size());
+                if (liste != null && !liste.isEmpty()) {
+                    System.out.println("dans if");
                     Reservation r = liste.get(0);
                     int i = 0;
                     while (i < liste.size() && r.getDispo() != null) {
@@ -73,10 +76,15 @@ public class GestionEmprunt extends AbstractServlet {
                     if (r.getDispo() == null) {
                         r.setDispo(new Date());
                         o.setDisponibilite(Ouvrage.DISPO_RESERVE);
+                        System.out.println("dispo reservée");
                     } //sinon, elle retrouve l'oeuvre retrouve sa liberte
                     else {
                         o.setDisponibilite(Ouvrage.DISPO_LIBRE);
+                        System.out.println("dispo libre");
                     }
+                }
+                else {
+                    o.setDisponibilite(Ouvrage.DISPO_LIBRE);
                 }
                 
                 Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
@@ -130,22 +138,17 @@ public class GestionEmprunt extends AbstractServlet {
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String date = request.getParameter("date");
-            System.out.println(date);
             if (a == null) {
                 a = adherentDS.getAdherent(nom, prenom, DateTool.parseDate(date));
-                System.out.println("cherche  adherent : " + a);
             }
             if (a == null) {
                 request.setAttribute("error", "adherent non trouve");
                 System.out.println("error : non trouve");
             } else {
-                System.out.println("compte ID : " + a.getCompte().getId());
-                List<Emprunt> listeEmprunts = adherentDS.getEmprunts(a);
+                List<Emprunt> listeEmprunts = adherentDS.getEmpruntsActifs(a);
                 List<Reservation> listeReservation = adherentDS.getReservationsActives(a);
                 request.setAttribute("listeEmprunts", listeEmprunts);
                 request.setAttribute("listeReservation", listeReservation);
-                System.out.println("nbEmprunts -> " + listeEmprunts.size());
-                System.out.println("nbResa -> " + listeReservation.size());
             }
             em.close();
             

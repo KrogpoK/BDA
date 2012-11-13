@@ -114,12 +114,11 @@ public class AdherentDS implements IAdherentDS {
     }
 
     public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre) {
-       Reservation r = new Reservation();
-       r.setOeuvre(oeuvre);
+        Reservation r = new Reservation();
+        r.setOeuvre(oeuvre);
         return reservationDao.findAllByExample(r);
     }
 
-    
     public Emprunt getEmprunt(int idEmprunt) {
 
         return empruntDao.find(idEmprunt);
@@ -130,22 +129,18 @@ public class AdherentDS implements IAdherentDS {
         reservationDao.persist(r);
     }
 
-    
     public void supprimerReservation(Reservation resa) {
         reservationDao.delete(resa);
     }
 
     public Reservation getReservation(int idReservation) {
-        try{
+        try {
             return reservationDao.find(idReservation);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }
 
-    
     public Adherent getAdherent(String login) {
         Adherent a = new Adherent();
         a.setLogin(login);
@@ -169,7 +164,12 @@ public class AdherentDS implements IAdherentDS {
     public List<Reservation> getReservationsActives(Adherent a) {
         return reservationDao.findAllResevationsActives(a);
     }
-    
-    
-    
+
+    public List<Emprunt> getEmpruntsActifs(Adherent a) {
+        try {
+            return empruntDao.findAllEmpruntsActif(a);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

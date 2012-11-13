@@ -28,10 +28,10 @@
             <th>Titre</th><th>Genre</th><th>Date de parution</th><th>Support</th><th>Jours restants</th>           
             <c:forEach var="emprunt" begin="0" items="${requestScope.listeEmprunts}">
                 <tr>
-                    <td>${emprunt.oeuvre.titre}</td> 
-                    <td>${emprunt.oeuvre.genre}</td> 
-                    <td>${emprunt.oeuvre.getStrDateParution()}</td> 
-                    <td>${emprunt.oeuvre.getStrType()}</td>
+                    <td>${emprunt.eOuvrage.oeuvre.titre}</td> 
+                    <td>${emprunt.eOuvrage.oeuvre.genre}</td> 
+                    <td>${emprunt.eOuvrage.oeuvre.getStrDateParution()}</td> 
+                    <td>${emprunt.eOuvrage.oeuvre.getStrType()}</td>
 
                 </tr> 
             </c:forEach>
