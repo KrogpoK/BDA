@@ -101,9 +101,10 @@ public class Film extends Oeuvre implements Serializable {
 
         realisateur.add("Gérard Gaston");
         realisateur.add("Francois Dubois");
-        realisateur.add("Sélio Rofrigez");
+        realisateur.add("Sélio Rodrigez");
         realisateur.add("Michel Dupont");
         realisateur.add("Fred le touriste");
+        realisateur.add("Ted Mosby");
 
         Random r = new Random();
 
@@ -116,10 +117,11 @@ public class Film extends Oeuvre implements Serializable {
         ArrayList<String> acteurPrincipal = new ArrayList<String>();
 
         acteurPrincipal.add("Hubert le couvert");
-        acteurPrincipal.add("Guy Copain");
-        acteurPrincipal.add("pas d'inspiration");
-        acteurPrincipal.add("pas envie de réfléchir");
-        acteurPrincipal.add("cool");
+        acteurPrincipal.add("Guy Mougins");
+        acteurPrincipal.add("Coco l artiste");
+        acteurPrincipal.add("Grégory Quentin");
+        acteurPrincipal.add("Sylvie Vastan");
+        acteurPrincipal.add("Léonie Finie");
 
         Random r = new Random();
 

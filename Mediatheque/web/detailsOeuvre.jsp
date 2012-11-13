@@ -16,11 +16,13 @@
         <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="css/design.css" rel="stylesheet">
-        <title><%
-            LinkedHashMap<String, String> keyVal = (LinkedHashMap<String, String>) request.getAttribute("keyVal");
-            out.print(keyVal.get("Titre"));%></title>
+        <title>Critique d'une oeuvre</title>
     </head>
     <body>
+        <%
+            LinkedHashMap<String, String> keyVal = (LinkedHashMap<String, String>) request.getAttribute("keyVal");
+            //out.print(keyVal.get("Titre"));
+        %>
         <jsp:include page="Header.jsp" />
 
         <div class="container-fluid bloc">
@@ -58,17 +60,17 @@
                                 <td colspan="2">
                                     <form action="DetailsOeuvre" method="post">
                                         <fieldset>
-                                        <textarea cols="5" rows="9" name="description"></textarea>
-                                        <select name="note">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                        <input type="submit" value='go' />
-                                        <input type="hidden" name="id" value="${id}" />
-                                        <input type="hidden" name="oeuvreType" value="${oeuvreType}" />
+                                            <textarea cols="5" rows="9" name="description"></textarea>
+                                            <select name="note">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                            <input type="submit" value='Critiquer' />
+                                            <input type="hidden" name="id" value="${id}" />
+                                            <input type="hidden" name="oeuvreType" value="${oeuvreType}" />
                                         </fieldset>
                                     </form>
                                 </td>

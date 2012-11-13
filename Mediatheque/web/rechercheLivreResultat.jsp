@@ -21,6 +21,7 @@
                 <th>Auteur</th>
                 <th>Editeur</th>
                 <th>Panier</th>
+                <th>Critique</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,9 @@
                             <input type="hidden" name="oeuvreId" value="${oeuvre.id}" />
                             <input type="submit" class="btn" id="add" value="X" />
                         </form>
+                    </td>
+                    <td>
+                        <a class="btn" href="DetailsOeuvre?id=${oeuvre.getId()}&oeuvreType=${oeuvre.getStrType()}">X</a> 
                     </td>
                 </tr> 
                 </tr> 
