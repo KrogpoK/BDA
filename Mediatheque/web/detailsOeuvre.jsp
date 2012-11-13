@@ -45,22 +45,24 @@
                             %>
                             <c:forEach var="critique" begin="0" items="${requestScope.critiques}">
                                 <tr>
+                                    <td><h4>Critique</h4></td>
                                     <td>
-                                        ${critique.getCompte().getProprietaire().getNom()}
+                                        Nom Adhérent : ${critique.getCompte().getProprietaire().getNom()}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>${critique.description}</td>
+                                    <td>Description : ${critique.description}</td>
                                 </tr> 
                                 <tr>
-                                    <td>${critique.note}</td>
-                                </tr> 
+                                    <td>Note : ${critique.note}</td>
+                                </tr>
                             </c:forEach>
                             <tr>
                                 <td colspan="2">
                                     <form action="DetailsOeuvre" method="post">
                                         <fieldset>
-                                            <textarea cols="50" rows="5" name="description"></textarea>
+                                            Description : <textarea cols="50" rows="5" name="description"></textarea>
+                                            Note :
                                             <select name="note">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>

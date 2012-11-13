@@ -73,7 +73,7 @@ public class DetailsOeuvre extends AbstractServlet {
                             critique.setCompte(user);
 
                         }
-                        if (typeOeuvre.equals("film")) {
+                        if (typeOeuvre.equals(Film.SUPPORT)) {
                                    
                             Film film = mediaDS.getFilm(id);
                             if (request.getMethod().equals("POST")) {
@@ -90,7 +90,7 @@ public class DetailsOeuvre extends AbstractServlet {
                             critiques = mediaDS.getCritiques(film);
 
                         }
-                        else if (typeOeuvre.equals("cd")) {
+                        else if (typeOeuvre.equals(CD.SUPPORT)) {
 
                             CD cd = mediaDS.getCD(id);
                             if (request.getMethod().equals("POST")) {
@@ -105,7 +105,7 @@ public class DetailsOeuvre extends AbstractServlet {
                             keyVal.put("Genre", cd.getGenre());
                             critiques = mediaDS.getCritiques(cd);
                         }
-                        else if (typeOeuvre.equals("livre")) {
+                        else if (typeOeuvre.equals(Livre.SUPPORT)) {
 
                             Livre livre = mediaDS.getLivre(id);
                             if (request.getMethod().equals("POST")) {
@@ -120,7 +120,7 @@ public class DetailsOeuvre extends AbstractServlet {
                             critiques = mediaDS.getCritiques(livre);
 
                         }
-                        else if (typeOeuvre.equals("periodique")) {
+                        else if (typeOeuvre.equals(Periodique.SUPPORT)) {
 
                             Periodique periodique = mediaDS.getPeriodique(id);
                             if (request.getMethod().equals("POST")) {

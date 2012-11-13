@@ -6,9 +6,12 @@ package enterprise.web_jpa_war.servlet;
 
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.configuration.Configuration;
+import enterprise.web_jpa_war.entity.mediatheque.item.CD;
 import enterprise.web_jpa_war.entity.mediatheque.item.Film;
+import enterprise.web_jpa_war.entity.mediatheque.item.Livre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
@@ -53,7 +56,7 @@ public class RegenDb extends AbstractServlet {
             adherentDS.creerAdherent(admin);
             Adherent ouioui = Adherent.buildMoke("oui", "oui", "1990-05-24");
             adherentDS.creerAdherent(ouioui);
-            for (Film f : Film.buildMoke(10)) {
+            for (Film f : Film.buildMoke(100)) {
                 mediaDS.creerFilm(f);
                 Ouvrage o = new Ouvrage();
                 Random r = new Random();
@@ -63,7 +66,36 @@ public class RegenDb extends AbstractServlet {
                 o.setOeuvre(f);
                 mediaDS.persistOuvrage(o);
             }
-
+            for (Livre l : Livre.buildMoke(100)) {
+                mediaDS.creerLivre(l);
+                Ouvrage o = new Ouvrage();
+                Random r = new Random();
+                o.setDisponibilite(0);
+                o.setDateArrivee(new Date());
+                o.setNbEmprunts(0);
+                o.setOeuvre(l);
+                mediaDS.persistOuvrage(o);
+            }
+            for (CD c : CD.buildMoke(100)) {
+                mediaDS.creerCD(c);
+                Ouvrage o = new Ouvrage();
+                Random r = new Random();
+                o.setDisponibilite(0);
+                o.setDateArrivee(new Date());
+                o.setNbEmprunts(0);
+                o.setOeuvre(c);
+                mediaDS.persistOuvrage(o);
+            }
+            for (Periodique p : Periodique.buildMoke(100)) {
+                mediaDS.creerPeriodique(p);
+                Ouvrage o = new Ouvrage();
+                Random r = new Random();
+                o.setDisponibilite(0);
+                o.setDateArrivee(new Date());
+                o.setNbEmprunts(0);
+                o.setOeuvre(p);
+                mediaDS.persistOuvrage(o);
+            }
             Configuration cFilm = new Configuration();
             cFilm.setEstRenouvelable(false);
             cFilm.setNbJours(5);
