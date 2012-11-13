@@ -56,7 +56,7 @@ public class RegenDb extends AbstractServlet {
                 mediaDS.creerFilm(f);
                 Ouvrage o = new Ouvrage();
                 Random r = new Random();
-                o.setDisponibilite(r.nextInt(3));
+                o.setDisponibilite(0);
                 o.setDateArrivee(new Date());
                 o.setNbEmprunts(0);
                 o.setOeuvre(f);

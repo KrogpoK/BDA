@@ -16,6 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <p><a href="index.jsp" ><-- revenir a l'accueil</a></p>
         <h1>Etat du client : </h1>
 
         <%

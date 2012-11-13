@@ -44,18 +44,18 @@ public class GestionEmprunt extends AbstractServlet {
             throws ServletException, IOException {
         try {
             response.setContentType("text/html;charset=UTF-8");
-
+            
             utx.begin();
             em = emf.createEntityManager();
             adherentDS = new AdherentDS(em);
             mediaDS = new MediaDS(em);
-
+            
             Adherent a = null;
             //rendre un emprunt
             if ("rendre".equals(request.getParameter("action"))) {
                 String empruntStr = request.getParameter("idEmprunt");
                 int idEmprunt = Integer.parseInt(empruntStr);
-
+                
                 Emprunt e = adherentDS.getEmprunt(idEmprunt);
                 a = e.geteCompte().getProprietaire();
                 Ouvrage o = e.geteOuvrage();
@@ -78,7 +78,7 @@ public class GestionEmprunt extends AbstractServlet {
                         o.setDisponibilite(Ouvrage.DISPO_LIBRE);
                     }
                 }
-
+                
                 Configuration config = mediaDS.getConfiguration(o.getOeuvre().getStrType());
                 e.setDateFinEmprunt(new Date());
                 int nbJoursEmpruntes = DateTool.getDifference(e.getDateDebutEmprunt(), e.getDateFinEmprunt());
@@ -87,7 +87,7 @@ public class GestionEmprunt extends AbstractServlet {
                     e.geteCompte().setSolde(e.geteCompte().getSolde() - montantPenalite);
                     request.setAttribute("penalite", montantPenalite);
                 }
-
+                
             }
             //creation d'un emprunt
             if ("creer".equals(request.getParameter("action"))) {
@@ -103,19 +103,30 @@ public class GestionEmprunt extends AbstractServlet {
                                 ouvragesDisponibles.add(listeOurage.get(i));
                             }
                         }
+                        System.out.println("nombre d'ouvrage dispo : " + ouvragesDisponibles.size());
                         if (ouvragesDisponibles.size() == 0) {
                             request.setAttribute("error", "aucun ouvrage disponible");
                         } else {
                             Emprunt e = new Emprunt();
                             e.setDateDebutEmprunt(new Date());
+                            String strIdAdherent = request.getParameter("idAdherent");
+                            int idAdherent = Integer.parseInt(strIdAdherent);
+                            a=adherentDS.getAdherent(idAdherent);
                             e.seteCompte(a.getCompte());
                             e.seteOuvrage(ouvragesDisponibles.get(0));
                             adherentDS.ajouterEmprunt(e);
                             e.geteOuvrage().setDisponibilite(Ouvrage.DISPO_EMPRUNTE);
+                            //supression de la reservation correspondante
+                            String strResaId = request.getParameter("idResa");
+                            int idResa = Integer.parseInt(strResaId);
+                            System.out.println("avant ds : "+ idResa);
+                            adherentDS.supprimerReservation(idResa);
+                            System.out.println("apres ds");
                         }
                     }
                 }
             }
+
             //a la fin, liste les emprunts courants de l'adherent
             utx.commit();
             String nom = request.getParameter("nom");
@@ -124,6 +135,7 @@ public class GestionEmprunt extends AbstractServlet {
             System.out.println(date);
             if (a == null) {
                 a = adherentDS.getAdherent(nom, prenom, DateTool.parseDate(date));
+                System.out.println("cherche  adherent : " + a);
             }
             if (a == null) {
                 request.setAttribute("error", "adherent non trouve");
@@ -134,12 +146,13 @@ public class GestionEmprunt extends AbstractServlet {
                 List<Reservation> listeReservation = adherentDS.getReservationsActives(a);
                 request.setAttribute("listeEmprunts", listeEmprunts);
                 request.setAttribute("listeReservation", listeReservation);
-
+                System.out.println("nbEmprunts -> " + listeEmprunts.size());
+                System.out.println("nbResa -> " + listeReservation.size());
             }
             em.close();
-
-            request.getRequestDispatcher("EmpruntRetour.jsp").forward(request, response);
-
+            
+            request.getRequestDispatcher("GestionEmprunt.jsp").forward(request, response);
+            
         } catch (Exception ex) {
             throw new ServletException(ex);
         }

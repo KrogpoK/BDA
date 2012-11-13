@@ -50,7 +50,9 @@ public interface IAdherentDS {
     //indique si le rendu se fait en retard
     public Emprunt getEmprunt(int idEmprunt);
 
-    public void supprimerReservation(int idAdherent, int idReservation);
+    public void creerReservation(Reservation r);
+    
+    public void supprimerReservation(int idReservation);
 
     public Adherent getAdherent(int idAdherent);
 }

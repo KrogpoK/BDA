@@ -39,7 +39,7 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
     }
 
     public void delete(int id) {
-        em.remove(id);
+        em.remove(find(id));
     }
 
     public void deleteByExample(Reservation obj) {

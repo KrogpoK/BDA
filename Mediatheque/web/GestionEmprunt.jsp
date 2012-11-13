@@ -36,10 +36,13 @@
         </form>
 
         <%
-            if (request.getAttribute("error") != null) {
+            System.out.println("dans jsp, error : " + request.getAttribute("error"));
+            if (request.getAttribute("error") == null) {
                 if (request.getAttribute("listeEmprunts") == null) {
-                    out.println("<h2>Il n'y a pas d'emprunts actifs");
-                } else {
+        %>
+
+        <h2>Il n'y a pas d'emprunts actifs</h2>
+        <% } else {
         %>
         <h2>Liste des emprunts </h2>
         <table>
@@ -58,8 +61,10 @@
 
         <%            }
             if (request.getAttribute("listeReservation") == null) {
-                out.println("<h2>Il n'y a pas de reservations actives");
-            } else {
+        %>
+
+        <h2>Il n'y a pas de reservations actives</h2>
+        <%  } else {
         %>
         <h2>Liste des reservations </h2>
         <table>
@@ -69,7 +74,7 @@
                     <td>${resa.oeuvre.titre}</td> 
                     <td>${resa.oeuvre.genre}</td>
                     <td>
-                        <a href="GestionEmprunt?action=creer&idOeuvre=${resa.oeuvre.id}" ><input type ="button" value="emprunter" /></a> 
+                        <a href="GestionEmprunt?action=creer&idOeuvre=${resa.oeuvre.id}&idAdherent=${resa.compte.proprietaire.id}&idResa=${resa.id}" ><input type ="button" value="emprunter" /></a> 
                     </td>
                 </tr> 
             </c:forEach>

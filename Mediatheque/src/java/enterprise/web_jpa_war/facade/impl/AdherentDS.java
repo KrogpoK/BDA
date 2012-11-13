@@ -9,14 +9,11 @@ import enterprise.web_jpa_war.dao.impl.configuration.ConfigurationDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.EmpruntDao;
 import enterprise.web_jpa_war.dao.impl.mediatheque.ReservationDao;
 import enterprise.web_jpa_war.entity.Adherent;
-import enterprise.web_jpa_war.entity.configuration.Configuration;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.Panier;
 import enterprise.web_jpa_war.entity.mediatheque.Reservation;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
-import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.facade.IAdherentDS;
-import enterprise.web_jpa_war.util.DateTool;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -129,8 +126,13 @@ public class AdherentDS implements IAdherentDS {
 
     }
 
-    public void supprimerReservation(int idAdherent, int idReservation) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void creerReservation(Reservation r) {
+        reservationDao.persist(r);
+    }
+
+    
+    public void supprimerReservation(int idReservation) {
+        reservationDao.delete(idReservation);
     }
 
     public Adherent getAdherent(String login) {

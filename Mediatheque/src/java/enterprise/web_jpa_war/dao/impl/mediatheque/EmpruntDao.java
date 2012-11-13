@@ -8,6 +8,7 @@ import enterprise.web_jpa_war.dao.AbstractCommonnDao;
 import enterprise.web_jpa_war.dao.ICommonDao;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
+import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -50,7 +51,7 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             }
             clause.append(" e.eCompte.id='").append(obj.geteCompte().getId()).append("' ");
         }
-        
+
 
 
         return clause.toString();
@@ -67,13 +68,17 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             return null;
         }
     }
-    
+
     public List<Emprunt> findAllEmpruntsActif(Adherent a) {
-      try {
-            System.out.println("query : select e from Emprunt e where e.Ecompte='"+a.getCompte().getId()+"' and e.dateFinEmprunt = null");
-            return em.createQuery("select e from Emprunt e where e.Ecompte='"+a.getCompte().getId()+"' and e.dateFinEmprunt = null").getResultList();
+        try {
+            System.out.println("select e from Emprunt e where e.eCompte.id='" + a.getCompte().getId()
+                    + "' and e.eOuvrage.disponibilite = " + Ouvrage.DISPO_EMPRUNTE);
+            List<Emprunt> l = em.createQuery("select e from Emprunt e where e.eCompte.id='" + a.getCompte().getId()
+                    + "' and e.eOuvrage.disponibilite = " + Ouvrage.DISPO_EMPRUNTE).getResultList();
+            System.out.println("nb results : " + l.size());
+            return l;
         } catch (Exception e) {
             return null;
-        }  
+        }
     }
 }

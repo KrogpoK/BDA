@@ -35,6 +35,8 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
 
     public Adherent findByExample(Adherent example) {
         try {
+            System.out.println("dans dao, recherchre adherent : ");
+            System.out.println("select a from Adherent a where " + getWhereClause(example));
             Adherent a = (Adherent) em.createQuery("select a from Adherent a where " + getWhereClause(example)).getSingleResult();
 
             if (a.getAdress() != null) {
