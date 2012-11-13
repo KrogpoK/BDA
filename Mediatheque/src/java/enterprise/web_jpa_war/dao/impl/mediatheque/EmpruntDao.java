@@ -10,8 +10,12 @@ import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
 import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
+import enterprise.web_jpa_war.util.DateTool;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -38,8 +42,6 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
     public void delete(Emprunt obj) {
         em.remove(obj);
     }
-
-   
 
     public void deleteByExample(Emprunt obj) {
         em.createQuery("delete from Emprunt e where " + getWhereClause(obj));
@@ -77,6 +79,20 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
             List<Emprunt> l = em.createQuery("select e from Emprunt e where e.eCompte.id='" + a.getCompte().getId()
                     + "' and e.dateFinEmprunt IS NULL ").getResultList();
             return l;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Emprunt> getEmprutTermineDuJour(Adherent a, Date d) {
+        try {
+            Query query = em.createQuery("select e from Emprunt e "
+                    + "where e.dateFinEmprunt IS NOT NULL "
+                    + "and e.dateFinEmprunt = :date "
+                    + "and e.eCompte.proprietaire.id = " + a.getId());
+            query.setParameter("date", d, TemporalType.DATE);
+
+            return query.getResultList();
         } catch (Exception e) {
             return null;
         }

@@ -4,8 +4,10 @@
  */
 package enterprise.web_jpa_war.facade;
 
+import enterprise.web_jpa_war.Exception.CreationEmpruntException;
 import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.entity.mediatheque.Emprunt;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +20,9 @@ public interface IEmpruntDS {
 
     public List<Emprunt> getEmprunts(Adherent a);
 
-    public void ajouterEmprunt(Emprunt emprunt);
+    public void ajouterEmprunt(Emprunt emprunt) throws CreationEmpruntException;
 
     public List<Emprunt> getEmpruntsActifs(Adherent a);
+    
+    public List<Emprunt> getEmprutTermineDuJour(Adherent a,Date d);
 }
