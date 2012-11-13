@@ -86,12 +86,13 @@ public class CD extends Oeuvre implements Serializable {
 
     private static String generateRandomInterprete() {
         ArrayList<String> interprete = new ArrayList<String>();
-
+        
         interprete.add("Gérard Gaston");
         interprete.add("Francois Dubois");
-        interprete.add("Sélio Rofrigez");
+        interprete.add("Sélio Rodrigez");
         interprete.add("Michel Dupont");
         interprete.add("Fred le touriste");
+        interprete.add("Ted Mosby");
 
         Random r = new Random();
 
@@ -102,12 +103,13 @@ public class CD extends Oeuvre implements Serializable {
 
     private static String generateRandomMaisonEdition() {
         ArrayList<String> maisonEdition = new ArrayList<String>();
-
-        maisonEdition.add("Hubert le couvert");
-        maisonEdition.add("Guy Copain");
-        maisonEdition.add("pas d'inspiration");
-        maisonEdition.add("pas envie de réfléchir");
-        maisonEdition.add("cool");
+        
+        maisonEdition.add("Gérard Gaston");
+        maisonEdition.add("Francois Dubois");
+        maisonEdition.add("Sélio Rodrigez");
+        maisonEdition.add("Michel Dupont");
+        maisonEdition.add("Fred le touriste");
+        maisonEdition.add("Ted Mosby");
 
         Random r = new Random();
 

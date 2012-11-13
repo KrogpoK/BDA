@@ -75,11 +75,14 @@ public class Livre extends Oeuvre implements Serializable {
     private static String generateRandomAuteur() {
         ArrayList<String> auteur = new ArrayList<String>();
 
-        auteur.add("kateb yacine");
-        auteur.add("mohamed isso");
+        auteur.add("Gérard Gaston");
+        auteur.add("Francois Dubois");
+        auteur.add("Sélio Rodrigez");
         auteur.add("Michel Dupont");
         auteur.add("Fred le touriste");
+        auteur.add("Ted Mosby");
 
+        
         Random r = new Random();
 
         String auteuru = auteur.get(r.nextInt(auteur.size()));
@@ -90,11 +93,12 @@ public class Livre extends Oeuvre implements Serializable {
     private static String generateRandomEditeur() {
         ArrayList<String> editeur = new ArrayList<String>();
 
-        editeur.add("Hubert le couvert");
-        editeur.add("Guy Copain");
-        editeur.add("pas d'inspiration");
-        editeur.add("pas envie de réfléchir");
-        editeur.add("cool");
+        editeur.add("Gérard Gaston");
+        editeur.add("Francois Dubois");
+        editeur.add("Sélio Rodrigez");
+        editeur.add("Michel Dupont");
+        editeur.add("Fred le touriste");
+        editeur.add("Ted Mosby");
 
         Random r = new Random();
 
