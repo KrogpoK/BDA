@@ -21,11 +21,7 @@ public interface IAdherentDS {
 
     public Adherent getAdherent(String login);
 
-    public void ajouterAuPanier(int idAdherent, Oeuvre oeuvre);
-
-    public void supprimerDuPanier(int idAdherent, int idOeuvre);
-
-    public boolean reserverPanier(int idAdherent);
+  
 
     public boolean creerAdherent(Adherent adherent);
 
@@ -37,25 +33,6 @@ public interface IAdherentDS {
 
     public Adherent getAdherent(String nom, String prenom, Date dateDeNaissance);
 
-//    public List<Critique> getCritiques(int idAdherent);
-    public List<Reservation> getReservationsByAdherent(Adherent a);
-
-    public List<Reservation> getReservationsByOeuvre(Oeuvre oeuvre);
-
-    public List<Reservation> getReservationsActives(Adherent a);
-    public List<Emprunt> getEmprunts(Adherent a);
-
-    public void ajouterEmprunt(Emprunt emprunt);
-
-    //indique si le rendu se fait en retard
-    public Emprunt getEmprunt(int idEmprunt);
-
-    public void creerReservation(Reservation r);
-    
-    public void supprimerReservation(Reservation reservation);
-
-    public Reservation getReservation(int idReservation);
     public Adherent getAdherent(int idAdherent);
-    
-    public List<Emprunt> getEmpruntsActifs(Adherent a);
+   
 }

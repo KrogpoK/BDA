@@ -14,10 +14,15 @@ import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Periodique;
 import enterprise.web_jpa_war.facade.impl.MediaDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
+import enterprise.web_jpa_war.util.DateTool;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,90 +52,95 @@ public class DetailsOeuvre extends AbstractServlet {
                
                     try {
                         super.utx.begin();
+                        List<Critique> critiques = null;
+                        Critique critique = new Critique();
                     
-                    Critique tmp = new Critique();
-                    
-                    em = emf.createEntityManager();
-                    String typeOeuvre = request.getParameter("oeuvreType");
-                    int id = Integer.parseInt(request.getParameter("id"));
-
-                    request.setAttribute("id", id);
-                    request.setAttribute("oeuvreType", typeOeuvre);
-                    mediaDS = new MediaDS(em);
-                
-                    if (request.getMethod().equals("POST")) {
-
-                        Compte user = ((Adherent) request.getSession().getAttribute("user")).getCompte();
-                        tmp.setDescription(request.getParameter("description"));
-                        tmp.setNote(request.getParameter("note"));
-                        tmp.setTitreCritiqie("titre critique");
-                        tmp.setCompte(user);
-
-                    }
-                    if (typeOeuvre.equals("film")){
-
-                        Film film = mediaDS.getFilm(id);
-                        request.setAttribute("film", film);
+                        em = emf.createEntityManager();
+                        String typeOeuvre = request.getParameter("oeuvreType");
+                        int id = Integer.parseInt(request.getParameter("id"));
+                 
+                        mediaDS = new MediaDS(em);
+                        LinkedHashMap<String, String> keyVal = new LinkedHashMap();
+                        request.setAttribute("id", id);
+                        request.setAttribute("oeuvreType", typeOeuvre);
+                        
                         if (request.getMethod().equals("POST")) {
-                            tmp.setOeuvre(film);
-                            mediaDS.setCritique(tmp);
-                            utx.commit();
-                            
-                        }
-                       
-                        List<Critique> critiques = mediaDS.getCritiques(film);
-                        request.setAttribute("critiques", critiques);
-                        request.getRequestDispatcher("Film.jsp").forward(request, response);
 
-                    }
-                   
-                
-                else if (typeOeuvre.equals("cd")) {
-               
-                    CD cd  = mediaDS.getCD(id);
-                    request.setAttribute("cd", cd);
-                    if (request.getMethod().equals("POST")) {
-                            tmp.setOeuvre(cd);
-                            mediaDS.setCritique(tmp);
-                            utx.commit();
-                            
-                     }
-                    List<Critique> critiques = mediaDS.getCritiques(cd);
-                    request.setAttribute("critiques", critiques);    
-                    request.getRequestDispatcher("Cd.jsp").forward(request, response);
-                }
-                
-                else if (typeOeuvre.equals("livre")) {
-                
-                    Livre livre = mediaDS.getLivre(id);
-                    request.setAttribute("livre", livre);
-                     if (request.getMethod().equals("POST")) {
-                            tmp.setOeuvre(livre);
-                            mediaDS.setCritique(tmp);
-                            utx.commit();
-                            
-                     }
-                    List<Critique> critiques = mediaDS.getCritiques(livre);
-                    request.setAttribute("critiques", critiques);  
-                    request.getRequestDispatcher("Livre.jsp").forward(request, response);
-                }
-                else if (typeOeuvre.equals("periodique")) {
-                
-                    Periodique periodique = mediaDS.getPeriodique(id);
-                    request.setAttribute("periodique", periodique);
-                    if (request.getMethod().equals("POST")) {
-                            tmp.setOeuvre(periodique);
-                            mediaDS.setCritique(tmp);
-                            utx.commit();
-                            
-                     }
-                    List<Critique> critiques = mediaDS.getCritiques(periodique);
-                    request.setAttribute("critiques", critiques);    
-                    request.getRequestDispatcher("Periodique.jsp").forward(request, response);
-                }
-                else {
-                    // TODO: en cas d'erreur
-                }
+                            Compte user = ((Adherent) request.getSession().getAttribute("user")).getCompte();
+                            critique.setDescription(request.getParameter("description"));
+                            critique.setNote(request.getParameter("note"));
+                            critique.setTitreCritiqie("titre critique");
+                            critique.setCompte(user);
+
+                        }
+                        if (typeOeuvre.equals("film")) {
+                                   
+                            Film film = mediaDS.getFilm(id);
+                            if (request.getMethod().equals("POST")) {
+                                critique.setOeuvre(film);
+                                mediaDS.setCritique(critique);
+                                utx.commit(); 
+                            }
+                            keyVal.put("Titre", film.getTitre());
+                            keyVal.put("Realisateur", film.getRealisateur());
+                            keyVal.put("Langue", film.getLangue());
+                            keyVal.put("Duree",DateTool.printDate(film.getDuree()));
+                            keyVal.put("Genre",film.getGenre());
+                            keyVal.put("Date de parution:",DateTool.printDate(film.getDateParution()));
+                            critiques = mediaDS.getCritiques(film);
+
+                        }
+                        else if (typeOeuvre.equals("cd")) {
+
+                            CD cd = mediaDS.getCD(id);
+                            if (request.getMethod().equals("POST")) {
+                                critique.setOeuvre(cd);
+                                mediaDS.setCritique(critique);
+                                utx.commit(); 
+                            }
+                            keyVal.put("Titre", cd.getTitre());
+                            keyVal.put("maisonEdition",cd.getMaisonEdition());
+                            keyVal.put("interprete",cd.getInterprete());
+                            keyVal.put("nbPiste", ""+cd.getNbPiste());
+                            keyVal.put("Genre", cd.getGenre());
+                            critiques = mediaDS.getCritiques(cd);
+                        }
+                        else if (typeOeuvre.equals("livre")) {
+
+                            Livre livre = mediaDS.getLivre(id);
+                            if (request.getMethod().equals("POST")) {
+                                critique.setOeuvre(livre);
+                                mediaDS.setCritique(critique);
+                                utx.commit(); 
+                            }
+                            keyVal.put("Titre", livre.getTitre());
+                            keyVal.put("Auteur:",livre.getAuteur());
+                            keyVal.put("Editeur",livre.getEditeur());
+                            keyVal.put("Genre", livre.getGenre());
+                            critiques = mediaDS.getCritiques(livre);
+
+                        }
+                        else if (typeOeuvre.equals("periodique")) {
+
+                            Periodique periodique = mediaDS.getPeriodique(id);
+                            if (request.getMethod().equals("POST")) {
+                                critique.setOeuvre(periodique);
+                                mediaDS.setCritique(critique);
+                                utx.commit();   
+                            }
+                            keyVal.put("Titre", periodique.getTitre());
+                            keyVal.put("Theme",periodique.getTheme());
+                            keyVal.put("Type",periodique.getType());
+                            keyVal.put("Periodicite", periodique.getPeriodicite());
+                            keyVal.put("Genre",periodique.getGenre());
+                            critiques = mediaDS.getCritiques(periodique);
+                        }
+                        
+                        request.setAttribute("keyVal",keyVal);              
+                        request.setAttribute("critiques", critiques);
+                        request.getRequestDispatcher("detailsOeuvre.jsp").forward(request, response);
+
+
                 }
                    catch (Exception ex) {
                     throw new ServletException(ex);

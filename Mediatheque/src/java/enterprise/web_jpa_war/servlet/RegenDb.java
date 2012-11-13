@@ -69,6 +69,7 @@ public class RegenDb extends AbstractServlet {
             cFilm.setNbJours(5);
             cFilm.setNbOuvragesMemeType(4);
             cFilm.setNomSupport(Film.SUPPORT);
+            cFilm.setEstRenouvelable(false);
             em.persist(cFilm);
 
 

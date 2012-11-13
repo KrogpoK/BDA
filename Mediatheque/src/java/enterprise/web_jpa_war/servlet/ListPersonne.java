@@ -4,9 +4,11 @@
  */
 package enterprise.web_jpa_war.servlet;
 
+import enterprise.web_jpa_war.entity.Adherent;
 import enterprise.web_jpa_war.facade.impl.AdherentDS;
 import enterprise.web_jpa_war.servlet.common.AbstractServlet;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +35,8 @@ public class ListPersonne extends AbstractServlet {
             super.utx.begin();
             em = emf.createEntityManager();
             adherentDS = new AdherentDS(em);
-            request.setAttribute("adherentList", adherentDS.listerAdherent());
+            List<Adherent> l = adherentDS.listerAdherent();
+            request.setAttribute("adherentList", l);
 
             em.close();
             request.getRequestDispatcher("ListPerson.jsp").forward(request, response);

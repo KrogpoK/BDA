@@ -4,7 +4,6 @@
  */
 package enterprise.web_jpa_war.entity.mediatheque;
 
-import enterprise.web_jpa_war.entity.mediatheque.item.Oeuvre;
 import enterprise.web_jpa_war.entity.mediatheque.item.Ouvrage;
 import enterprise.web_jpa_war.util.DateTool;
 import java.io.Serializable;
@@ -45,7 +44,10 @@ public class Emprunt implements Serializable {
     @Column(name = "DDEBUT_EMPRUNT")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebutEmprunt;
-                
+               
+    @Column(name="BRENOUVELE")
+    private boolean renouvele;
+    
     @Column(name = "DFIN_EMPRUNT")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFinEmprunt;
@@ -93,6 +95,14 @@ public class Emprunt implements Serializable {
     public String getStrDateDebut()
     {
         return DateTool.printDate(dateDebutEmprunt);
+    }
+
+    public boolean isRenouvele() {
+        return renouvele;
+    }
+
+    public void setRenouvele(boolean renouvele) {
+        this.renouvele = renouvele;
     }
     
     @Override
