@@ -38,9 +38,11 @@ public class ReservationDao extends AbstractCommonnDao implements ICommonDao<Res
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(find(id));
+    public void delete(Reservation obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(Reservation obj) {
         em.createQuery("delete from Reservation r where " + getWhereClause(obj));

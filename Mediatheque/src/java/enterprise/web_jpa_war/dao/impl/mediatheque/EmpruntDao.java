@@ -34,9 +34,11 @@ public class EmpruntDao extends AbstractCommonnDao implements ICommonDao<Emprunt
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Emprunt obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(Emprunt obj) {
         em.createQuery("delete from Emprunt e where " + getWhereClause(obj));

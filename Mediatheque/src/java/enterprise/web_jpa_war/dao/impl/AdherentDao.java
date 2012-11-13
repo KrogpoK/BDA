@@ -63,9 +63,11 @@ public class AdherentDao extends AbstractCommonnDao implements ICommonDao<Adhere
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Adherent obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(Adherent obj) {
         em.createQuery("delete from Adherent a where " + getWhereClause(obj));

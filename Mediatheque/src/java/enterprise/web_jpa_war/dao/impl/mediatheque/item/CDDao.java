@@ -37,9 +37,11 @@ public class CDDao extends AbstractCommonnDao implements ICommonDao<CD> {
         em.persist(obj);
     }
 
-    public void delete(int id) {
-       em.remove(id);
+    public void delete(CD obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(CD obj) {
         em.createQuery("delete from CD c where " + getWhereClause(obj));

@@ -103,7 +103,6 @@ public class GestionEmprunt extends AbstractServlet {
                                 ouvragesDisponibles.add(listeOurage.get(i));
                             }
                         }
-                        System.out.println("nombre d'ouvrage dispo : " + ouvragesDisponibles.size());
                         if (ouvragesDisponibles.size() == 0) {
                             request.setAttribute("error", "aucun ouvrage disponible");
                         } else {
@@ -120,8 +119,7 @@ public class GestionEmprunt extends AbstractServlet {
                             String strResaId = request.getParameter("idResa");
                             int idResa = Integer.parseInt(strResaId);
                             System.out.println("avant ds : "+ idResa);
-                            adherentDS.supprimerReservation(idResa);
-                            System.out.println("apres ds");
+                            adherentDS.supprimerReservation(adherentDS.getReservation(idResa));
                         }
                     }
                 }

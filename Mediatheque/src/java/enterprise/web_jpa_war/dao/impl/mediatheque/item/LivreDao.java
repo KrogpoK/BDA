@@ -36,9 +36,11 @@ public class LivreDao extends AbstractCommonnDao implements ICommonDao<Livre> {
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Livre obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(Livre obj) {
         em.createQuery("delete from Livre l where " + getWhereClause(obj));

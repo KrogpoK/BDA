@@ -91,8 +91,8 @@ public class AdherentDS implements IAdherentDS {
         adherentDao.persist(adherent);
     }
 
-    public void supprimerAdherent(int idAdherent) {
-        adherentDao.delete(idAdherent);
+    public void supprimerAdherent(Adherent adherent) {
+        adherentDao.delete(adherent);
     }
 
     public List<Adherent> listerAdherent() {
@@ -131,10 +131,21 @@ public class AdherentDS implements IAdherentDS {
     }
 
     
-    public void supprimerReservation(int idReservation) {
-        reservationDao.delete(idReservation);
+    public void supprimerReservation(Reservation resa) {
+        reservationDao.delete(resa);
     }
 
+    public Reservation getReservation(int idReservation) {
+        try{
+            return reservationDao.find(idReservation);
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+    }
+
+    
     public Adherent getAdherent(String login) {
         Adherent a = new Adherent();
         a.setLogin(login);

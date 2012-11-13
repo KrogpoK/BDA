@@ -66,9 +66,11 @@ public class OeuvreDao extends AbstractCommonnDao implements ICommonDao<Oeuvre> 
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Oeuvre obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(Oeuvre obj) {
         em.createQuery("delete from Ouvrage o where " + getWhereClause(obj));

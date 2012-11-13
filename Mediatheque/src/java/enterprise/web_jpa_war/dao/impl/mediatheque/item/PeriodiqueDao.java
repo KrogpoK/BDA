@@ -36,10 +36,11 @@ public class PeriodiqueDao extends AbstractCommonnDao implements ICommonDao<Peri
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Periodique obj) {
+        em.remove(obj);
     }
 
+    
     public void deleteByExample(Periodique obj) {
         em.createQuery("delete from Periodique p where " + getWhereClause(obj));
     }

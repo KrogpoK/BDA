@@ -76,11 +76,12 @@ public class CritiqueDao  extends AbstractCommonnDao implements ICommonDao<Criti
     
         em.persist(obj);
     }
-    
-    public void delete(int id) {
-        
-        em.remove(id);
+
+    public void delete(Critique obj) {
+        em.remove(obj);
     }
+    
+    
     
     public void deleteByExample(Critique obj) {
     

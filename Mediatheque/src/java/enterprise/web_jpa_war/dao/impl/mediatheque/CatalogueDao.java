@@ -38,9 +38,11 @@ public class CatalogueDao extends AbstractCommonnDao implements ICommonDao<Catal
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Catalogue obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(Catalogue obj) {
         em.createQuery("delete from Catalogue r where " + getWhereClause(obj));

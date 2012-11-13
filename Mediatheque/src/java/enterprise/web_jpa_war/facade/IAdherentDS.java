@@ -31,7 +31,7 @@ public interface IAdherentDS {
 
     public void updateAdherent(Adherent adherent);
 
-    public void supprimerAdherent(int idAdherent);
+    public void supprimerAdherent(Adherent adherent);
 
     public List<Adherent> listerAdherent();
 
@@ -52,7 +52,8 @@ public interface IAdherentDS {
 
     public void creerReservation(Reservation r);
     
-    public void supprimerReservation(int idReservation);
+    public void supprimerReservation(Reservation reservation);
 
+    public Reservation getReservation(int idReservation);
     public Adherent getAdherent(int idAdherent);
 }

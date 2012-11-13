@@ -18,7 +18,7 @@ public interface ICommonDao<T> {
 
     public void persist(T obj);
 
-    public void delete(int id);
+    public void delete(T obj);
 
     public void deleteByExample(T obj);
 

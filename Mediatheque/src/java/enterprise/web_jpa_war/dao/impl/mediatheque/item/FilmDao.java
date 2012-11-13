@@ -36,9 +36,11 @@ public class FilmDao extends AbstractCommonnDao implements ICommonDao<Film> {
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Film obj) {
+        em.remove(obj);
     }
+
+   
 
     public void deleteByExample(Film obj) {
         em.createQuery("delete from Film f where " + getWhereClause(obj));

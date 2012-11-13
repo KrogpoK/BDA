@@ -35,10 +35,11 @@ public class OuvrageDao extends AbstractCommonnDao implements ICommonDao<Ouvrage
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(Ouvrage obj) {
+        em.remove(obj);
     }
 
+   
     public void deleteByExample(Ouvrage obj) {
         em.createQuery("delete from Ouvrage o where " + getWhereClause(obj));
     }

@@ -36,9 +36,11 @@ public class BonDeCommandeDoa extends AbstractCommonnDao implements ICommonDao<B
         em.persist(obj);
     }
 
-    public void delete(int id) {
-        em.remove(id);
+    public void delete(BonDeCommande obj) {
+        em.remove(obj);
     }
+
+    
 
     public void deleteByExample(BonDeCommande obj) {
         em.createQuery("delete from BonDeCommande r where " + getWhereClause(obj));
