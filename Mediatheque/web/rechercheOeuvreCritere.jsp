@@ -9,38 +9,54 @@
 <!DOCTYPE html>
 
 <h1>Recherche des Oeuvres</h1>
-<form id="searchFilmForm" action="RechercheOeuvre" method="post">
-    <table>
-        <tr>
-            <td><input type="radio" id="all" name="typeSupport" value="All" checked="true" /></td><td>All</td>
-            <td><input type="radio" id="film" name="typeSupport" value="Film" /></td><td>Film</td>
-            <td><input type="radio" id="livre" name="typeSupport" value="Livre" /></td><td>Livre</td>
-            <td><input type="radio" id="CD" name="typeSupport" value="CD" /></td><td>CD</td>
-            <td><input type="radio" id="periodique" name="typeSupport" value="Periodique" /></td><td>Periodique</td>
-        </tr>
-        <tr>
-            Titre : 
-        <input type="text" id="titreSearch" name="titreSearch" placeholder="titre" />
-        </tr>
-        <tr>
-            Genre : 
-        <select name="genreSearch">
-            <option selected="true"></option>
-            <option>Comique</option>
-            <option>Horreur</option>
-            <option>Policier</option>
-        </select> 
-        Langue : 
-        <select name="langueSearch">
-            <option selected="true"></option>
-            <option>Français</option>
-            <option>Anglais</option>
-        </select>
-        <input type="date" id="dateParutionSearch" name="dateParutionSearch" placeholder="date de parution" />
-        <input type="radio" id="avant" name="dateParutionIndicateurSearch" value="avant" checked="true "/></td>avant
-        <input type="radio" id="apres" name="dateParutionIndicateurSearch" value="apres" /></td>après
-        </tr>
-</table>
-<input type="submit" id="find" value="Find" />
-</form>
-<hr />
+<div class="container-fluid well">
+    <form id="searchFilmForm" action="RechercheOeuvre" method="post">
+        <table>
+            <tr>
+                <td><input type="radio" id="all" name="typeSupport" value="All" checked="true" /></td><td>All</td>
+                <td><input type="radio" id="film" name="typeSupport" value="Film" /></td><td>Film</td>
+                <td><input type="radio" id="livre" name="typeSupport" value="Livre" /></td><td>Livre</td>
+                <td><input type="radio" id="CD" name="typeSupport" value="CD" /></td><td>CD</td>
+                <td><input type="radio" id="periodique" name="typeSupport" value="Periodique" /></td><td>Periodique</td>
+            </tr>
+            <tr>
+                Titre : 
+            <input type="text" id="titreSearch" name="titreSearch" placeholder="titre" />
+            </tr>
+            <tr>
+                Genre : 
+            <select name="genreSearch">
+                <option selected="true"></option>
+                <option>Action</option>
+                <option>Comique</option>
+                <option>Fantasy</option>
+                <option>Horreur</option>
+                <option>Policier</option>
+                <option>Romantique</option>
+                <option>Thriller</option>
+            </select> 
+            Langue : 
+            <select name="langueSearch">
+                <option selected="true"></option>
+                <option>Allemand</option>
+                <option>Anglais</option>
+                <option>Chinois</option>
+                <option>Danois</option>
+                <option>Espagnol</option>
+                <option>Français</option>
+                <option>Hongrois</option>
+                <option>Italien</option>
+                <option>Japonais</option>
+                <option>Portuguais</option>
+                <option>Russe</option>
+                <option>Suédois</option>
+                <option>Tchèque</option>
+            </select>
+            <input type="date" id="dateParutionSearch" name="dateParutionSearch" placeholder="date de parution" />
+            <input type="radio" id="avant" name="dateParutionIndicateurSearch" value="avant" checked="true "/></td>avant
+            <input type="radio" id="apres" name="dateParutionIndicateurSearch" value="apres" /></td>après
+            </tr>
+        </table>
+        <input type="submit" id="find" value="Find" />
+    </form>
+</div>

@@ -234,16 +234,14 @@ public class Oeuvre implements Serializable {
     public static String generateRandomGenre() {
         ArrayList<String> genre = new ArrayList<String>();
 
-        genre.add("action");
-        genre.add("amour");
-        genre.add("thriller");
+        genre.add("Action");
+        genre.add("Fantasy");
+        genre.add("Thriller");
         genre.add("Policier");
-        genre.add("nouvelle");
-        genre.add("anime");
         genre.add("Horreur");
-        genre.add("suspense");
-        genre.add("roman");
-        genre.add("biographie");
+        genre.add("Comique");
+        genre.add("Romantique");
+
 
         Random r = new Random();
 
@@ -255,9 +253,19 @@ public class Oeuvre implements Serializable {
     public static String generateRandomLangue() {
         ArrayList<String> langue = new ArrayList<String>();
 
-        langue.add("Français");
+        langue.add("Allemand");
         langue.add("Anglais");
+        langue.add("Chinois");
+        langue.add("Danois");
+        langue.add("Espagnol");
+        langue.add("Français");
+        langue.add("Hongrois");
+        langue.add("Italien");
+        langue.add("Japonais");
+        langue.add("Portuguais");
         langue.add("Russe");
+        langue.add("Suédois");
+        langue.add("Tchèque");
 
         Random r = new Random();
 
@@ -268,21 +276,21 @@ public class Oeuvre implements Serializable {
 
     /*public static Oeuvre buildMoke() {
 
-        Oeuvre o = new Oeuvre();
-        o.setDateParution(DateTool.parseDate("2009-06-12"));
-        o.setGenre(Oeuvre.generateRandomGenre());
-        o.setLangue(Oeuvre.generateRandomLangue());
-        o.setTitre(Oeuvre.generateRandomTitle());
-        return o;
-    }
+     Oeuvre o = new Oeuvre();
+     o.setDateParution(DateTool.parseDate("2009-06-12"));
+     o.setGenre(Oeuvre.generateRandomGenre());
+     o.setLangue(Oeuvre.generateRandomLangue());
+     o.setTitre(Oeuvre.generateRandomTitle());
+     return o;
+     }
 
-    public static ArrayList<Oeuvre> buildMoke(int nb) {
-        ArrayList<Oeuvre> al = new ArrayList<Oeuvre>();
+     public static ArrayList<Oeuvre> buildMoke(int nb) {
+     ArrayList<Oeuvre> al = new ArrayList<Oeuvre>();
 
-        for (int i = 0; i < nb; i++) {
-            al.add(buildMoke());
-        }
-        return al;
+     for (int i = 0; i < nb; i++) {
+     al.add(buildMoke());
+     }
+     return al;
 
-    }*/
+     }*/
 }

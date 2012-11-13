@@ -1,0 +1,17 @@
+/* 
+    Document   : design
+    Created on : 13 nov. 2012, 14:48:24
+    Author     : jeremiefabre
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.bloc {
+   margin-top: 70px;
+   margin-bottom: 30px;
+}
+

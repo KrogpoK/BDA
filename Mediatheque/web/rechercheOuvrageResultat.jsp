@@ -8,7 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
-<h2>Resultats : ${requestScope.listFilms.size()}</h2>
+<h2>Resultats : ${requestScope.listOuvrages.size()}</h2>
 <table border="3">
     <th>Titre</th>
     <th>Genre</th>
@@ -19,7 +19,7 @@
     <th>Disponibilité</th>
     <th>Nombre d'Emprunts</th>
     <th></th>
-    <c:forEach var="ouvrage" begin="0" items="${requestScope.listFilms}">
+    <c:forEach var="ouvrage" begin="0" items="${requestScope.listOuvrages}">
         <tr>
             <% String keyWord = (String) request.getAttribute("keyWord");
             %>
