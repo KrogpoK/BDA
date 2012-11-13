@@ -45,6 +45,11 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/design.css" rel="stylesheet">
+        <title>Connexion</title>
     </head>
     <body>
         <%
@@ -52,45 +57,52 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
             if (request.getSession().getAttribute("user") == null) {
         %>
         <h1>Connexion</h1>
-        <form action="Connexion" method="post">
-            <%
-                if (request.getAttribute("error") != null) {
-            %>
-            <p style="color:red;" ><strong>Erreur danc le couple login/mot de passe</strong></p>      
-            <%                }
-            %>
-            <table>
-                <tr>
-                    <td>login</td>
-                    <td><input type="text" name ="login" /></td>
-                </tr>
-                <tr>
-                    <td>password</td>
-                    <td><input type="password" name ="pass" /></td>
-                </tr>
-            </table>
-            <input type="hidden" name="action" value="connexion" />
-            <input type="submit" value="connexion" />
-        </form>
+        <div class="container-fluid bloc">
+            <div class="row-fluid">
+                <div class="span12 well">
+                    <div class="sidebar-nav">
+                        <form action="Connexion" method="post">
+                            <fieldset>
+                                <%
+                                    if (request.getAttribute("error") != null) {
+                                %>
+                                <p style="color:red;" ><strong>Erreur danc le couple login/mot de passe</strong></p>      
+                                <%                }
+                                %>
+                                <table>
+                                    <tr>
+                                        <td>login</td>
+                                        <td><input type="text" name ="login" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>password</td>
+                                        <td><input type="password" name ="pass" /></td>
+                                    </tr>
+                                </table>
+                                <input type="hidden" name="action" value="connexion" />
+                                <input type="submit" class="btn btn-primary" value="connexion" />
+                            </fieldset>
+                        </form>
 
-        <%
-            //Si il y a une session en cours
-        } else {
-            //si l'utilisateur est un administrateur
-            if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
-        %>
-        <jsp:forward page="AccueilAdmin.jsp"></jsp:forward>
-        <%                    } //si l'utilisateur est un client
-        else {
-        %>
-        <jsp:forward page="AccueilClient.jsp"></jsp:forward>
-        <%                            }
-            }
-        %>
+                        <%
+                            //Si il y a une session en cours
+                        } else {
+                            //si l'utilisateur est un administrateur
+                            if (((Adherent) request.getSession().getAttribute("user")).isAdmin()) {
+                        %>
+                        <jsp:forward page="AccueilAdmin.jsp"></jsp:forward>
+                        <%                    } //si l'utilisateur est un client
+                        else {
+                        %>
+                        <jsp:forward page="AccueilClient.jsp"></jsp:forward>
+                        <%                            }
+                            }
+                        %>
 
-           <a href="RegenDb" >creer des choses dans la base</a>
-            
-           <h3><a href="rechercheOeuvre.jsp" >rechercher une oeuvre</a></h3>
-
+                        <h3><a href="RegenDb" >Remplir la base de données</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -34,51 +34,64 @@
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Of Persons</title>
+        <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/design.css" rel="stylesheet">
+        <title>Liste Personnes</title>
     </head>
     <body>
-        <p><a href="index.jsp" ><-- revenir a l'accueil</a></p>
-    <h1>List of Persons currently in Database (${requestScope.adherentList.size()})</h1>
-    
-<table id="personListTable" border="3">
-<tr >
-    <th bgcolor=>ID</th>
-    <th bgcolor=>prenom</th>
-    <th bgcolor=>nom</th>
-    <th bgcolor=>mail</th>
-    <th bgcolor=>login</th>
-    <th bgcolor=>pass</th>
-    <th bgcolor=>admin</th>
-    <th bgcolor=>date de naissance</th>
-    <th bgcolor=>rue</th>
-    <th bgcolor=>CP</th>
-    <th bgcolor=>Ville</th>
-    <th bgcolor=>pays</th>
-</tr>
-<c:forEach var="person" begin="0" items="${requestScope.adherentList}">
-<tr>
-    <td>${person.id}&nbsp;&nbsp;</td> 
-    <td>${person.prenom}&nbsp;&nbsp;</td> 
-    <td>${person.nom}&nbsp;&nbsp;</td> 
-    <td>${person.mail}&nbsp;&nbsp;</td> 
-    <td>${person.login}&nbsp;&nbsp;</td> 
-    <td>${person.pass}&nbsp;&nbsp;</td> 
-    <td>${person.admin}&nbsp;&nbsp;</td> 
-    <td>${person.getStrDateDeNaissance()}&nbsp;&nbsp;</td> 
-    <td>${person.adress.street}&nbsp;&nbsp;</td> 
-    <td>${person.adress.city.postalCode}&nbsp;&nbsp;</td> 
-    <td>${person.adress.city.name}&nbsp;&nbsp;</td> 
-    <td>${person.adress.country}&nbsp;&nbsp;</td> 
-    
-</tr> 
+        <div class="container-fluid bloc">
+            <div><a href="index.jsp" >Revenir à la page précédente</a></div><br />
+            <h1>Liste de personnes enregistrés dans la base de données (${requestScope.adherentList.size()})</h1>
+            <div class="row-fluid">
+                <div class="span12 well">
+                    <div class="sidebar-nav">
+                        <table class="table table-hover" id="personListTable">
+                            <thead>
+                                <tr >
+                                    <th bgcolor=>ID</th>
+                                    <th bgcolor=>prenom</th>
+                                    <th bgcolor=>nom</th>
+                                    <th bgcolor=>mail</th>
+                                    <th bgcolor=>login</th>
+                                    <th bgcolor=>pass</th>
+                                    <th bgcolor=>admin</th>
+                                    <th bgcolor=>date de naissance</th>
+                                    <th bgcolor=>rue</th>
+                                    <th bgcolor=>CP</th>
+                                    <th bgcolor=>Ville</th>
+                                    <th bgcolor=>pays</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="person" begin="0" items="${requestScope.adherentList}">
+                                    <tr>
+                                        <td>${person.id}&nbsp;&nbsp;</td> 
+                                        <td>${person.prenom}&nbsp;&nbsp;</td> 
+                                        <td>${person.nom}&nbsp;&nbsp;</td> 
+                                        <td>${person.mail}&nbsp;&nbsp;</td> 
+                                        <td>${person.login}&nbsp;&nbsp;</td> 
+                                        <td>${person.pass}&nbsp;&nbsp;</td> 
+                                        <td>${person.admin}&nbsp;&nbsp;</td> 
+                                        <td>${person.getStrDateDeNaissance()}&nbsp;&nbsp;</td> 
+                                        <td>${person.adress.street}&nbsp;&nbsp;</td> 
+                                        <td>${person.adress.city.postalCode}&nbsp;&nbsp;</td> 
+                                        <td>${person.adress.city.name}&nbsp;&nbsp;</td> 
+                                        <td>${person.adress.country}&nbsp;&nbsp;</td> 
 
-</c:forEach>
+                                    </tr> 
 
-</table>
-<a href="CreatePerson.jsp"><strong>Create a Person Record</strong></a>
-</body>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
